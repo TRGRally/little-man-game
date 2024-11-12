@@ -23,7 +23,6 @@ var hitbox_shape: RectangleShape2D
 var hitbox: CollisionShape2D
 
 func _ready():
-	# Get the shape reference from the CollisionShape2D node
 	hitbox = $CollisionShape2D
 	hitbox_shape = $CollisionShape2D.shape as RectangleShape2D
 	
@@ -38,17 +37,17 @@ func is_dash_available():
 func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_pressed("move_down"):
-		# Change the size to the shrunk version
-		hitbox_shape.size = shrunk_hitbox_size
-		hitbox.position = shrunk_hitbox_transform
+		#fucked up nested if cause move_down should be the switch
+		if is_on_floor():
+			hitbox_shape.size = shrunk_hitbox_size
+			hitbox.position = shrunk_hitbox_transform
 	else:
-		# Reset to normal size
 		hitbox_shape.size = normal_hitbox_size
 		hitbox.position = normal_hitbox_transform
 	
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity.y += GRAVITY * delta
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -60,9 +59,6 @@ func _physics_process(delta: float) -> void:
 	inputVector.y = verticalDirection
 
 	# Handle jump.
-	if Input.is_action_just_released("jump") and velocity.y < 0:
-		velocity.y = JUMP_VELOCITY / 2
-	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y += JUMP_VELOCITY
 		
@@ -80,7 +76,7 @@ func _physics_process(delta: float) -> void:
 	#Dash
 	if Input.is_action_just_pressed("dash") and is_dash_available():
 		dashCount = dashCount + 1
-		velocity += DASH_VELOCITY * inputVector
+		velocity = DASH_VELOCITY * inputVector
 	
 	if is_on_floor():
 		dashCount = 0
