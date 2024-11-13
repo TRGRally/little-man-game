@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwo5jg10b1tbh"]
+
+[sub_resource type="GDScript" id="GDScript_6laai"]
+resource_name = "res://scripts/hud.gd"
+script/source = "extends CanvasLayer
+
+func set_deaths(deaths):
+	$Deaths.text = str(deaths)
+	
+func set_velocity(velocity: Vector2):
+	var vel = snapped(velocity.length(), 0)
+	$Velocity.text = str(vel)
+	
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="HUD" type="CanvasLayer"]
+script = SubResource("GDScript_6laai")
+
+[node name="Deaths" type="Label" parent="."]
+offset_left = 4.0
+offset_right = 44.0
+offset_bottom = 23.0
+text = "0
+"
+horizontal_alignment = 3
+
+[node name="Velocity" type="Label" parent="."]
+offset_left = 4.0
+offset_top = 23.0
+offset_right = 79.0
+offset_bottom = 46.0
+text = "some shit"

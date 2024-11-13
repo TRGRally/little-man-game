@@ -4,13 +4,15 @@ extends CharacterBody2D
 const SPEED = 30.0
 const JUMP_VELOCITY = -600.0
 const AIR_FRICTION = 0.95
-const FRICTION = 0.85
+const FRICTION = 0.9
 const GRAVITY = 2000
 const FALL_GRAVITY = 2400
 const DASH_VELOCITY = 1000
 
 var dashCount = 0
 var allowedDashes = 1
+
+@onready var HUD = %HUD
 
 # Export variable to easily adjust the hitbox size in the Inspector
 @export var normal_hitbox_size: Vector2 = Vector2(24, 48)
@@ -76,13 +78,17 @@ func _physics_process(delta: float) -> void:
 	#Dash
 	if Input.is_action_just_pressed("dash") and is_dash_available():
 		dashCount = dashCount + 1
-		velocity = DASH_VELOCITY * inputVector
+		
+		if velocity.length() <= DASH_VELOCITY:
+			velocity = DASH_VELOCITY * inputVector
+		else:
+			velocity = velocity.length() * inputVector
 	
 	if is_on_floor():
 		dashCount = 0
 			
 			
-		
+	HUD.set_velocity(velocity)
 	
 		
 	

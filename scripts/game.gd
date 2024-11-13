@@ -1,5 +1,7 @@
 extends Node2D
 
+@onready var gameManager = %GameManager
+@onready var HUD = %HUD
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,3 +15,6 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	body.position = Vector2(0,0)
+	var deaths = gameManager.add_death()
+	HUD.set_deaths(deaths)
+	

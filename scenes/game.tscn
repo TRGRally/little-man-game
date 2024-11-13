@@ -1,8 +1,30 @@
-[gd_scene load_steps=7 format=4 uid="uid://dwvu6qqm1x438"]
+[gd_scene load_steps=11 format=4 uid="uid://dwvu6qqm1x438"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8bmj7"]
 [ext_resource type="PackedScene" uid="uid://20vymhe38nsq" path="res://scenes/player.tscn" id="1_rss1j"]
 [ext_resource type="Texture2D" uid="uid://cosyj0now6mxb" path="res://assets/sprites/dev.png" id="2_exghi"]
+[ext_resource type="PackedScene" uid="uid://crrn62if0387i" path="res://scenes/platform.tscn" id="4_bl2iw"]
+[ext_resource type="PackedScene" uid="uid://dwo5jg10b1tbh" path="res://scenes/hud.tscn" id="5_thxls"]
+
+[sub_resource type="GDScript" id="GDScript_t53kb"]
+resource_name = "res://scripts/game_manager.gd"
+script/source = "extends Node
+
+var deaths = 0
+
+func add_death():
+	deaths += 1
+	return deaths
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_twgah"]
 texture = ExtResource("2_exghi")
@@ -273,11 +295,31 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_twgah")
 
+[sub_resource type="GDScript" id="GDScript_i7goa"]
+resource_name = "res://scripts/killzone.gd"
+script/source = "extends Area2D
+
+@onready var gameManager = %GameManager
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_eyfp4"]
 distance = -300.0
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_8bmj7")
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = SubResource("GDScript_t53kb")
 
 [node name="Player" parent="." instance=ExtResource("1_rss1j")]
 position = Vector2(0, -3)
@@ -292,9 +334,16 @@ tile_map_data = PackedByteArray("AAD//wAAAAABAAAAAAAAAAAAAAABAAAAAAD//wEAAAAEAAQ
 tile_set = SubResource("TileSet_e5u8y")
 rendering_quadrant_size = 32
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Killzone" type="Area2D" parent="."]
+script = SubResource("GDScript_i7goa")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
 shape = SubResource("WorldBoundaryShape2D_eyfp4")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="Platform" parent="." instance=ExtResource("4_bl2iw")]
+position = Vector2(-160, 8)
+
+[node name="HUD" parent="." instance=ExtResource("5_thxls")]
+unique_name_in_owner = true
+
+[connection signal="body_entered" from="Killzone" to="." method="_on_area_2d_body_entered"]
