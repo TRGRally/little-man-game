@@ -1,0 +1,104 @@
+[gd_scene load_steps=17 format=3 uid="uid://20vymhe38nsq"]
+
+[ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
+[ext_resource type="Texture2D" uid="uid://0ytvu2l3rbat" path="res://assets/sprites/dev-player-sheet.png" id="2_o0er2"]
+[ext_resource type="Script" path="res://entities/player/states.gd" id="3_ckwwy"]
+[ext_resource type="Script" path="res://entities/player/LockedState.gd" id="4_0ffgt"]
+[ext_resource type="Script" path="res://entities/player/IdleState.gd" id="4_107eg"]
+[ext_resource type="Script" path="res://entities/player/WalkState.gd" id="5_jmwou"]
+[ext_resource type="Script" path="res://entities/player/JumpState.gd" id="6_scppm"]
+[ext_resource type="Script" path="res://entities/player/JumpPeakState.gd" id="7_ortu5"]
+[ext_resource type="Script" path="res://entities/player/FallState.gd" id="8_0rjko"]
+[ext_resource type="Script" path="res://entities/player/DashState.gd" id="10_5p7vt"]
+[ext_resource type="Script" path="res://entities/player/WallGrabState.gd" id="11_yixrl"]
+[ext_resource type="Script" path="res://entities/player/WallSlideState.gd" id="12_akqea"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qt7s7"]
+atlas = ExtResource("2_o0er2")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlfgf"]
+atlas = ExtResource("2_o0er2")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fdqj5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qt7s7")
+}],
+"loop": true,
+"name": &"duck",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlfgf")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ej272"]
+size = Vector2(24, 48)
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 5
+script = ExtResource("1_6enp7")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_fdqj5")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_ej272")
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_ckwwy")
+
+[node name="Locked" type="Node" parent="StateMachine"]
+script = ExtResource("4_0ffgt")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_107eg")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("5_jmwou")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("6_scppm")
+
+[node name="JumpPeak" type="Node" parent="StateMachine"]
+script = ExtResource("7_ortu5")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("8_0rjko")
+
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("10_5p7vt")
+
+[node name="WallGrab" type="Node" parent="StateMachine"]
+script = ExtResource("11_yixrl")
+
+[node name="WallSlide" type="Node" parent="StateMachine"]
+script = ExtResource("12_akqea")
+
+[node name="DebugText" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -72.0
+offset_right = 20.0
+offset_bottom = -49.0
+grow_horizontal = 2
+horizontal_alignment = 1
+
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]

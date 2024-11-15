@@ -1,15 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwo5jg10b1tbh"]
+[gd_scene load_steps=3 format=3 uid="uid://dwo5jg10b1tbh"]
+
+[ext_resource type="Script" path="res://scenes/fps.gd" id="1_852id"]
 
 [sub_resource type="GDScript" id="GDScript_6laai"]
 resource_name = "res://scripts/hud.gd"
 script/source = "extends CanvasLayer
 
+
 func set_deaths(deaths):
-	$Deaths.text = str(deaths)
+	$Control/Deaths.text = str(deaths)
 	
 func set_velocity(velocity: Vector2):
-	var vel = snapped(velocity.length(), 0)
-	$Velocity.text = str(vel)
+	var speed = snapped(velocity.length(), 0)
+	$Control/Velocity.text = str(speed)
+	$Control/Xvel.text = str(snapped(abs(velocity.x), 0))
+	$Control/Yvel.text = str(snapped(abs(velocity.y), 0))
+	
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,17 +30,49 @@ func _process(delta: float) -> void:
 [node name="HUD" type="CanvasLayer"]
 script = SubResource("GDScript_6laai")
 
-[node name="Deaths" type="Label" parent="."]
-offset_left = 4.0
-offset_right = 44.0
-offset_bottom = 23.0
+[node name="Control" type="Control" parent="."]
+layout_direction = 2
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_vertical = 3
+
+[node name="FPS" type="Label" parent="Control"]
+offset_left = 6.0
+offset_top = 2.0
+offset_right = 46.0
+offset_bottom = 25.0
+text = "FPS
+"
+script = ExtResource("1_852id")
+
+[node name="Velocity" type="Label" parent="Control"]
+offset_left = 6.0
+offset_top = 25.0
+offset_right = 81.0
+offset_bottom = 48.0
+text = "vel"
+
+[node name="Deaths" type="Label" parent="Control"]
+offset_left = 6.0
+offset_top = 94.0
+offset_right = 45.0
+offset_bottom = 117.0
 text = "0
 "
 horizontal_alignment = 3
 
-[node name="Velocity" type="Label" parent="."]
-offset_left = 4.0
-offset_top = 23.0
-offset_right = 79.0
-offset_bottom = 46.0
-text = "some shit"
+[node name="Xvel" type="Label" parent="Control"]
+offset_left = 6.0
+offset_top = 71.0
+offset_right = 81.0
+offset_bottom = 94.0
+text = "xvel"
+
+[node name="Yvel" type="Label" parent="Control"]
+offset_left = 6.0
+offset_top = 48.0
+offset_right = 81.0
+offset_bottom = 71.0
+text = "yvel"
