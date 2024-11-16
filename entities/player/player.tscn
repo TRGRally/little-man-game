@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=23 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Texture2D" uid="uid://0ytvu2l3rbat" path="res://assets/sprites/dev-player-sheet.png" id="2_o0er2"]
+[ext_resource type="Texture2D" uid="uid://cx15m2lfftedq" path="res://assets/sprites/dev-player.png" id="2_vglsb"]
 [ext_resource type="Script" path="res://entities/player/states.gd" id="3_ckwwy"]
 [ext_resource type="Script" path="res://entities/player/LockedState.gd" id="4_0ffgt"]
 [ext_resource type="Script" path="res://entities/player/IdleState.gd" id="4_107eg"]
@@ -12,6 +13,30 @@
 [ext_resource type="Script" path="res://entities/player/DashState.gd" id="10_5p7vt"]
 [ext_resource type="Script" path="res://entities/player/WallGrabState.gd" id="11_yixrl"]
 [ext_resource type="Script" path="res://entities/player/WallSlideState.gd" id="12_akqea"]
+
+[sub_resource type="Shader" id="Shader_2rvit"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_mix;
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lxiep"]
+shader = SubResource("Shader_2rvit")
+
+[sub_resource type="Curve" id="Curve_hr5hw"]
+_data = [Vector2(0, 0.495232), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_v4wfx"]
+curve = SubResource("Curve_hr5hw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ax6rc"]
+particle_flag_disable_z = true
+angle_min = -9.99999
+angle_max = 10.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_v4wfx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qt7s7"]
 atlas = ExtResource("2_o0er2")
@@ -46,6 +71,18 @@ size = Vector2(24, 48)
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 script = ExtResource("1_6enp7")
+
+[node name="DashParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_lxiep")
+position = Vector2(0, -32)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_ax6rc")
+texture = ExtResource("2_vglsb")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+interpolate = false
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -32)

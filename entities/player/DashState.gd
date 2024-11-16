@@ -3,6 +3,8 @@ extends PlayerState
 func EnterState():
 	Name = "Dash"
 	
+	%DashParticles.emitting = true
+	
 	Player.dashCount = Player.dashCount + 1
 	if Player.velocity.length() <= Player.DASH_SPEED:
 		Player.velocity = Player.DASH_SPEED * Player.inputVector
@@ -11,7 +13,7 @@ func EnterState():
 	
 
 func ExitState():
-	pass
+	%DashParticles.emitting = false
 	
 	
 func Draw():
