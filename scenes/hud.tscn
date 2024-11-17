@@ -39,6 +39,7 @@ offset_bottom = 40.0
 size_flags_vertical = 3
 
 [node name="FPS" type="Label" parent="Control"]
+layout_mode = 0
 offset_left = 6.0
 offset_top = 2.0
 offset_right = 46.0
@@ -48,6 +49,7 @@ text = "FPS
 script = ExtResource("1_852id")
 
 [node name="Velocity" type="Label" parent="Control"]
+layout_mode = 0
 offset_left = 6.0
 offset_top = 25.0
 offset_right = 81.0
@@ -55,6 +57,7 @@ offset_bottom = 48.0
 text = "vel"
 
 [node name="Deaths" type="Label" parent="Control"]
+layout_mode = 0
 offset_left = 6.0
 offset_top = 94.0
 offset_right = 45.0
@@ -64,6 +67,7 @@ text = "0
 horizontal_alignment = 3
 
 [node name="Xvel" type="Label" parent="Control"]
+layout_mode = 0
 offset_left = 6.0
 offset_top = 71.0
 offset_right = 81.0
@@ -71,6 +75,7 @@ offset_bottom = 94.0
 text = "xvel"
 
 [node name="Yvel" type="Label" parent="Control"]
+layout_mode = 0
 offset_left = 6.0
 offset_top = 48.0
 offset_right = 81.0

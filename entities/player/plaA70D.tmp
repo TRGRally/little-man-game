@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=23 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Texture2D" uid="uid://0ytvu2l3rbat" path="res://assets/sprites/dev-player-sheet.png" id="2_o0er2"]
@@ -35,38 +35,6 @@ curve = SubResource("Curve_hr5hw")
 particle_flag_disable_z = true
 gravity = Vector3(0, 0, 0)
 alpha_curve = SubResource("CurveTexture_v4wfx")
-
-[sub_resource type="Shader" id="Shader_vpj8m"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
-
-shader_type canvas_item;
-render_mode blend_mix;
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6yrdc"]
-shader = SubResource("Shader_vpj8m")
-
-[sub_resource type="Curve" id="Curve_unnw2"]
-_data = [Vector2(0, 0.507968), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_38giy"]
-curve = SubResource("Curve_unnw2")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vw6ks"]
-particle_flag_disable_z = true
-angle_min = 1.07288e-05
-angle_max = 1.07288e-05
-direction = Vector3(0, 1, 0)
-spread = 180.0
-initial_velocity_min = 2.37
-initial_velocity_max = 13.27
-gravity = Vector3(0, 0, 0)
-radial_accel_min = 3.32
-radial_accel_max = 26.07
-damping_min = 8.018
-damping_max = 30.712
-alpha_curve = SubResource("CurveTexture_38giy")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qt7s7"]
 atlas = ExtResource("2_o0er2")
@@ -114,13 +82,6 @@ lifetime = 0.1
 one_shot = true
 fixed_fps = 60
 interpolate = false
-
-[node name="WalkParticles" type="GPUParticles2D" parent="."]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_6yrdc")
-emitting = false
-amount = 50
-process_material = SubResource("ParticleProcessMaterial_vw6ks")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -32)

@@ -3,9 +3,10 @@ extends PlayerState
 func EnterState():
 	Name = "Walk"
 	
+	%WalkParticles.emitting = true
 
 func ExitState():
-	pass
+	%WalkParticles.emitting = false
 	
 	
 func Draw():

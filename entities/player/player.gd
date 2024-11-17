@@ -8,6 +8,7 @@ const AIR_FRICTION = 0.95
 const FRICTION = 0.8
 const GRAVITY = 2000
 const FALL_GRAVITY = 2400
+const WALL_SLIDE_SPEED = 200
 const DASH_SPEED = 800
 const DASH_GRAVITY = 0
 const DASH_FRICTION = 0
@@ -74,15 +75,40 @@ func HandleGravity(delta, gravity = GRAVITY):
 			velocity.y += gravity * delta	
 	
 func HandleFalling():
+	if currentState == States.WallSlide:
+		if not (Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")):
+			ChangeState(States.Fall)
+		if not is_on_wall_only():
+			ChangeState(States.Fall)
+		return
+	
+	if currentState == States.WallGrab:
+		if not Input.is_action_pressed("grab"):
+			ChangeState(States.Fall)
+		return
+	
 	if (!is_on_floor()):
 		ChangeState(States.Fall)
+
+			
 		
 func HandleJump():
 	if (is_on_floor() and Input.is_action_just_pressed("jump")):
 		dashCount = 0
 		ChangeState(States.Jump)
 		
-
+func HandleWall():
+	if not is_on_wall_only():
+		return
+		
+	if Input.is_action_pressed("grab"):
+		ChangeState(States.WallGrab)
+		return
+		
+	if currentState != States.WallSlide:
+		if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
+			ChangeState(States.WallSlide)
+		
 	
 func HandleLanding():
 	if (is_on_floor()):

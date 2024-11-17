@@ -3,6 +3,9 @@ extends PlayerState
 func EnterState():
 	Name = "WallGrab"
 	
+	Player.velocity.y = 0
+	Player.velocity.x = 0
+	
 
 func ExitState():
 	pass
@@ -13,7 +16,9 @@ func Draw():
 	
 
 func Update(delta: float):
-	Player.ChangeState(States.Fall)
+	Player.velocity.y = 0
+	Player.HandleFalling()
+	
 	
 
 func HandleAnimations():

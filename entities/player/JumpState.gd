@@ -17,6 +17,7 @@ func Update(delta: float):
 	Player.HandleGravity(delta)
 	HandleMovement()
 	HandleJumpToFall()
+	Player.HandleWall()
 	HandleAnimations()
 	
 func HandleMovement():

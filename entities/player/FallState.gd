@@ -1,8 +1,8 @@
 extends PlayerState
 
+
 func EnterState():
 	Name = "Fall"
-	
 
 func ExitState():
 	pass
@@ -16,6 +16,7 @@ func Update(delta: float):
 	Player.HandleGravity(delta, Player.FALL_GRAVITY)
 	Player.HandleLanding()
 	HandleMovement()
+	Player.HandleWall()
 	HandleAnimations()
 	
 func HandleMovement():
