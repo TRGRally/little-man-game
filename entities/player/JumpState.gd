@@ -4,6 +4,7 @@ func EnterState():
 	Name = "Jump"
 	Player.velocity.y = Player.JUMP_SPEED
 	
+	
 
 func ExitState():
 	pass
