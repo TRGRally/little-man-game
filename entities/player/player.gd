@@ -1,10 +1,12 @@
 extends CharacterBody2D
 
+#fake
+const MOVE_SPEED = 200.0
 
 const SPEED = 50.0
 const AIR_SPEED = 20.0
 const JUMP_SPEED = -600.0
-const AIR_FRICTION = 0.95
+const AIR_FRICTION = 0.99
 const FRICTION = 0.8
 const GRAVITY = 2000
 const FALL_GRAVITY = 2400
@@ -18,6 +20,8 @@ var dashCount = 0
 var allowedDashes = 1
 
 var inputVector = Vector2.ZERO
+
+var wishdir = sign(inputVector.x)
 
 #state machine stuff
 @onready var States = $StateMachine
@@ -157,6 +161,8 @@ func _physics_process(delta: float) -> void:
 		dashCount = 0
 			
 	HUD.set_velocity(velocity)
+	wishdir = sign(inputVector.x)
+	HUD.set_direction(wishdir)
 	
 	$DebugText.text = currentState.Name
 		

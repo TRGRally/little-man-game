@@ -13,8 +13,11 @@ func set_deaths(deaths):
 func set_velocity(velocity: Vector2):
 	var speed = snapped(velocity.length(), 0)
 	$Control/Velocity.text = str(speed)
-	$Control/Xvel.text = str(snapped(abs(velocity.x), 0))
+	$Control/Xvel.text = str(snapped(velocity.x, 0.1))
 	$Control/Yvel.text = str(snapped(abs(velocity.y), 0))
+	
+func set_direction(wishdir):
+	$Control/Direction.text = str(wishdir)
 	
 	
 # Called when the node enters the scene tree for the first time.
@@ -81,3 +84,11 @@ offset_top = 48.0
 offset_right = 81.0
 offset_bottom = 71.0
 text = "yvel"
+
+[node name="Direction" type="Label" parent="Control"]
+offset_left = 6.0
+offset_top = 117.0
+offset_right = 81.0
+offset_bottom = 140.0
+text = "xdir
+"

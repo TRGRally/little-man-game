@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	body.position = Vector2(0,0)
+	body.position = Vector2(0,100)
 	var deaths = gameManager.add_death()
 	HUD.set_deaths(deaths)
 	
