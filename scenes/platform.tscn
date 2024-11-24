@@ -1,14 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://crrn62if0387i"]
+[gd_scene load_steps=4 format=3 uid="uid://crrn62if0387i"]
 
-[ext_resource type="Texture2D" uid="uid://bn385b2fwxxyf" path="res://assets/sprites/dev-platform.png" id="1_34tg4"]
+[ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="1_jrxbg"]
+[ext_resource type="Texture2D" uid="uid://cpk4csu6ocf0n" path="res://assets/sprites/dev-platform-16x.png" id="1_lcrv4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ncsh2"]
-size = Vector2(64, 16)
+size = Vector2(32, 8)
 
 [node name="Platform" type="AnimatableBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_34tg4")
+texture_filter = 2
+material = ExtResource("1_jrxbg")
+texture = ExtResource("1_lcrv4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ncsh2")

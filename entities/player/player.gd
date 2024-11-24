@@ -1,17 +1,20 @@
 extends CharacterBody2D
 
 #fake
-const MOVE_SPEED = 200.0
+const MOVE_SPEED = 140.0
+const DASH_JUMP_MOVE_SPEED = DASH_SPEED
 
-const SPEED = 50.0
-const AIR_SPEED = 20.0
-const JUMP_SPEED = -600.0
+const SPEED = 25.0
+const AIR_SPEED = 10.0
+const JUMP_SPEED = -300.0
+const DASH_JUMP_SPEED = -250.0
+
 const AIR_FRICTION = 0.99
-const FRICTION = 0.8
-const GRAVITY = 2000
-const FALL_GRAVITY = 2400
-const WALL_SLIDE_SPEED = 200
-const DASH_SPEED = 800
+const FRICTION = 0.85
+const GRAVITY = 900
+const FALL_GRAVITY = 1200
+const WALL_SLIDE_SPEED = 100
+const DASH_SPEED = 400
 const DASH_GRAVITY = 0
 const DASH_FRICTION = 0
 const DASH_TIME_S = 0.1
@@ -94,12 +97,31 @@ func HandleFalling():
 	if (!is_on_floor()):
 		ChangeState(States.Fall)
 
-			
+
+func HandleAirMovement(delta, allowedSpeed):
+	if inputVector.x != 0:
+		#runs movement calculation and checks if it would help the player change directions, 
+		#if not, dont apply the new velocity
+		var currentdir = sign(velocity.x)
 		
+		if abs(velocity.x) < allowedSpeed:
+			#they are currently moving slower than the allowed move_speed so accelerate
+			velocity.x += inputVector.x * AIR_SPEED
+			return
+		
+		if currentdir != wishdir:
+			#they want to change direction so let them turn
+			velocity.x += inputVector.x * AIR_SPEED
+			
+
+
 func HandleJump():
 	if (is_on_floor() and Input.is_action_just_pressed("jump")):
 		dashCount = 0
-		ChangeState(States.Jump)
+		if currentState == States.Dash:
+			ChangeState(States.DashJump)
+		else:
+			ChangeState(States.Jump)
 		
 func HandleWall():
 	if not is_on_wall_only():
@@ -171,4 +193,6 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_dash_timer_timeout() -> void:
-	ChangeState(States.Fall)
+	#avoids race condition where dash ends after jumping and triggers falling too soon
+	if currentState == States.Dash:
+		ChangeState(States.Fall)

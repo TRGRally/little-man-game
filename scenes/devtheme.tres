@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b5715plb4akvc"]
+
+[ext_resource type="FontFile" uid="uid://bhwmojb6xye7q" path="res://assets/fonts/GeistMono-VariableFont_wght.ttf" id="1_vncdc"]
+
+[resource]
+default_font = ExtResource("1_vncdc")
+default_font_size = 10

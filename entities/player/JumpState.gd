@@ -16,14 +16,11 @@ func Draw():
 
 func Update(delta: float):
 	Player.HandleGravity(delta)
-	HandleMovement()
+	Player.HandleAirMovement(delta, Player.MOVE_SPEED)
 	HandleJumpToFall()
 	Player.HandleWall()
 	HandleAnimations()
-	
-func HandleMovement():
-	if Player.inputVector.x != 0:
-		Player.velocity.x += Player.inputVector.x * Player.SPEED
+
 	
 func HandleJumpToFall():
 	if (Player.velocity.y >= 0):
