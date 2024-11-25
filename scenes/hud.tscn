@@ -14,7 +14,7 @@ func set_deaths(deaths):
 func set_velocity(velocity: Vector2):
 	var speed = snapped(velocity.length(), 0)
 	%DevHUD/Velocity.text = str(speed)
-	%DevHUD/Xvel.text = str(snapped(velocity.x, 0.1))
+	%DevHUD/Xvel.text = str(snapped(velocity.x, 0))
 	%DevHUD/Yvel.text = str(snapped(abs(velocity.y), 0))
 	
 func set_direction(wishdir):

@@ -14,11 +14,17 @@ func Draw():
 
 func Update(delta: float):
 	Player.HandleLanding()
+	HandleWallJump()
 	Player.HandleFalling()
 	Player.HandleWall()
 	HandleMovement()
 	HandleSliding(delta)
 
+
+func HandleWallJump():
+	if %JumpBuffer.time_left > 0 or Input.is_action_just_pressed("jump"):
+		%JumpBuffer.stop()
+		Player.ChangeState(States.WallJump)
 
 func HandleMovement():
 	if Player.inputVector.x != 0:

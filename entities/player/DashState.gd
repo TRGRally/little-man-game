@@ -2,14 +2,18 @@ extends PlayerState
 
 func EnterState():
 	Name = "Dash"
-	
+	%DashTimer.start()
 	%DashParticles.emitting = true
 	
+	var directionRaw = InputOrLookDirection()
+	var direction = directionRaw.normalized()
+	
 	Player.dashCount = Player.dashCount + 1
-	if Player.velocity.length() <= Player.DASH_SPEED:
-		Player.velocity = Player.DASH_SPEED * Player.inputVector
+	
+	if Player.is_on_floor():
+		Player.velocity = Player.DASH_SPEED * directionRaw
 	else:
-		Player.velocity = Player.velocity.length() * Player.inputVector
+		Player.velocity = Player.DASH_SPEED * direction
 	
 
 func ExitState():
@@ -21,8 +25,14 @@ func Draw():
 	
 
 func Update(delta: float):
-	pass
+	Player.HandleJumpBuffer()
 	
+	
+func InputOrLookDirection():
+	if Player.inputVector != Vector2.ZERO:
+		return Player.inputVector
+	else:
+		return Player.facingVector
 
 func HandleAnimations():
 	pass

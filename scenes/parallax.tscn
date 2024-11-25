@@ -14,21 +14,19 @@ scroll_offset = Vector2(10, 0)
 
 [node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(576, 324)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Sky"]
-position = Vector2(-247, -288)
-scale = Vector2(2, 2)
 texture = ExtResource("1_w6irp")
 centered = false
 
 [node name="Clouds2" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.025, 0)
-motion_mirroring = Vector2(576, 0)
+motion_mirroring = Vector2(576, 324)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Clouds2"]
 modulate = Color(1, 1, 1, 0.392157)
 material = SubResource("CanvasItemMaterial_howky")
-position = Vector2(0, 36)
 texture = ExtResource("4_nvmiw")
 centered = false
 
@@ -38,6 +36,5 @@ motion_mirroring = Vector2(576, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Clouds1"]
 modulate = Color(1, 1, 1, 0.784314)
-position = Vector2(0, 36)
 texture = ExtResource("2_rfevs")
 centered = false

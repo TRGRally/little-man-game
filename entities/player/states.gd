@@ -8,6 +8,8 @@ extends Node
 @onready var JumpPeak = $JumpPeak
 @onready var Fall = $Fall
 @onready var Dash = $Dash
+@onready var DashBuffer = $DashBuffer
 @onready var DashJump = $DashJump
 @onready var WallGrab = $WallGrab
 @onready var WallSlide = $WallSlide
+@onready var WallJump = $WallJump

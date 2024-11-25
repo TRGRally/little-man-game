@@ -1,8 +1,9 @@
 extends PlayerState
 
 func EnterState():
-	Name = "Jump"
+	Name = "WallJump"
 	Player.velocity.y = Player.JUMP_SPEED
+	Player.velocity.x = Player.WALL_JUMP_SPEED * (-1 * Player.inputVector.x)
 	
 	
 

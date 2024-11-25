@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=37 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -14,8 +14,10 @@
 [ext_resource type="Script" path="res://entities/player/WallGrabState.gd" id="11_yixrl"]
 [ext_resource type="Script" path="res://entities/player/WallSlideState.gd" id="12_akqea"]
 [ext_resource type="Script" path="res://entities/player/DuckState.gd" id="14_0ayni"]
+[ext_resource type="Script" path="res://entities/player/WallJumpState.gd" id="15_3kl73"]
 [ext_resource type="Script" path="res://entities/player/DashJumpState.gd" id="15_007vb"]
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="15_r22h3"]
+[ext_resource type="Script" path="res://entities/player/DashBufferState.gd" id="16_i50og"]
 
 [sub_resource type="Shader" id="Shader_2rvit"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
@@ -28,17 +30,44 @@ render_mode blend_mix;
 shader = SubResource("Shader_2rvit")
 
 [sub_resource type="Curve" id="Curve_hr5hw"]
-_data = [Vector2(0, 0.495232), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 0.753816), 0.0, 0.0, 0, 0, Vector2(0.5, 0.753816), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_v4wfx"]
 curve = SubResource("Curve_hr5hw")
 
+[sub_resource type="Gradient" id="Gradient_ppt7k"]
+offsets = PackedFloat32Array(0, 0.557377)
+colors = PackedColorArray(1, 1, 1, 1, 0.139453, 0.877208, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0f0kg"]
+gradient = SubResource("Gradient_ppt7k")
+
+[sub_resource type="Curve" id="Curve_hlgc6"]
+min_value = 1.0
+max_value = 100.0
+_data = [Vector2(0.0298013, 100), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ioo8p"]
+curve = SubResource("Curve_hlgc6")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ax6rc"]
+lifetime_randomness = 0.2
 particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
 emission_shape = 3
-emission_box_extents = Vector3(6, 12, 1)
+emission_box_extents = Vector3(3, 3, 1)
+spread = 42.978
+flatness = 0.5
+initial_velocity_min = 8.06
+initial_velocity_max = 1000.0
+velocity_limit_curve = SubResource("CurveTexture_ioo8p")
 gravity = Vector3(0, 0, 0)
+damping_min = 33.099
+damping_max = 49.296
+attractor_interaction_enabled = false
+color_ramp = SubResource("GradientTexture1D_0f0kg")
 alpha_curve = SubResource("CurveTexture_v4wfx")
 
 [sub_resource type="Shader" id="Shader_vpj8m"]
@@ -63,16 +92,16 @@ lifetime_randomness = 1.0
 particle_flag_align_y = true
 particle_flag_disable_z = true
 emission_shape_scale = Vector3(2, 1, 1)
-angle_min = 1.07288e-05
-angle_max = 1.07288e-05
-direction = Vector3(0, 1, 0)
-spread = 180.0
+direction = Vector3(0, -1, 0)
+spread = 90.0
 flatness = 0.478
 initial_velocity_min = 2.37
 initial_velocity_max = 13.27
-gravity = Vector3(0, 10, 0)
-linear_accel_min = -5.0
-linear_accel_max = 5.0
+gravity = Vector3(0, 4, 0)
+linear_accel_min = -18.58
+linear_accel_max = 35.21
+radial_accel_min = -7.04
+radial_accel_max = 8.45
 damping_min = 8.018
 damping_max = 30.712
 alpha_curve = SubResource("CurveTexture_38giy")
@@ -125,8 +154,7 @@ emitting = false
 amount = 400
 process_material = SubResource("ParticleProcessMaterial_ax6rc")
 lifetime = 2.0
-one_shot = true
-interpolate = false
+fixed_fps = 60
 
 [node name="WalkParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
@@ -145,10 +173,6 @@ animation = &"duck"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_ej272")
-
-[node name="DashTimer" type="Timer" parent="."]
-wait_time = 0.2
-one_shot = true
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_ckwwy")
@@ -183,8 +207,36 @@ script = ExtResource("11_yixrl")
 [node name="WallSlide" type="Node" parent="StateMachine"]
 script = ExtResource("12_akqea")
 
+[node name="WallJump" type="Node" parent="StateMachine"]
+script = ExtResource("15_3kl73")
+
 [node name="DashJump" type="Node" parent="StateMachine"]
 script = ExtResource("15_007vb")
+
+[node name="DashBuffer" type="Node" parent="StateMachine"]
+script = ExtResource("16_i50og")
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="DashTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
+
+[node name="DashBuffer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+wait_time = 0.05
+one_shot = true
+
+[node name="JumpBuffer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+wait_time = 0.15
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+wait_time = 0.15
+one_shot = true
 
 [node name="DebugText" type="Label" parent="."]
 z_index = 1
@@ -200,4 +252,7 @@ theme = ExtResource("15_r22h3")
 theme_override_font_sizes/font_size = 8
 horizontal_alignment = 1
 
-[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="Timers/DashBuffer" to="StateMachine/DashBuffer" method="_on_dash_buffer_timeout"]
+[connection signal="timeout" from="Timers/JumpBuffer" to="StateMachine/DashBuffer" method="_on_dash_buffer_timeout"]
+[connection signal="timeout" from="Timers/CoyoteTimer" to="StateMachine/DashBuffer" method="_on_dash_buffer_timeout"]
