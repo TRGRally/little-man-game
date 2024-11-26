@@ -35,5 +35,4 @@ func InputOrLookDirection():
 		return Player.facingVector
 
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "dash"

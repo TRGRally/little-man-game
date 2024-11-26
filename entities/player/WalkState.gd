@@ -32,5 +32,4 @@ func HandleMovement(delta):
 	
 	
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "walk"

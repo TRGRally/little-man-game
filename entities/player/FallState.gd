@@ -28,5 +28,4 @@ func Update(delta: float):
 	
 
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "fall"

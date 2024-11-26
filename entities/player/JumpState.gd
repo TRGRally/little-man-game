@@ -32,5 +32,4 @@ func HandleJumpToFall():
 		
 	
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "jump_up"

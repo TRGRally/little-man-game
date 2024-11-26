@@ -15,13 +15,12 @@ func Draw():
 	
 
 func Update(delta: float):
-	pass
+	HandleAnimations()
 	
 	
 
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "dash"
 
 
 func _on_dash_buffer_timeout() -> void:

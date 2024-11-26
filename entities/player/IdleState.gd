@@ -27,5 +27,4 @@ func HandleDuck():
 	
 	
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "idle"

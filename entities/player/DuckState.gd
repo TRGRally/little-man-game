@@ -26,5 +26,4 @@ func HandleDuck():
 		Player.ChangeState(States.Idle)	
 
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "duck"

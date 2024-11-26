@@ -50,7 +50,7 @@ func ChangeState(newState):
 
 
 @onready var HUD = %HUD
-
+@onready var sprite = $Sprite2D
 
 # Export variable to easily adjust the hitbox size in the Inspector
 @export var normal_hitbox_size: Vector2 = Vector2(24, 48)
@@ -73,6 +73,8 @@ func _ready():
 	#easy default to get to the ground
 	previousState = States.Fall
 	currentState = States.Fall
+	
+	$Sprite2D.autoplay
 
 #animations not implemented
 func _draw():
@@ -101,6 +103,8 @@ func HandleDirection():
 		
 	#resets y to active otherwise
 	facingVector.y = activeDirection.y
+	
+	
 	
 		
 	
@@ -212,14 +216,18 @@ func _physics_process(delta: float) -> void:
 	
 	currentState.Update(delta)
 	
+	#update the sprite facing direction
+	if facingVector.x < 0:
+		sprite.flip_h = true
+	else:
+		sprite.flip_h = false
+	
 	if Input.is_action_pressed("move_down"):
 		#fucked up nested if cause move_down should be the switch
 		if is_on_floor():
-			$Sprite2D.animation = "duck"
 			hitbox_shape.size = shrunk_hitbox_size
 			hitbox.position = shrunk_hitbox_transform
 	else:
-		$Sprite2D.animation = "idle"
 		hitbox_shape.size = normal_hitbox_size
 		hitbox.position = normal_hitbox_transform
 	
