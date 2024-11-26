@@ -72,6 +72,14 @@ material = ExtResource("3_csxic")
 position = Vector2(-16, 172)
 slide_on_ceiling = false
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+physics_interpolation_mode = 1
+position = Vector2(-32, 61)
+scale = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("7_p1ddu")
+
 [node name="PointLight2D2" type="PointLight2D" parent="Player"]
 show_behind_parent = true
 z_index = -1
@@ -120,12 +128,6 @@ tile_set = ExtResource("5_hv6gm")
 
 [node name="HUD" parent="." instance=ExtResource("5_thxls")]
 unique_name_in_owner = true
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-48, 233)
-scale = Vector2(0.5, 0.5)
-position_smoothing_speed = 10.0
-script = ExtResource("7_p1ddu")
 
 [node name="Parallax" parent="." instance=ExtResource("7_x8vxa")]
 
