@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://dwvu6qqm1x438"]
+[gd_scene load_steps=14 format=4 uid="uid://dwvu6qqm1x438"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8bmj7"]
 [ext_resource type="PackedScene" uid="uid://20vymhe38nsq" path="res://entities/player/player.tscn" id="1_rss1j"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://crrn62if0387i" path="res://scenes/platform.tscn" id="4_bl2iw"]
 [ext_resource type="TileSet" uid="uid://cso536vea7owh" path="res://scenes/dev-tileset.tres" id="5_hv6gm"]
 [ext_resource type="PackedScene" uid="uid://dwo5jg10b1tbh" path="res://scenes/hud.tscn" id="5_thxls"]
+[ext_resource type="Script" path="res://scenes/Camera.gd" id="7_p1ddu"]
 [ext_resource type="PackedScene" uid="uid://boymwxx7yjidg" path="res://scenes/parallax.tscn" id="7_x8vxa"]
 
 [sub_resource type="GDScript" id="GDScript_t53kb"]
@@ -124,6 +125,7 @@ unique_name_in_owner = true
 position = Vector2(-48, 233)
 scale = Vector2(0.5, 0.5)
 position_smoothing_speed = 10.0
+script = ExtResource("7_p1ddu")
 
 [node name="Parallax" parent="." instance=ExtResource("7_x8vxa")]
 

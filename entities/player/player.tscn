@@ -19,7 +19,7 @@
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="15_r22h3"]
 [ext_resource type="Script" path="res://entities/player/DashBufferState.gd" id="16_i50og"]
 
-[sub_resource type="Shader" id="Shader_2rvit"]
+[sub_resource type="Shader" id="Shader_15do6"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
 
 shader_type canvas_item;
@@ -27,20 +27,20 @@ render_mode blend_mix;
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lxiep"]
-shader = SubResource("Shader_2rvit")
+shader = SubResource("Shader_15do6")
 
 [sub_resource type="Curve" id="Curve_hr5hw"]
 _data = [Vector2(0, 0.753816), 0.0, 0.0, 0, 0, Vector2(0.5, 0.753816), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_v4wfx"]
+[sub_resource type="CurveTexture" id="CurveTexture_h7udx"]
 curve = SubResource("Curve_hr5hw")
 
 [sub_resource type="Gradient" id="Gradient_ppt7k"]
 offsets = PackedFloat32Array(0, 0.557377)
 colors = PackedColorArray(1, 1, 1, 1, 0.139453, 0.877208, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_0f0kg"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2jnna"]
 gradient = SubResource("Gradient_ppt7k")
 
 [sub_resource type="Curve" id="Curve_hlgc6"]
@@ -49,7 +49,7 @@ max_value = 100.0
 _data = [Vector2(0.0298013, 100), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_ioo8p"]
+[sub_resource type="CurveTexture" id="CurveTexture_24s8o"]
 curve = SubResource("Curve_hlgc6")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ax6rc"]
@@ -62,15 +62,15 @@ spread = 42.978
 flatness = 0.5
 initial_velocity_min = 8.06
 initial_velocity_max = 1000.0
-velocity_limit_curve = SubResource("CurveTexture_ioo8p")
+velocity_limit_curve = SubResource("CurveTexture_24s8o")
 gravity = Vector3(0, 0, 0)
 damping_min = 33.099
 damping_max = 49.296
 attractor_interaction_enabled = false
-color_ramp = SubResource("GradientTexture1D_0f0kg")
-alpha_curve = SubResource("CurveTexture_v4wfx")
+color_ramp = SubResource("GradientTexture1D_2jnna")
+alpha_curve = SubResource("CurveTexture_h7udx")
 
-[sub_resource type="Shader" id="Shader_vpj8m"]
+[sub_resource type="Shader" id="Shader_rcppc"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
 
 shader_type canvas_item;
@@ -78,13 +78,13 @@ render_mode blend_mix;
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6yrdc"]
-shader = SubResource("Shader_vpj8m")
+shader = SubResource("Shader_rcppc")
 
 [sub_resource type="Curve" id="Curve_unnw2"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.253886, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_38giy"]
+[sub_resource type="CurveTexture" id="CurveTexture_g478v"]
 curve = SubResource("Curve_unnw2")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vw6ks"]
@@ -104,7 +104,7 @@ radial_accel_min = -7.04
 radial_accel_max = 8.45
 damping_min = 8.018
 damping_max = 30.712
-alpha_curve = SubResource("CurveTexture_38giy")
+alpha_curve = SubResource("CurveTexture_g478v")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(10, 0, 0)
 
@@ -148,6 +148,7 @@ shrunk_hitbox_transform = Vector2(0, -6)
 
 [node name="DashParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
+physics_interpolation_mode = 2
 material = SubResource("ShaderMaterial_lxiep")
 position = Vector2(0, -12)
 emitting = false
@@ -155,13 +156,18 @@ amount = 400
 process_material = SubResource("ParticleProcessMaterial_ax6rc")
 lifetime = 2.0
 fixed_fps = 60
+interpolate = false
 
 [node name="WalkParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
+physics_interpolation_mode = 2
 material = SubResource("ShaderMaterial_6yrdc")
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_vw6ks")
+fixed_fps = 60
+interpolate = false
+fract_delta = false
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 2

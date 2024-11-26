@@ -17,7 +17,7 @@ func Update(delta: float):
 	#handle movements
 	Player.HandleFalling()
 	Player.HandleJump()
-	HandleMovement()
+	HandleMovement(delta)
 	HandleAnimations()
 	HandleIdle()
 	
@@ -25,7 +25,7 @@ func HandleIdle():
 	if (Player.inputVector == Vector2.ZERO):
 		Player.ChangeState(States.Idle)
 
-func HandleMovement():
+func HandleMovement(delta):
 	if Player.inputVector.x != 0:
 		Player.velocity.x += Player.inputVector.x * Player.SPEED
 

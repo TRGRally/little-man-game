@@ -10,7 +10,7 @@ func EnterState():
 	
 	Player.dashCount = Player.dashCount + 1
 	
-	if Player.is_on_floor():
+	if Player.is_on_floor() and direction.y > 0:
 		Player.velocity = Player.DASH_SPEED * directionRaw
 	else:
 		Player.velocity = Player.DASH_SPEED * direction

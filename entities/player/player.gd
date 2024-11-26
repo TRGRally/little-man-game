@@ -5,7 +5,7 @@ const MOVE_SPEED = 140.0
 const DASH_JUMP_MOVE_SPEED = DASH_SPEED
 
 const SPEED = 25.0
-const AIR_SPEED = 10.0
+const AIR_SPEED = 15.0
 const JUMP_SPEED = -300.0
 const WALL_JUMP_SPEED = 200.0
 const VARIABLE_JUMP_MULTIPLIER = 0.7
@@ -17,13 +17,13 @@ const AIR_FRICTION = 0.99
 const FRICTION = 0.85
 const GRAVITY = 900
 const FALL_GRAVITY = 1200
-const MAX_FALL_SPEED = 800
+const MAX_FALL_SPEED = 500
 const WALL_SLIDE_SPEED = 100
 const DASH_SPEED = 400
 const DASH_GRAVITY = 0
 const DASH_FRICTION = 0
 const DASH_TIME_S = 0.1
-const DASH_BUFFER_TIME_S = 0.05
+const DASH_BUFFER_TIME_S = 0.04
 
 var dashCount = 0
 var allowedDashes = 1
