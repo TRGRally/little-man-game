@@ -2,6 +2,9 @@ extends Camera2D
 
 @export var VIEWPORT_HEIGHT = 270
 @export var VIEWPORT_WIDTH = 480
+@export var DEV_ROOM_POSITION = Vector2(-48,233)
+
+@onready var Camera = %Camera
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

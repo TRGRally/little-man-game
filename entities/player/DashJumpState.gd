@@ -2,7 +2,12 @@ extends PlayerState
 
 func EnterState():
 	Name = "DashJump"
-	Player.velocity.y = Player.DASH_JUMP_SPEED
+	#diagonal down dash jump goes less high to account for the fact the movement vector isnt normalised
+	#this lets the player choose distance at the cost of height
+	if (Player.inputVector.y > 0):
+		Player.velocity.y = Player.DASH_JUMP_SPEED
+	else:
+		Player.velocity.y = Player.JUMP_SPEED
 	Player.velocity.x = max(abs(Player.velocity.x), Player.inputVector.length() * Player.DASH_SPEED) * Player.inputVector.x
 	print(str(Player.velocity.x))
 
@@ -16,7 +21,7 @@ func Draw():
 
 func Update(delta: float):
 	Player.HandleGravity(delta)
-	#Player.HandleAirMovement(delta, Player.DASH_JUMP_MOVE_SPEED)
+	Player.HandleAirMovement(delta, Player.DASH_JUMP_MOVE_SPEED)
 	HandleJumpToFall()
 	Player.HandleWall()
 	HandleAnimations()

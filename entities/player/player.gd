@@ -17,7 +17,9 @@ const AIR_FRICTION = 0.99
 const FRICTION = 0.85
 const GRAVITY = 900
 const FALL_GRAVITY = 1200
-const MAX_FALL_SPEED = 500
+const MAX_FALL_SPEED = 450
+const FAST_FALL_SPEED_MULTIPLIER = 1.5
+const FAST_FALL_GRAVITY_MULTIPLIER = 1.2
 const WALL_SLIDE_SPEED = 100
 const DASH_SPEED = 400
 const DASH_GRAVITY = 0
@@ -104,6 +106,11 @@ func HandleDirection():
 	
 #regular gravity unless specified
 func HandleGravity(delta, gravity = GRAVITY, maxFallSpeed = MAX_FALL_SPEED):
+	#crazy function parameter mutation but idc rn
+	if inputVector.y > 0:
+		maxFallSpeed *= FAST_FALL_SPEED_MULTIPLIER
+		gravity *= FAST_FALL_GRAVITY_MULTIPLIER
+	
 	if not is_on_floor():
 		if not (currentState == States.Dash or currentState == States.DashBuffer):
 			var newvel = velocity.y + (gravity * delta)
@@ -111,6 +118,8 @@ func HandleGravity(delta, gravity = GRAVITY, maxFallSpeed = MAX_FALL_SPEED):
 				velocity.y = maxFallSpeed
 			else:
 				velocity.y += gravity * delta	
+		
+		
 	
 func HandleFalling():
 	if currentState == States.WallSlide:
@@ -145,6 +154,7 @@ func HandleAirMovement(delta, allowedSpeed):
 		if currentdir != wishdir:
 			#they want to change direction so let them turn
 			velocity.x += inputVector.x * AIR_SPEED
+		
 			
 
 
