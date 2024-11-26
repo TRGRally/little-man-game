@@ -65,20 +65,20 @@ script = ExtResource("1_8bmj7")
 unique_name_in_owner = true
 script = SubResource("GDScript_t53kb")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+physics_interpolation_mode = 1
+position = Vector2(-48, 233)
+scale = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("7_p1ddu")
+
 [node name="Player" parent="." instance=ExtResource("1_rss1j")]
 light_mask = 2
 z_index = 1
 material = ExtResource("3_csxic")
 position = Vector2(-16, 172)
 slide_on_ceiling = false
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-physics_interpolation_mode = 1
-position = Vector2(-32, 61)
-scale = Vector2(0.5, 0.5)
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-script = ExtResource("7_p1ddu")
 
 [node name="PointLight2D2" type="PointLight2D" parent="Player"]
 show_behind_parent = true
