@@ -8,7 +8,12 @@ func EnterState():
 		Player.velocity.y = Player.DASH_JUMP_SPEED
 	else:
 		Player.velocity.y = Player.JUMP_SPEED
-	Player.velocity.x = max(abs(Player.velocity.x), Player.inputVector.length() * Player.DASH_SPEED) * Player.inputVector.x
+	
+	if Player.inputVector.x != 0:
+		Player.velocity.x = max(abs(Player.velocity.x), Player.inputVector.length() * Player.DASH_SPEED) * Player.inputVector.x
+	else:
+		Player.velocity.x = max(abs(Player.velocity.x), Player.facingVector.length() * Player.DASH_SPEED) * Player.facingVector.x
+
 	print(str(Player.velocity.x))
 
 func ExitState():
@@ -36,5 +41,4 @@ func HandleJumpToFall():
 		Player.ChangeState(States.JumpPeak)
 	
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "jump_up"

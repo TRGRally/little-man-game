@@ -26,6 +26,7 @@ func Draw():
 
 func Update(delta: float):
 	Player.HandleJumpBuffer()
+	HandleAnimations()
 	
 	
 func InputOrLookDirection():

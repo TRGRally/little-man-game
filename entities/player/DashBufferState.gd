@@ -20,7 +20,8 @@ func Update(delta: float):
 	
 
 func HandleAnimations():
-	Player.sprite.animation = "dash"
+	#Player.sprite.animation = "dash"
+	pass
 
 
 func _on_dash_buffer_timeout() -> void:

@@ -78,6 +78,7 @@ func _ready():
 
 #animations not implemented
 func _draw():
+	print("drawing")
 	currentState.Draw()
 
 func is_dash_available():
@@ -123,7 +124,6 @@ func HandleGravity(delta, gravity = GRAVITY, maxFallSpeed = MAX_FALL_SPEED):
 			else:
 				velocity.y += gravity * delta	
 		
-		
 	
 func HandleFalling():
 	if currentState == States.WallSlide:
@@ -159,7 +159,6 @@ func HandleAirMovement(delta, allowedSpeed):
 			#they want to change direction so let them turn
 			velocity.x += inputVector.x * AIR_SPEED
 		
-			
 
 
 func HandleJumpBuffer():
@@ -211,7 +210,16 @@ func HandleWall():
 func HandleLanding():
 	if (is_on_floor()):
 		ChangeState(States.Idle)
+		
+	
+	
+#runs every frame not every physics tick (variable interval)
+func _process(delta) -> void:
+	#floor to the nearest whole number
+	position.x = round(position.x)
+	position.y = round(position.y)		
 
+#runs every physics tick (fixed interval)
 func _physics_process(delta: float) -> void:
 	
 	currentState.Update(delta)
@@ -240,7 +248,7 @@ func _physics_process(delta: float) -> void:
 	inputVector.x = horizontalDirection
 	inputVector.y = verticalDirection
 
-	# Handle jump.
+	#handle jump
 	HandleJump()
 		
 		
@@ -268,9 +276,13 @@ func _physics_process(delta: float) -> void:
 	
 	if not currentState == States.DashBuffer:
 		move_and_slide()
+	
 
 
 func _on_dash_timer_timeout() -> void:
 	#avoids race condition where dash ends after jumping and triggers falling too soon
 	if currentState == States.Dash:
-		ChangeState(States.Fall)
+		if is_on_floor():
+			ChangeState(States.Idle)
+		else:
+			ChangeState(States.Fall)

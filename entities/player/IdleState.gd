@@ -1,7 +1,11 @@
 extends PlayerState
 
+var landingFrames = 0
+
 func EnterState():
 	Name = "Idle"
+	if Player.previousState == States.Fall:
+		landingFrames = 8
 	
 
 func ExitState():
@@ -15,11 +19,17 @@ func Draw():
 func Update(delta: float):
 	Player.HandleFalling()
 	Player.HandleJump()
-	HandleDuck()
-	#Player.HorizontalMovement() not implemented
+	
 	if (Player.inputVector.x != 0):
-		Player.ChangeState(States.Walk)
+		if Input.is_action_pressed("move_down"):
+			Player.ChangeState(States.DuckWalk)
+		else:
+			Player.ChangeState(States.Walk)
+			
+	HandleDuck()
 	HandleAnimations()
+	
+	landingFrames -= 1
 	
 func HandleDuck():
 	if Input.is_action_pressed("move_down"):
@@ -27,4 +37,7 @@ func HandleDuck():
 	
 	
 func HandleAnimations():
-	Player.sprite.animation = "idle"
+	if landingFrames > 0:
+		Player.sprite.animation = "land"
+	else:
+		Player.sprite.animation = "idle"

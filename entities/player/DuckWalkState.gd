@@ -1,7 +1,7 @@
 extends PlayerState
 
 func EnterState():
-	Name = "Duck"
+	Name = "DuckWalk"
 	
 	%WalkParticles.emitting = true
 
@@ -15,28 +15,28 @@ func Draw():
 
 func Update(delta: float):
 	#handle movements
+	HandleDuck()
 	Player.HandleFalling()
 	Player.HandleJump()
-	HandleDuck()
 	HandleMovement(delta)
 	HandleAnimations()
 	HandleIdle()
 	
 func HandleIdle():
-	if (Player.inputVector == Vector2.ZERO):
-		Player.ChangeState(States.Idle)
+	if (Player.inputVector.x == 0):
+		if Input.is_action_pressed("move_down"):
+			Player.ChangeState(States.Duck)
+		else:
+			Player.ChangeState(States.Idle)
 
 func HandleMovement(delta):
 	if Player.inputVector.x != 0:
-		Player.ChangeState(States.DuckWalk)
+		Player.velocity.x += Player.inputVector.x * Player.SPEED
 
 func HandleDuck():
 	if not Input.is_action_pressed("move_down"):
-		if Player.inputVector.x == 0:
-			Player.ChangeState(States.Idle)	
-		else:
-			Player.ChangeState(States.Walk)
+		Player.ChangeState(States.Walk)	
 	
 	
 func HandleAnimations():
-	Player.sprite.animation = "duck"
+	Player.sprite.animation = "duck_walk"

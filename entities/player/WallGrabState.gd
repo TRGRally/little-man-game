@@ -5,7 +5,6 @@ func EnterState():
 	
 	Player.velocity.y = 0
 	Player.velocity.x = 0
-	
 
 func ExitState():
 	pass
@@ -18,9 +17,9 @@ func Draw():
 func Update(delta: float):
 	Player.velocity.y = 0
 	Player.HandleFalling()
+	HandleAnimations()
 	
 	
 
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "wall_grab"
