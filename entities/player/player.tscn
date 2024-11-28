@@ -702,7 +702,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 10.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -771,7 +771,7 @@ position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
 animation = &"walk"
 autoplay = "idle"
-frame_progress = 0.551669
+frame_progress = 0.358787
 
 [node name="Hat" type="Sprite2D" parent="."]
 visible = false
@@ -853,6 +853,7 @@ wait_time = 0.15
 one_shot = true
 
 [node name="DebugText" type="Label" parent="."]
+visible = false
 z_index = 1
 anchors_preset = 5
 anchor_left = 0.5
