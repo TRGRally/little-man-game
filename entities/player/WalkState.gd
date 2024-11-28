@@ -38,4 +38,4 @@ func HandleDuck():
 	
 	
 func HandleAnimations():
-	Player.sprite.animation = "run"
+	Player.sprite.animation = "walk"
