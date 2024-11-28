@@ -34,6 +34,26 @@ var inputVector = Vector2.ZERO
 var facingVector = Vector2.ZERO
 var wishdir = sign(inputVector.x)
 
+#combat related variables
+var maxHealth = 5
+var startingHealth = maxHealth
+
+var currentHealth = startingHealth
+
+func damage(amount):
+	var newHealth = currentHealth - amount
+	var alive = false
+	if newHealth > 0:
+		currentHealth = newHealth
+		alive  = true
+	else:
+		currentHealth = 0
+		#kill the player idk
+		alive = false
+	
+	return alive
+		
+
 
 #state machine stuff
 @onready var States = $StateMachine
@@ -222,6 +242,9 @@ func _process(delta) -> void:
 func _physics_process(delta: float) -> void:
 	
 	currentState.Update(delta)
+	
+	#health
+	HUD.set_health(currentHealth)
 	
 	#update the sprite facing direction
 	if facingVector.x < 0:
