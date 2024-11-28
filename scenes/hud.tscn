@@ -17,8 +17,12 @@ func set_velocity(velocity: Vector2):
 	%DevHUD/Xvel.text = str(snapped(velocity.x, 0))
 	%DevHUD/Yvel.text = str(snapped(abs(velocity.y), 0))
 	
-func set_direction(wishdir):
-	%DevHUD/Direction.text = str(wishdir)
+func set_input_direction(wishdir):
+	%DevHUD/InputDirection.text = str(wishdir)
+	
+func set_facing_direction(facingDirection):
+	%DevHUD/FacingDirection.text = str(facingDirection)
+	
 	
 	
 # Called when the node enters the scene tree for the first time.
@@ -80,7 +84,15 @@ size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "yvel"
 
-[node name="Direction" type="Label" parent="Control/DevHUD"]
+[node name="InputDirection" type="Label" parent="Control/DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "xdir
+"
+
+[node name="FacingDirection" type="Label" parent="Control/DevHUD"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_stretch_ratio = 0.48

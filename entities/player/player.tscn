@@ -1,7 +1,9 @@
-[gd_scene load_steps=123 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=125 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
+[ext_resource type="Script" path="res://entities/player/dash_particles.gd" id="2_60ron"]
+[ext_resource type="Script" path="res://entities/player/walk_particles.gd" id="3_bx257"]
 [ext_resource type="Script" path="res://entities/player/states.gd" id="3_ckwwy"]
 [ext_resource type="Texture2D" uid="uid://ih75tjr7oemq" path="res://assets/sprites/player/Crouch-Idle/Player Crouch-Idle 48x48.png" id="3_ecvq1"]
 [ext_resource type="Texture2D" uid="uid://pa7gj7om22ki" path="res://assets/sprites/player/Player Idle/Player Idle 48x48.png" id="3_noh4h"]
@@ -747,6 +749,7 @@ process_material = SubResource("ParticleProcessMaterial_ax6rc")
 lifetime = 2.0
 fixed_fps = 60
 interpolate = false
+script = ExtResource("2_60ron")
 
 [node name="WalkParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
@@ -758,6 +761,7 @@ process_material = SubResource("ParticleProcessMaterial_vw6ks")
 fixed_fps = 60
 interpolate = false
 fract_delta = false
+script = ExtResource("3_bx257")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 2
@@ -766,7 +770,7 @@ position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
 animation = &"dash"
 autoplay = "idle"
-frame_progress = 0.343165
+frame_progress = 0.985162
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -12)
@@ -853,6 +857,10 @@ theme = ExtResource("15_r22h3")
 theme_override_font_sizes/font_size = 8
 horizontal_alignment = 1
 
+[connection signal="enter_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_enter_state"]
+[connection signal="exit_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_exit_state"]
+[connection signal="enter_state" from="StateMachine/Dash" to="DashParticles" method="_on_dash_enter_state"]
+[connection signal="exit_state" from="StateMachine/Dash" to="DashParticles" method="_on_dash_exit_state"]
 [connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Timers/DashBuffer" to="StateMachine/DashBuffer" method="_on_dash_buffer_timeout"]
 [connection signal="timeout" from="Timers/JumpBuffer" to="StateMachine/DashBuffer" method="_on_dash_buffer_timeout"]

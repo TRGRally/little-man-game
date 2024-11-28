@@ -1,9 +1,13 @@
 extends PlayerState
 
+signal enter_state
+signal exit_state
+
 func EnterState():
+	enter_state.emit()
+	
 	Name = "Dash"
 	%DashTimer.start()
-	%DashParticles.emitting = true
 	
 	var directionRaw = InputOrLookDirection()
 	var direction = directionRaw.normalized()
@@ -17,7 +21,7 @@ func EnterState():
 	
 
 func ExitState():
-	%DashParticles.emitting = false
+	exit_state.emit()
 	
 	
 func Draw():

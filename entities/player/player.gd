@@ -100,13 +100,12 @@ func HandleDirection():
 		#individial movement direction is pressed, favour orthogonal over diagonal
 		if abs(activeDirection.x) != abs(activeDirection.y):
 			facingVector = activeDirection
-		return
+	else:	
+		#resets y to active otherwise
+		facingVector.y = activeDirection.y
 		
-	#resets y to active otherwise
-	facingVector.y = activeDirection.y
 	
-	
-	
+	HUD.set_facing_direction(facingVector)
 		
 	
 #regular gravity unless specified
@@ -268,11 +267,11 @@ func _physics_process(delta: float) -> void:
 			
 	HUD.set_velocity(velocity)
 	wishdir = sign(inputVector.x)
-	HUD.set_direction(wishdir)
+	HUD.set_input_direction(wishdir)
 	
 	HandleDirection()
 	
-	$DebugText.text = str(facingVector) + " " + currentState.Name
+	$DebugText.text = currentState.Name
 	
 	if not currentState == States.DashBuffer:
 		move_and_slide()

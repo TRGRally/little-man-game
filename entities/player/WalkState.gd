@@ -1,17 +1,19 @@
 extends PlayerState
 
+signal enter_state
+signal exit_state
+
 func EnterState():
-	Name = "Walk"
+	enter_state.emit()
 	
-	%WalkParticles.emitting = true
+	Name = "Walk"
 
 func ExitState():
-	%WalkParticles.emitting = false
+	exit_state.emit()
 	
 	
 func Draw():
 	pass
-
 
 func Update(delta: float):
 	#handle movements

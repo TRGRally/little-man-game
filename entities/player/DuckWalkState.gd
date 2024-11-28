@@ -1,12 +1,14 @@
 extends PlayerState
 
+signal enter_state
+signal exit_state
+
 func EnterState():
 	Name = "DuckWalk"
-	
-	%WalkParticles.emitting = true
+	enter_state.emit()
 
 func ExitState():
-	%WalkParticles.emitting = false
+	exit_state.emit()
 	
 	
 func Draw():

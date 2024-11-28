@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var gameManager = %GameManager
 @onready var HUD = %HUD
-@onready var camera = %Camera
+@onready var camera = %PlayerCamera
 @onready var player = $Player
 
 var enableSmoothingNextFrame = false

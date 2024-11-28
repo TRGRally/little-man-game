@@ -146,18 +146,16 @@ unique_name_in_owner = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 
-[node name="PixelPerfectLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("main_camera", "pp_camera")]
+[node name="PixelPerfectLayer" type="CanvasLayer" parent="."]
 layer = 5
 script = ExtResource("9_i5pqh")
-main_camera = NodePath("../PlayerCamera")
-pp_camera = NodePath("SubViewport/PPCamera")
 
 [node name="SubViewport" type="SubViewport" parent="PixelPerfectLayer"]
 transparent_bg = true
 canvas_item_default_texture_filter = 0
 size = Vector2i(640, 360)
 
-[node name="PPCamera" type="Camera2D" parent="PixelPerfectLayer/SubViewport"]
+[node name="Camera2D" type="Camera2D" parent="PixelPerfectLayer/SubViewport"]
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
