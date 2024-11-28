@@ -1,4 +1,4 @@
-[gd_scene load_steps=125 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=126 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" path="res://entities/player/WallGrabState.gd" id="11_yixrl"]
 [ext_resource type="Script" path="res://entities/player/WallSlideState.gd" id="12_akqea"]
 [ext_resource type="Script" path="res://entities/player/DuckState.gd" id="14_0ayni"]
+[ext_resource type="Texture2D" uid="uid://b8yyu3l47tkx5" path="res://assets/sprites/player/Hat/hat.png" id="14_yvoow"]
 [ext_resource type="Script" path="res://entities/player/WallJumpState.gd" id="15_3kl73"]
 [ext_resource type="Script" path="res://entities/player/DashJumpState.gd" id="15_007vb"]
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="15_r22h3"]
@@ -768,9 +769,18 @@ texture_filter = 2
 material = ExtResource("2_5x65k")
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
-animation = &"dash"
+animation = &"land"
 autoplay = "idle"
-frame_progress = 0.484292
+frame = 8
+frame_progress = 1.0
+
+[node name="Hat" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 2
+material = ExtResource("2_5x65k")
+position = Vector2(1, -28)
+rotation = -0.000319684
+texture = ExtResource("14_yvoow")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -12)
@@ -848,10 +858,10 @@ z_index = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_top = -41.0
-offset_right = 20.0
-offset_bottom = -18.0
+offset_left = -18.0
+offset_top = -39.0
+offset_right = 22.0
+offset_bottom = -16.0
 grow_horizontal = 2
 theme = ExtResource("15_r22h3")
 theme_override_font_sizes/font_size = 8
