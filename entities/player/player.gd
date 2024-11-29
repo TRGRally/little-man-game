@@ -78,18 +78,16 @@ func ChangeState(newState):
 
 
 # Export variable to easily adjust the hitbox size in the Inspector
-@export var normal_hitbox_size: Vector2 = Vector2(24, 48)
-@export var normal_hitbox_transform: Vector2 = Vector2(0, -24)
-@export var shrunk_hitbox_size: Vector2 = Vector2(24, 24)
-@export var shrunk_hitbox_transform: Vector2 = Vector2(0, -12)
+@export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
+@export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(-6,12), Vector2(0,0), Vector2(6,12)])
 
 # Reference to the CollisionShape2D node
-var hitbox_shape: RectangleShape2D
+var hitbox_shape: ConvexPolygonShape2D
 var hitbox: CollisionShape2D
 
 func _ready():
 	hitbox = $CollisionShape2D
-	hitbox_shape = $CollisionShape2D.shape as RectangleShape2D
+	hitbox_shape = $CollisionShape2D.shape as ConvexPolygonShape2D
 	
 	#init statemachine
 	for state in States.get_children():
@@ -281,11 +279,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("move_down"):
 		#fucked up nested if cause move_down should be the switch
 		if is_on_floor():
-			hitbox_shape.size = shrunk_hitbox_size
-			hitbox.position = shrunk_hitbox_transform
+			hitbox_shape.set_point_cloud(shrunk_hitbox_shape)
 	else:
-		hitbox_shape.size = normal_hitbox_size
-		hitbox.position = normal_hitbox_transform
+		#TODO: use a method that checks if the player can uncrouch (is under a ceiling or not)
+		hitbox_shape.set_point_cloud(normal_hitbox_shape)
 	
 	GetWallDirection()
 	

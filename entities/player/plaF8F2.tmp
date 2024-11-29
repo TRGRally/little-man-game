@@ -843,6 +843,10 @@ points = PackedVector2Array(6, 12, -6, 12, -6, 0, 0, -12, 6, 0)
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 script = ExtResource("1_6enp7")
+normal_hitbox_size = Vector2(12, 24)
+normal_hitbox_transform = Vector2(0, -12)
+shrunk_hitbox_size = Vector2(12, 12)
+shrunk_hitbox_transform = Vector2(0, -6)
 
 [node name="DashParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
@@ -886,7 +890,6 @@ rotation = -0.000319684
 texture = ExtResource("14_yvoow")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-z_index = 5
 position = Vector2(0, -12)
 shape = SubResource("ConvexPolygonShape2D_w6gbp")
 debug_color = Color(0, 0.595, 0.7, 0.12549)
