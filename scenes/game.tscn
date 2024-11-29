@@ -94,11 +94,10 @@ position = Vector2(-16, 172)
 slide_on_ceiling = false
 
 [node name="PointLight2D2" type="PointLight2D" parent="Player"]
-visible = false
 show_behind_parent = true
 z_index = -1
 position = Vector2(0, -12)
-color = Color(0.586, 1, 0.31, 1)
+color = Color(1, 0.964, 0.76, 0.254902)
 energy = 0.36
 range_z_min = -1
 range_z_max = 1
@@ -110,6 +109,7 @@ shadow_filter = 2
 shadow_filter_smooth = 0.8
 texture = SubResource("GradientTexture2D_v87co")
 texture_scale = 3.0
+height = 16.0
 
 [node name="Killzone" type="Area2D" parent="."]
 position = Vector2(0, 500)

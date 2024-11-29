@@ -14,19 +14,14 @@ func Draw():
 
 func Update(delta: float):
 	Player.HandleLanding()
-	HandleWallJump()
 	Player.HandleFalling()
+	Player.HandleWallJump()
 	Player.HandleWall()
 	HandleMovement()
 	HandleSliding(delta)
 	Player.HandleFriction()
 	HandleAnimations()
 
-
-func HandleWallJump():
-	if %JumpBuffer.time_left > 0 or Input.is_action_just_pressed("jump"):
-		%JumpBuffer.stop()
-		Player.ChangeState(States.WallJump)
 
 func HandleMovement():
 	if Player.inputVector.x != 0:
@@ -42,3 +37,7 @@ func HandleSliding(delta):
 
 func HandleAnimations():
 	Player.sprite.animation = "wall_slide"
+	if Player.wallVector.x < 0:
+		Player.sprite.flip_h = true
+	else:
+		Player.sprite.flip_h = false

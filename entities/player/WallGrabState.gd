@@ -20,7 +20,10 @@ func Update(delta: float):
 	Player.HandleFriction()
 	HandleAnimations()
 	
-	
 
 func HandleAnimations():
 	Player.sprite.animation = "wall_grab"
+	if Player.wallVector.x < 0:
+		Player.sprite.flip_h = true
+	else:
+		Player.sprite.flip_h = false

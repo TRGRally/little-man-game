@@ -7,7 +7,8 @@ const DASH_JUMP_MOVE_SPEED = DASH_SPEED
 const SPEED = 25.0
 const AIR_SPEED = 15.0
 const JUMP_SPEED = -300.0
-const WALL_JUMP_SPEED = 200.0
+const WALL_JUMP_SPEED = -300.0
+const WALL_JUMP_KICKBACK_SPEED = 160.0
 const VARIABLE_JUMP_MULTIPLIER = 0.7
 const JUMP_BUFFER_TIME_S = 0.15
 const DASH_JUMP_SPEED = -250.0
@@ -18,7 +19,7 @@ const FRICTION = 0.85
 const GRAVITY = 900
 const FALL_GRAVITY = 1200
 const MAX_FALL_SPEED = 450
-const FAST_FALL_SPEED_MULTIPLIER = 1.5
+const FAST_FALL_SPEED_MULTIPLIER = 1.25
 const FAST_FALL_GRAVITY_MULTIPLIER = 1.2
 const WALL_SLIDE_SPEED = 100
 const DASH_SPEED = 400
@@ -32,6 +33,7 @@ var allowedDashes = 1
 
 var inputVector = Vector2.ZERO
 var facingVector = Vector2.ZERO
+var wallVector = Vector2.ZERO
 var wishdir = sign(inputVector.x)
 
 #combat related variables
@@ -71,6 +73,9 @@ func ChangeState(newState):
 
 @onready var HUD = %HUD
 @onready var sprite = $Sprite2D
+@onready var rc_bottomLeft = $Raycasts/WallJump/BottomLeft
+@onready var rc_bottomRight = $Raycasts/WallJump/BottomRight
+
 
 # Export variable to easily adjust the hitbox size in the Inspector
 @export var normal_hitbox_size: Vector2 = Vector2(24, 48)
@@ -213,19 +218,31 @@ func HandleJump():
 				ChangeState(States.Jump)
 				print("coyote time jump")
 		
+func GetWallDirection():
+	if rc_bottomRight.is_colliding():
+		wallVector = Vector2.RIGHT
+	elif rc_bottomLeft.is_colliding():
+		wallVector = Vector2.LEFT
+	else:
+		wallVector = Vector2.ZERO
+		
 func HandleWall():
-	if not is_on_wall_only():
-		return
-		
-	if Input.is_action_pressed("grab"):
-		ChangeState(States.WallGrab)
-		return
-		
-	if currentState != States.WallSlide:
-		if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
-			ChangeState(States.WallSlide)
-		
+	if wallVector != Vector2.ZERO:
+		if Input.is_action_pressed("grab") and currentState != States.WallGrab:
+			ChangeState(States.WallGrab)
+			return
 	
+		if inputVector.x == wallVector.x and velocity.y > 0:
+			if currentState != States.WallSlide:
+				ChangeState(States.WallSlide)
+		
+
+func HandleWallJump():
+	if currentState != States.WallJump and wallVector != Vector2.ZERO:
+		if %JumpBuffer.time_left > 0 or Input.is_action_just_pressed("jump"):
+			%JumpBuffer.stop()
+			ChangeState(States.WallJump)
+
 func HandleLanding():
 	if (is_on_floor()):
 		ChangeState(States.Idle)
@@ -242,7 +259,7 @@ func HandleFriction():
 func _process(delta) -> void:
 	#floor to the nearest whole number
 	position.x = round(position.x)
-	#position.y = round(position.y)	
+	#sprite.position.y = round(sprite.position.y)	
 	pass	
 
 #runs every physics tick (fixed interval)
@@ -253,12 +270,14 @@ func _physics_process(delta: float) -> void:
 	#health
 	HUD.set_health(currentHealth)
 	
-	#update the sprite facing direction
-	if facingVector.x < 0:
-		sprite.flip_h = true
-	else:
-		sprite.flip_h = false
-	
+	#update the sprite facing direction if in a state that allows turning
+	#TODO: refactor to use multiple lists of states that allow different things
+	if currentState != States.Dash and currentState != States.WallGrab and currentState != States.WallSlide:
+		if facingVector.x < 0:
+			sprite.flip_h = true
+		else:
+			sprite.flip_h = false
+		
 	if Input.is_action_pressed("move_down"):
 		#fucked up nested if cause move_down should be the switch
 		if is_on_floor():
@@ -268,11 +287,10 @@ func _physics_process(delta: float) -> void:
 		hitbox_shape.size = normal_hitbox_size
 		hitbox.position = normal_hitbox_transform
 	
+	GetWallDirection()
 	
-
 	var horizontalDirection := Input.get_axis("move_left", "move_right")
 	var verticalDirection := Input.get_axis("move_up", "move_down")
-	
 	
 	inputVector.x = horizontalDirection
 	inputVector.y = verticalDirection

@@ -2,8 +2,13 @@ extends PlayerState
 
 func EnterState():
 	Name = "WallJump"
-	Player.velocity.y = Player.JUMP_SPEED
-	Player.velocity.x = Player.WALL_JUMP_SPEED * (-1 * Player.inputVector.x)
+	if Player.velocity.y > Player.WALL_JUMP_SPEED:
+		#-y is up, player is travelling slower than wall jump
+		Player.velocity.y = Player.WALL_JUMP_SPEED
+	else:
+		#keep y speed if theyre already travelling upward
+		Player.velocity.y = Player.velocity.y
+	Player.velocity.x = Player.WALL_JUMP_KICKBACK_SPEED * (-1 * Player.wallVector.x)
 	
 	
 
@@ -34,5 +39,4 @@ func HandleJumpToFall():
 		
 	
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "jump_up"
