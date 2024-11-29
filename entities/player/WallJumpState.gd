@@ -20,6 +20,7 @@ func Update(delta: float):
 	Player.HandleAirMovement(delta, Player.MOVE_SPEED)
 	HandleJumpToFall()
 	Player.HandleWall()
+	Player.HandleFriction()
 	HandleAnimations()
 
 	

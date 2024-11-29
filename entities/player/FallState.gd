@@ -17,11 +17,11 @@ func Draw():
 func Update(delta: float):
 	Player.HandleGravity(delta, Player.FALL_GRAVITY)
 	#we handle jump before checking for landing to allow the player to get a perf hop
+	Player.HandleLanding()
 	Player.HandleJump()
 	Player.HandleJumpBuffer()
-	Player.HandleLanding()
 	Player.HandleAirMovement(delta, Player.MOVE_SPEED)
-	
+	Player.HandleFriction()
 	Player.HandleWall()
 	HandleAnimations()
 	

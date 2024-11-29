@@ -29,6 +29,7 @@ func Update(delta: float):
 	Player.HandleAirMovement(delta, Player.DASH_JUMP_MOVE_SPEED)
 	HandleJumpToFall()
 	Player.HandleWall()
+	Player.HandleFriction()
 	HandleAnimations()
 
 	

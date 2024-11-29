@@ -1,12 +1,12 @@
 extends PlayerState
 
+const LANDING_ANIMATION_LENGTH = 8
 var landingFrames = 0
 
 func EnterState():
 	Name = "Idle"
 	if Player.previousState == States.Fall:
-		landingFrames = 8
-	
+		landingFrames = 0
 
 func ExitState():
 	pass
@@ -26,10 +26,13 @@ func Update(delta: float):
 		else:
 			Player.ChangeState(States.Walk)
 			
+	if landingFrames != 0:
+		Player.HandleFriction()
+			
 	HandleDuck()
 	HandleAnimations()
 	
-	landingFrames -= 1
+	landingFrames += 1
 	
 func HandleDuck():
 	if Input.is_action_pressed("move_down"):
@@ -37,7 +40,7 @@ func HandleDuck():
 	
 	
 func HandleAnimations():
-	if landingFrames > 0:
+	if landingFrames <= LANDING_ANIMATION_LENGTH:
 		Player.sprite.animation = "land"
 	else:
 		Player.sprite.animation = "idle"

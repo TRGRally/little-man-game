@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=126 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -22,15 +22,12 @@
 [ext_resource type="Texture2D" uid="uid://qnfgbbt2fnyi" path="res://assets/sprites/player/PlayerWalk/PlayerWalk 48x48.png" id="10_ib0vp"]
 [ext_resource type="Texture2D" uid="uid://d3ydq8jqnyeko" path="res://assets/sprites/player/Player Wall Land/player wall land 48x48.png" id="11_nk0yv"]
 [ext_resource type="Script" path="res://entities/player/WallGrabState.gd" id="11_yixrl"]
-[ext_resource type="Texture2D" uid="uid://dqrmapd1rdjyu" path="res://assets/sprites/player/Slide/Player Slide 48x48.png" id="12_1ujfk"]
 [ext_resource type="Script" path="res://entities/player/WallSlideState.gd" id="12_akqea"]
 [ext_resource type="Script" path="res://entities/player/DuckState.gd" id="14_0ayni"]
-[ext_resource type="Texture2D" uid="uid://c4vlauhl0sd3g" path="res://assets/sprites/player/Player Climb-Side/Player Side-Climb 48x48.png" id="14_kv85f"]
 [ext_resource type="Texture2D" uid="uid://b8yyu3l47tkx5" path="res://assets/sprites/player/Hat/hat.png" id="14_yvoow"]
 [ext_resource type="Script" path="res://entities/player/WallJumpState.gd" id="15_3kl73"]
 [ext_resource type="Script" path="res://entities/player/DashJumpState.gd" id="15_007vb"]
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="15_r22h3"]
-[ext_resource type="Texture2D" uid="uid://df410wat8cotf" path="res://assets/sprites/player/Player Wall Slide/player wall slide 48x48.png" id="16_gxdh8"]
 [ext_resource type="Script" path="res://entities/player/DashBufferState.gd" id="16_i50og"]
 [ext_resource type="Script" path="res://entities/player/DuckWalkState.gd" id="25_5xafn"]
 
@@ -386,38 +383,6 @@ region = Rect2(288, 0, 48, 48)
 atlas = ExtResource("9_8krlu")
 region = Rect2(336, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_igr1d"]
-atlas = ExtResource("12_1ujfk")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ug5bj"]
-atlas = ExtResource("12_1ujfk")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4f03i"]
-atlas = ExtResource("12_1ujfk")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_blhsh"]
-atlas = ExtResource("12_1ujfk")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5v4t6"]
-atlas = ExtResource("12_1ujfk")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_paeoa"]
-atlas = ExtResource("12_1ujfk")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jxx74"]
-atlas = ExtResource("12_1ujfk")
-region = Rect2(288, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j222h"]
-atlas = ExtResource("12_1ujfk")
-region = Rect2(336, 0, 48, 48)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_50hjt"]
 atlas = ExtResource("10_ib0vp")
 region = Rect2(0, 0, 48, 48)
@@ -450,22 +415,6 @@ region = Rect2(288, 0, 48, 48)
 atlas = ExtResource("10_ib0vp")
 region = Rect2(336, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fi3fy"]
-atlas = ExtResource("14_kv85f")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ul86b"]
-atlas = ExtResource("14_kv85f")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qqeyi"]
-atlas = ExtResource("14_kv85f")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rgs8j"]
-atlas = ExtResource("14_kv85f")
-region = Rect2(144, 0, 48, 48)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_hcx1e"]
 atlas = ExtResource("11_nk0yv")
 region = Rect2(0, 0, 48, 48)
@@ -489,10 +438,6 @@ region = Rect2(192, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_5isi6"]
 atlas = ExtResource("11_nk0yv")
 region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cbm00"]
-atlas = ExtResource("16_gxdh8")
-region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oiw8m"]
 animations = [{
@@ -732,35 +677,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_igr1d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ug5bj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4f03i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_blhsh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5v4t6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_paeoa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jxx74")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j222h")
-}],
-"loop": true,
-"name": &"slide",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_50hjt")
 }, {
 "duration": 1.0,
@@ -790,23 +706,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fi3fy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ul86b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qqeyi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rgs8j")
-}],
-"loop": true,
-"name": &"wall_climb",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_hcx1e")
 }, {
 "duration": 1.0,
@@ -827,20 +726,12 @@ animations = [{
 "loop": true,
 "name": &"wall_grab",
 "speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cbm00")
-}],
-"loop": true,
-"name": &"wall_slide",
-"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ej272"]
 size = Vector2(12, 24)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["PP"]]
 z_index = 5
 script = ExtResource("1_6enp7")
 normal_hitbox_size = Vector2(12, 24)
@@ -878,10 +769,9 @@ texture_filter = 2
 material = ExtResource("2_5x65k")
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
-animation = &"land"
+animation = &"walk"
 autoplay = "idle"
-frame = 8
-frame_progress = 1.0
+frame_progress = 0.758831
 
 [node name="Hat" type="Sprite2D" parent="."]
 visible = false
@@ -910,9 +800,6 @@ script = ExtResource("5_jmwou")
 [node name="Duck" type="Node" parent="StateMachine"]
 script = ExtResource("14_0ayni")
 
-[node name="DuckWalk" type="Node" parent="StateMachine"]
-script = ExtResource("25_5xafn")
-
 [node name="Jump" type="Node" parent="StateMachine"]
 script = ExtResource("6_scppm")
 
@@ -940,6 +827,9 @@ script = ExtResource("15_007vb")
 [node name="DashBuffer" type="Node" parent="StateMachine"]
 script = ExtResource("16_i50og")
 
+[node name="DuckWalk" type="Node" parent="StateMachine"]
+script = ExtResource("25_5xafn")
+
 [node name="Timers" type="Node" parent="."]
 
 [node name="DashTimer" type="Timer" parent="Timers"]
@@ -963,14 +853,15 @@ wait_time = 0.15
 one_shot = true
 
 [node name="DebugText" type="Label" parent="."]
+visible = false
 z_index = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -18.0
-offset_top = -44.0
+offset_top = -39.0
 offset_right = 22.0
-offset_bottom = -21.0
+offset_bottom = -16.0
 grow_horizontal = 2
 theme = ExtResource("15_r22h3")
 theme_override_font_sizes/font_size = 8

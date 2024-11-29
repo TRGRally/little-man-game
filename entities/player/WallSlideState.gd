@@ -19,6 +19,8 @@ func Update(delta: float):
 	Player.HandleWall()
 	HandleMovement()
 	HandleSliding(delta)
+	Player.HandleFriction()
+	HandleAnimations()
 
 
 func HandleWallJump():
@@ -39,5 +41,4 @@ func HandleSliding(delta):
 	
 
 func HandleAnimations():
-	pass
-	#not implemented
+	Player.sprite.animation = "wall_slide"

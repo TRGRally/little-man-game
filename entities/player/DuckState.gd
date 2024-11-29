@@ -20,6 +20,7 @@ func Update(delta: float):
 	Player.HandleJump()
 	HandleDuck()
 	HandleMovement(delta)
+	Player.HandleFriction()
 	HandleAnimations()
 	HandleIdle()
 	

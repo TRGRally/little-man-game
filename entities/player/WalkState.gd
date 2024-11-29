@@ -21,8 +21,10 @@ func Update(delta: float):
 	Player.HandleFalling()
 	Player.HandleJump()
 	HandleMovement(delta)
+	Player.HandleFriction()
 	HandleAnimations()
 	HandleIdle()
+	
 	
 func HandleIdle():
 	if (Player.inputVector == Vector2.ZERO):

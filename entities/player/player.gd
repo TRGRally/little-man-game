@@ -230,13 +230,20 @@ func HandleLanding():
 	if (is_on_floor()):
 		ChangeState(States.Idle)
 		
+		
+func HandleFriction():
+	if not is_on_floor():
+		velocity.x = velocity.x * AIR_FRICTION
+	else:
+		velocity.x = velocity.x * FRICTION
 	
 	
 #runs every frame not every physics tick (variable interval)
 func _process(delta) -> void:
 	#floor to the nearest whole number
 	position.x = round(position.x)
-	position.y = round(position.y)		
+	#position.y = round(position.y)	
+	pass	
 
 #runs every physics tick (fixed interval)
 func _physics_process(delta: float) -> void:
@@ -273,12 +280,8 @@ func _physics_process(delta: float) -> void:
 	#handle jump
 	HandleJump()
 		
+	
 		
-	if not (currentState == States.Dash or currentState == States.DashBuffer):
-		if not is_on_floor():
-			velocity.x = velocity.x * AIR_FRICTION
-		else:
-			velocity.x = velocity.x * FRICTION
 		
 	#Dash
 	if Input.is_action_just_pressed("dash") and is_dash_available():

@@ -17,6 +17,7 @@ func Draw():
 func Update(delta: float):
 	Player.velocity.y = 0
 	Player.HandleFalling()
+	Player.HandleFriction()
 	HandleAnimations()
 	
 	
