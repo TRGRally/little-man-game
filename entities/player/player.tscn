@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=140 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -45,7 +45,7 @@ render_mode blend_mix;
 shader = SubResource("Shader_15do6")
 
 [sub_resource type="Curve" id="Curve_hr5hw"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.497664, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_h7udx"]
@@ -57,13 +57,6 @@ colors = PackedColorArray(0.139453, 0.877208, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_2jnna"]
 gradient = SubResource("Gradient_ppt7k")
-
-[sub_resource type="Curve" id="Curve_ohu15"]
-_data = [Vector2(0, 1), 0.0, -0.21723, 0, 0, Vector2(0.252336, 0.493805), -1.84646, -1.84646, 0, 0, Vector2(0.462617, 0.217699), -1.1977, -1.1977, 0, 0, Vector2(0.974299, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.0599818, 0.0, 0, 0]
-point_count = 5
-
-[sub_resource type="CurveTexture" id="CurveTexture_nafpj"]
-curve = SubResource("Curve_ohu15")
 
 [sub_resource type="Curve" id="Curve_hlgc6"]
 min_value = 1.0
@@ -81,18 +74,18 @@ particle_flag_damping_as_friction = true
 emission_shape_scale = Vector3(1, 1, 0)
 emission_shape = 3
 emission_box_extents = Vector3(2, 2, 0)
+direction = Vector3(0, 1, 0)
 spread = 42.978
-flatness = 0.5
+flatness = 1.0
 initial_velocity_min = 8.06
 initial_velocity_max = 1000.0
 angular_velocity_min = -41.14
 angular_velocity_max = 27.43
 velocity_limit_curve = SubResource("CurveTexture_24s8o")
 gravity = Vector3(0, 0, 0)
-damping_min = 13.81
+damping_min = 6.667
 damping_max = 13.81
 attractor_interaction_enabled = false
-scale_curve = SubResource("CurveTexture_nafpj")
 color_ramp = SubResource("GradientTexture1D_2jnna")
 alpha_curve = SubResource("CurveTexture_h7udx")
 
@@ -117,7 +110,8 @@ curve = SubResource("Curve_unnw2")
 lifetime_randomness = 1.0
 particle_flag_align_y = true
 particle_flag_disable_z = true
-emission_shape_scale = Vector3(2, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(3, 1, 1)
 direction = Vector3(0, -1, 0)
 spread = 90.0
 flatness = 0.478
@@ -596,7 +590,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"duck_walk",
-"speed": 10.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -847,12 +841,13 @@ script = ExtResource("1_6enp7")
 [node name="DashParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
+z_as_relative = false
 material = SubResource("ShaderMaterial_lxiep")
 position = Vector2(0, -12)
 emitting = false
 amount = 1000
 process_material = SubResource("ParticleProcessMaterial_ax6rc")
-lifetime = 2.0
+lifetime = 1.5
 fixed_fps = 60
 interpolate = false
 script = ExtResource("2_60ron")
@@ -860,6 +855,7 @@ script = ExtResource("2_60ron")
 [node name="WalkParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
+z_index = 6
 material = SubResource("ShaderMaterial_6yrdc")
 emitting = false
 amount = 50
@@ -874,7 +870,7 @@ texture_filter = 2
 material = ExtResource("2_5x65k")
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
-animation = &"idle"
+animation = &"duck_walk"
 autoplay = "idle"
 
 [node name="Hat" type="Sprite2D" parent="."]
