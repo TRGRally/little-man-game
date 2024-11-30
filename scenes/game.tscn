@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dwvu6qqm1x438"]
+[gd_scene load_steps=17 format=4 uid="uid://dwvu6qqm1x438"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8bmj7"]
 [ext_resource type="PackedScene" uid="uid://20vymhe38nsq" path="res://entities/player/player.tscn" id="1_rss1j"]
@@ -67,6 +67,15 @@ distance = -9.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_qdmtq"]
 viewport_path = NodePath("PixelPerfectLayer/SubViewport")
+
+[sub_resource type="Environment" id="Environment_48rji"]
+background_mode = 3
+tonemap_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 0.0
+glow_bloom = 0.14
+glow_blend_mode = 0
 
 [node name="Game" type="Node2D"]
 texture_filter = 2
@@ -176,5 +185,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_qdmtq")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_48rji")
 
 [connection signal="body_entered" from="Killzone" to="." method="_on_area_2d_body_entered"]

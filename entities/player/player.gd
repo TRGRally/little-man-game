@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 #fake
 const MOVE_SPEED = 140.0
@@ -8,7 +9,7 @@ const SPEED = 25.0
 const AIR_SPEED = 15.0
 const JUMP_SPEED = -300.0
 const WALL_JUMP_SPEED = -300.0
-const WALL_JUMP_KICKBACK_SPEED = 160.0
+const WALL_JUMP_KICKBACK_SPEED = 250.0
 const VARIABLE_JUMP_MULTIPLIER = 0.7
 const JUMP_BUFFER_TIME_S = 0.15
 const DASH_JUMP_SPEED = -250.0
@@ -34,6 +35,7 @@ var allowedDashes = 1
 var inputVector = Vector2.ZERO
 var facingVector = Vector2.ZERO
 var wallVector = Vector2.ZERO
+var lastWall = Vector2.ZERO
 var wishdir = sign(inputVector.x)
 
 #combat related variables
@@ -76,8 +78,6 @@ func ChangeState(newState):
 @onready var rc_bottomLeft = $Raycasts/WallJump/BottomLeft
 @onready var rc_bottomRight = $Raycasts/WallJump/BottomRight
 
-
-# Export variable to easily adjust the hitbox size in the Inspector
 @export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
 @export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(-6,12), Vector2(0,0), Vector2(6,12)])
 
@@ -88,6 +88,11 @@ var hitbox: CollisionShape2D
 func _ready():
 	hitbox = $CollisionShape2D
 	hitbox_shape = $CollisionShape2D.shape as ConvexPolygonShape2D
+	
+	#raycast exceptions
+	rc_bottomLeft.add_exception(self)
+	rc_bottomRight.add_exception(self)
+	
 	
 	#init statemachine
 	for state in States.get_children():
@@ -223,6 +228,7 @@ func GetWallDirection():
 		wallVector = Vector2.LEFT
 	else:
 		wallVector = Vector2.ZERO
+	#print(str(rc_bottomLeft.get_collider()) + " " + str(rc_bottomRight.get_collider()))
 		
 func HandleWall():
 	if wallVector != Vector2.ZERO:
@@ -257,17 +263,21 @@ func HandleFriction():
 func _process(delta) -> void:
 	#floor to the nearest whole number
 	position.x = round(position.x)
-	#sprite.position.y = round(sprite.position.y)	
+	position.y = round(position.y)	
+	# UNSECURED CANDIDATE
+	# - toletoletole
+	
+	# its funnier the secoind time
+	
+	# trolle ttrolle
+	
+	#wtf man
 	pass	
 
 #runs every physics tick (fixed interval)
 func _physics_process(delta: float) -> void:
-	
-	currentState.Update(delta)
-	
-	#health
-	HUD.set_health(currentHealth)
-	
+	#wall direction calculated at start so states use frame correct value
+	GetWallDirection()
 	#update the sprite facing direction if in a state that allows turning
 	#TODO: refactor to use multiple lists of states that allow different things
 	if currentState != States.Dash and currentState != States.WallGrab and currentState != States.WallSlide:
@@ -276,6 +286,12 @@ func _physics_process(delta: float) -> void:
 		else:
 			sprite.flip_h = false
 		
+	currentState.Update(delta)
+	
+	#health
+	HUD.set_health(currentHealth)
+	
+	
 	if Input.is_action_pressed("move_down"):
 		#fucked up nested if cause move_down should be the switch
 		if is_on_floor():
@@ -284,7 +300,7 @@ func _physics_process(delta: float) -> void:
 		#TODO: use a method that checks if the player can uncrouch (is under a ceiling or not)
 		hitbox_shape.set_point_cloud(normal_hitbox_shape)
 	
-	GetWallDirection()
+	
 	
 	var horizontalDirection := Input.get_axis("move_left", "move_right")
 	var verticalDirection := Input.get_axis("move_up", "move_down")

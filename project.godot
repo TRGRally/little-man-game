@@ -13,14 +13,14 @@ config_version=5
 config/name="unserious gaming"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-run/max_fps=60
+run/max_fps=360
 config/icon="res://icon.svg"
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=360
-window/size/mode=2
+window/size/mode=4
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
@@ -86,6 +86,7 @@ grab={
 2d/default_gravity=2000.0
 2d/default_linear_damp=0.0
 2d/default_angular_damp=0.0
+common/physics_interpolation=true
 
 [rendering]
 
