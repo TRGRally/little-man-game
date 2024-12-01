@@ -1,7 +1,13 @@
 extends PlayerState
 
+const JUMP_PARTICLE_FRAMES = 0
+var currentFrame = 0
+
 func EnterState():
 	Name = "DashJump"
+	
+	%JumpParticles.emitting = true
+	
 	#diagonal down dash jump goes less high to account for the fact the movement vector isnt normalised
 	#this lets the player choose distance at the cost of height
 	if (Player.inputVector.y > 0):
@@ -15,9 +21,11 @@ func EnterState():
 		Player.velocity.x = max(abs(Player.velocity.x), Player.facingVector.length() * Player.DASH_SPEED) * Player.facingVector.x
 
 	print(str(Player.velocity.x))
+	
+	currentFrame = 0
 
 func ExitState():
-	pass
+	%JumpParticles.emitting = false
 	
 	
 func Draw():
@@ -31,6 +39,8 @@ func Update(delta: float):
 	Player.HandleWall()
 	Player.HandleFriction()
 	HandleAnimations()
+	
+	currentFrame += 1
 
 	
 func HandleJumpToFall():
@@ -43,3 +53,8 @@ func HandleJumpToFall():
 	
 func HandleAnimations():
 	Player.sprite.animation = "jump_up"
+	
+	if currentFrame <= JUMP_PARTICLE_FRAMES:
+		%JumpParticles.emitting = true
+	else:
+		%JumpParticles.emitting = false

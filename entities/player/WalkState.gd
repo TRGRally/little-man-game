@@ -40,4 +40,6 @@ func HandleDuck():
 	
 	
 func HandleAnimations():
+	
+	#if Player.wallDirection
 	Player.sprite.animation = "walk"

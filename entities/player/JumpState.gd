@@ -1,13 +1,20 @@
 extends PlayerState
 
+signal enter_state
+signal exit_state
+
+const JUMP_PARTICLE_FRAMES = 0
+var currentFrame = 0
+
 func EnterState():
 	Name = "Jump"
+	%JumpParticles.emitting = true
 	Player.velocity.y = Player.JUMP_SPEED
-	
+	currentFrame = 0
 	
 
 func ExitState():
-	pass
+	%JumpParticles.emitting = false
 	
 	
 func Draw():
@@ -22,6 +29,8 @@ func Update(delta: float):
 	Player.HandleWallJump()
 	Player.HandleFriction()
 	HandleAnimations()
+	
+	currentFrame += 1
 
 	
 func HandleJumpToFall():
@@ -35,3 +44,11 @@ func HandleJumpToFall():
 	
 func HandleAnimations():
 	Player.sprite.animation = "jump_up"
+	
+	if currentFrame <= JUMP_PARTICLE_FRAMES:
+		%JumpParticles.emitting = true
+	else:
+		%JumpParticles.emitting = false
+	
+	
+	
