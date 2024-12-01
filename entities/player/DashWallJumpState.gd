@@ -8,7 +8,7 @@ var flipDirection = true
 const LOCK_FRAMES = 10
 var currentFrames = 0
 func EnterState():
-	Name = "WallJump"
+	Name = "DashWallJump"
 	
 	currentFrames = 0
 	

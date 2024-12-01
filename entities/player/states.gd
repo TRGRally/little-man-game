@@ -11,6 +11,7 @@ extends Node
 @onready var Dash = $Dash
 @onready var DashBuffer = $DashBuffer
 @onready var DashJump = $DashJump
+@onready var DashWallJump = $DashWallJump
 @onready var WallGrab = $WallGrab
 @onready var WallSlide = $WallSlide
 @onready var WallJump = $WallJump

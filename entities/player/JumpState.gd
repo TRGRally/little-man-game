@@ -8,13 +8,13 @@ var currentFrame = 0
 
 func EnterState():
 	Name = "Jump"
-	%JumpParticles.emitting = true
+	enter_state.emit()
 	Player.velocity.y = Player.JUMP_SPEED
 	currentFrame = 0
 	
 
 func ExitState():
-	%JumpParticles.emitting = false
+	exit_state.emit()
 	
 	
 func Draw():
@@ -44,11 +44,6 @@ func HandleJumpToFall():
 	
 func HandleAnimations():
 	Player.sprite.animation = "jump_up"
-	
-	if currentFrame <= JUMP_PARTICLE_FRAMES:
-		%JumpParticles.emitting = true
-	else:
-		%JumpParticles.emitting = false
 	
 	
 	

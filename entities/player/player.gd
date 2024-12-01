@@ -29,6 +29,11 @@ const DASH_FRICTION = 0
 const DASH_TIME_S = 0.1
 const DASH_BUFFER_TIME_S = 0.04
 
+#model
+const MIDPOINT_OFFSET = -16
+@export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
+@export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(-6,12), Vector2(0,0), Vector2(6,12)])
+
 var dashCount = 0
 var allowedDashes = 1
 
@@ -78,8 +83,7 @@ func ChangeState(newState):
 @onready var rc_bottomLeft = $Raycasts/WallJump/BottomLeft
 @onready var rc_bottomRight = $Raycasts/WallJump/BottomRight
 
-@export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
-@export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(-6,12), Vector2(0,0), Vector2(6,12)])
+
 
 # Reference to the CollisionShape2D node
 var hitbox_shape: ConvexPolygonShape2D
@@ -156,7 +160,7 @@ func HandleFalling():
 	if currentState == States.WallSlide:
 		if not (Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")):
 			ChangeState(States.Fall)
-		if not is_on_wall_only():
+		if wallVector != Vector2.ZERO:
 			ChangeState(States.Fall)
 		return
 	
@@ -258,12 +262,17 @@ func HandleFriction():
 	else:
 		velocity.x = velocity.x * FRICTION
 	
+func GetRoundedPosition(atFeet = false):
+	if atFeet:
+		return Vector2(round(position.x), round(position.y))
+	else:
+		return Vector2(round(position.x), round(position.y + MIDPOINT_OFFSET))
+		
 	
 #runs every frame not every physics tick (variable interval)
 func _process(delta) -> void:
 	#floor to the nearest whole number
-	position.x = round(position.x)
-	position.y = round(position.y)	
+	
 	# UNSECURED CANDIDATE
 	# - toletoletole
 	
@@ -272,7 +281,15 @@ func _process(delta) -> void:
 	# trolle ttrolle
 	
 	#wtf man
-	pass	
+	
+	#quantises the sprite position to the pixel grid
+	var midpointVector = GetRoundedPosition()
+	var feetVector = GetRoundedPosition(true)
+	
+	sprite.global_position = midpointVector
+	%DashParticles.global_position = midpointVector
+	%WalkParticles.global_position = feetVector
+	%JumpParticles.global_position = feetVector
 
 #runs every physics tick (fixed interval)
 func _physics_process(delta: float) -> void:
@@ -296,6 +313,7 @@ func _physics_process(delta: float) -> void:
 		#fucked up nested if cause move_down should be the switch
 		if is_on_floor():
 			hitbox_shape.set_point_cloud(shrunk_hitbox_shape)
+			
 	else:
 		#TODO: use a method that checks if the player can uncrouch (is under a ceiling or not)
 		hitbox_shape.set_point_cloud(normal_hitbox_shape)
@@ -330,9 +348,13 @@ func _physics_process(delta: float) -> void:
 	
 	$DebugText.text = currentState.Name
 	
+	#run physics
 	if not currentState == States.DashBuffer:
 		move_and_slide()
 	
+	
+		
+
 
 
 func _on_dash_timer_timeout() -> void:

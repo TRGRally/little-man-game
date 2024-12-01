@@ -1,4 +1,4 @@
-[gd_scene load_steps=143 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=145 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ih75tjr7oemq" path="res://assets/sprites/player/Crouch-Idle/Player Crouch-Idle 48x48.png" id="3_ecvq1"]
 [ext_resource type="Script" path="res://entities/player/LockedState.gd" id="4_0ffgt"]
 [ext_resource type="Script" path="res://entities/player/IdleState.gd" id="4_107eg"]
+[ext_resource type="Script" path="res://entities/player/jump_particles.gd" id="4_tdood"]
 [ext_resource type="Texture2D" uid="uid://duxmo3t2tyc4x" path="res://assets/sprites/player/Crouch-Walk/player crouch-walk 48x48.png" id="4_v7jd1"]
 [ext_resource type="Script" path="res://entities/player/WalkState.gd" id="5_jmwou"]
 [ext_resource type="Script" path="res://entities/player/JumpState.gd" id="6_scppm"]
@@ -33,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://df410wat8cotf" path="res://assets/sprites/player/Player Wall Slide/player wall slide 48x48.png" id="16_gxdh8"]
 [ext_resource type="Script" path="res://entities/player/DashBufferState.gd" id="16_i50og"]
 [ext_resource type="Script" path="res://entities/player/DuckWalkState.gd" id="25_5xafn"]
+[ext_resource type="Script" path="res://entities/player/DashWallJumpState.gd" id="32_3bs66"]
 
 [sub_resource type="Shader" id="Shader_15do6"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
@@ -72,6 +74,8 @@ lifetime_randomness = 0.4
 particle_flag_disable_z = true
 particle_flag_damping_as_friction = true
 emission_shape_scale = Vector3(1, 1, 0)
+emission_shape = 3
+emission_box_extents = Vector3(2, 2, 1)
 direction = Vector3(0, 1, 0)
 spread = 42.978
 flatness = 1.0
@@ -106,7 +110,6 @@ curve = SubResource("Curve_unnw2")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vw6ks"]
 lifetime_randomness = 1.0
-particle_flag_align_y = true
 particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(3, 1, 1)
@@ -883,10 +886,15 @@ script = ExtResource("3_bx257")
 
 [node name="JumpParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
+physics_interpolation_mode = 2
+z_index = 6
 emitting = false
 amount = 300
 process_material = SubResource("ParticleProcessMaterial_77f24")
 lifetime = 0.5
+fixed_fps = 60
+interpolate = false
+script = ExtResource("4_tdood")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 2
@@ -952,6 +960,9 @@ script = ExtResource("15_3kl73")
 [node name="DashJump" type="Node" parent="StateMachine"]
 script = ExtResource("15_007vb")
 
+[node name="DashWallJump" type="Node" parent="StateMachine"]
+script = ExtResource("32_3bs66")
+
 [node name="DashBuffer" type="Node" parent="StateMachine"]
 script = ExtResource("16_i50og")
 
@@ -1005,6 +1016,8 @@ target_position = Vector2(-6, 0)
 
 [connection signal="enter_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_enter_state"]
 [connection signal="exit_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_exit_state"]
+[connection signal="enter_state" from="StateMachine/Jump" to="JumpParticles" method="_on_jump_enter_state"]
+[connection signal="exit_state" from="StateMachine/Jump" to="JumpParticles" method="_on_jump_exit_state"]
 [connection signal="enter_state" from="StateMachine/Dash" to="DashParticles" method="_on_dash_enter_state"]
 [connection signal="exit_state" from="StateMachine/Dash" to="DashParticles" method="_on_dash_exit_state"]
 [connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
