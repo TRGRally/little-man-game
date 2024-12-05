@@ -851,7 +851,7 @@ animations = [{
 }]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_w6gbp"]
-points = PackedVector2Array(6, 12, -6, 12, -6, 0, 0, -12, 6, 0)
+points = PackedVector2Array(6, 12, -6, 12, -6, -12, 6, -12)
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 5

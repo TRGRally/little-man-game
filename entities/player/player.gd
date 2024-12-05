@@ -31,8 +31,9 @@ const DASH_BUFFER_TIME_S = 0.04
 
 #model
 const MIDPOINT_OFFSET = -16
-@export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
-@export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(-6,12), Vector2(0,0), Vector2(6,12)])
+@export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)])
+@export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
+
 
 var dashCount = 0
 var allowedDashes = 1
@@ -160,7 +161,7 @@ func HandleFalling():
 	if currentState == States.WallSlide:
 		if not (Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")):
 			ChangeState(States.Fall)
-		if wallVector != Vector2.ZERO:
+		if wallVector == Vector2.ZERO:
 			ChangeState(States.Fall)
 		return
 	
