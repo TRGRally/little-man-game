@@ -31,8 +31,8 @@ const DASH_BUFFER_TIME_S = 0.04
 
 #model
 const MIDPOINT_OFFSET = -16
-@export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)])
-@export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
+@export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
+@export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(-6,12), Vector2(0,0), Vector2(6,12)])
 
 var dashCount = 0
 var allowedDashes = 1
@@ -160,7 +160,7 @@ func HandleFalling():
 	if currentState == States.WallSlide:
 		if not (Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")):
 			ChangeState(States.Fall)
-		if wallVector == Vector2.ZERO:
+		if wallVector != Vector2.ZERO:
 			ChangeState(States.Fall)
 		return
 	
@@ -227,13 +227,10 @@ func HandleJump():
 		
 func GetWallDirection():
 	if rc_bottomRight.is_colliding():
-		#print("setting wall vector RIGHT")
 		wallVector = Vector2.RIGHT
 	elif rc_bottomLeft.is_colliding():
-		#print("setting wall vector LEFT")
 		wallVector = Vector2.LEFT
 	else:
-		#print("setting wall vector ZERO")
 		wallVector = Vector2.ZERO
 	#print(str(rc_bottomLeft.get_collider()) + " " + str(rc_bottomRight.get_collider()))
 		
