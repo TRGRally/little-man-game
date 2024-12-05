@@ -15,7 +15,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		self.emitting = false
 		
-	print(str(doJumpFrame))
+	#print(str(doJumpFrame))
 
 func _on_jump_enter_state() -> void:
 	doJumpFrame = true
