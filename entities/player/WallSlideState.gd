@@ -1,11 +1,17 @@
 extends PlayerState
 
+signal emit_left_particles
+signal emit_right_particles
+signal stop_left_particles
+signal stop_right_particles
+
 func EnterState():
 	Name = "WallSlide"
 	
 
 func ExitState():
-	pass
+	stop_left_particles.emit()
+	stop_right_particles.emit()
 	
 	
 func Draw():
@@ -39,5 +45,11 @@ func HandleAnimations():
 	Player.sprite.animation = "wall_slide"
 	if Player.wallVector.x < 0:
 		Player.sprite.flip_h = true
+		if Player.currentState == States.WallSlide:
+			emit_left_particles.emit()
+			stop_right_particles.emit()
 	else:
 		Player.sprite.flip_h = false
+		if Player.currentState == States.WallSlide:
+			stop_left_particles.emit()
+			emit_right_particles.emit()

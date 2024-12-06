@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=149 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -11,7 +11,9 @@
 [ext_resource type="Script" path="res://entities/player/jump_particles.gd" id="4_tdood"]
 [ext_resource type="Texture2D" uid="uid://duxmo3t2tyc4x" path="res://assets/sprites/player/Crouch-Walk/player crouch-walk 48x48.png" id="4_v7jd1"]
 [ext_resource type="Script" path="res://entities/player/WalkState.gd" id="5_jmwou"]
+[ext_resource type="Script" path="res://entities/player/wall_slide_left_particles.gd" id="5_uecvt"]
 [ext_resource type="Script" path="res://entities/player/JumpState.gd" id="6_scppm"]
+[ext_resource type="Script" path="res://entities/player/wall_slide_right_particles.gd" id="6_v8acb"]
 [ext_resource type="Texture2D" uid="uid://cj88xrac6mwh1" path="res://assets/sprites/player/Player Jump/player jump 48x48.png" id="6_yof4p"]
 [ext_resource type="Texture2D" uid="uid://bfgcb3p2rkdqc" path="res://assets/sprites/player/Player Jump/player new jump 48x48.png" id="7_esktx"]
 [ext_resource type="Script" path="res://entities/player/JumpPeakState.gd" id="7_ortu5"]
@@ -40,7 +42,7 @@
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
 
 shader_type canvas_item;
-render_mode blend_mix;
+render_mode blend_add;
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lxiep"]
@@ -76,17 +78,18 @@ particle_flag_damping_as_friction = true
 emission_shape_scale = Vector3(1, 1, 0)
 emission_shape = 3
 emission_box_extents = Vector3(2, 2, 1)
-direction = Vector3(0, 1, 0)
-spread = 42.978
-flatness = 1.0
-initial_velocity_min = 8.06
-initial_velocity_max = 1000.0
-angular_velocity_min = -41.14
-angular_velocity_max = 27.43
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
 velocity_limit_curve = SubResource("CurveTexture_24s8o")
 gravity = Vector3(0, 0, 0)
-damping_min = 6.667
-damping_max = 13.81
+radial_accel_min = -5.0
+radial_accel_max = 5.0
+damping_min = 1.0
+damping_max = 2.0
 attractor_interaction_enabled = false
 color_ramp = SubResource("GradientTexture1D_2jnna")
 alpha_curve = SubResource("CurveTexture_h7udx")
@@ -146,6 +149,48 @@ linear_accel_max = -100.0
 alpha_curve = SubResource("CurveTexture_t507g")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(0, -2, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v1ss4"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(3, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 90.0
+flatness = 0.478
+initial_velocity_min = 2.37
+initial_velocity_max = 13.27
+gravity = Vector3(0, 4, 0)
+linear_accel_min = -18.58
+linear_accel_max = 35.21
+radial_accel_min = -7.04
+radial_accel_max = 8.45
+damping_min = 8.018
+damping_max = 30.712
+alpha_curve = SubResource("CurveTexture_g478v")
+turbulence_enabled = true
+turbulence_noise_speed = Vector3(10, 0, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dj80r"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(3, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 90.0
+flatness = 0.478
+initial_velocity_min = 2.37
+initial_velocity_max = 13.27
+gravity = Vector3(0, 4, 0)
+linear_accel_min = -18.58
+linear_accel_max = 35.21
+radial_accel_min = -7.04
+radial_accel_max = 8.45
+damping_min = 8.018
+damping_max = 30.712
+alpha_curve = SubResource("CurveTexture_g478v")
+turbulence_enabled = true
+turbulence_noise_speed = Vector3(10, 0, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rooes"]
 atlas = ExtResource("8_romr0")
@@ -856,6 +901,8 @@ points = PackedVector2Array(6, 12, -6, 12, -6, -12, 6, -12)
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 script = ExtResource("1_6enp7")
+normal_hitbox_shape = PackedVector2Array()
+shrunk_hitbox_shape = PackedVector2Array()
 
 [node name="DashParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
@@ -864,11 +911,13 @@ z_index = 6
 material = SubResource("ShaderMaterial_lxiep")
 position = Vector2(0, -12)
 emitting = false
-amount = 1000
+amount = 200
 process_material = SubResource("ParticleProcessMaterial_ax6rc")
 lifetime = 0.5
 fixed_fps = 60
 interpolate = false
+trail_enabled = true
+trail_lifetime = 0.1
 script = ExtResource("2_60ron")
 
 [node name="WalkParticles" type="GPUParticles2D" parent="."]
@@ -887,6 +936,7 @@ script = ExtResource("3_bx257")
 [node name="JumpParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
+visible = false
 z_index = 6
 emitting = false
 amount = 300
@@ -896,13 +946,44 @@ fixed_fps = 60
 interpolate = false
 script = ExtResource("4_tdood")
 
+[node name="WallSlideLeftParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+physics_interpolation_mode = 2
+z_index = 6
+material = SubResource("ShaderMaterial_6yrdc")
+position = Vector2(-6, -12)
+rotation = 1.5708
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_v1ss4")
+fixed_fps = 15
+interpolate = false
+fract_delta = false
+script = ExtResource("5_uecvt")
+
+[node name="WallSlideRightParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+physics_interpolation_mode = 2
+z_index = 6
+material = SubResource("ShaderMaterial_6yrdc")
+position = Vector2(6, -12)
+rotation = -1.5708
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_dj80r")
+fixed_fps = 15
+interpolate = false
+fract_delta = false
+script = ExtResource("6_v8acb")
+
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 2
 material = ExtResource("2_5x65k")
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
-animation = &"duck_walk"
+animation = &"walk"
 autoplay = "idle"
+frame_progress = 0.888396
 
 [node name="Hat" type="Sprite2D" parent="."]
 visible = false
@@ -1007,11 +1088,11 @@ horizontal_alignment = 1
 [node name="WallJump" type="Node2D" parent="Raycasts"]
 
 [node name="BottomRight" type="RayCast2D" parent="Raycasts/WallJump"]
-position = Vector2(4, -4)
+position = Vector2(4, -12)
 target_position = Vector2(6, 0)
 
 [node name="BottomLeft" type="RayCast2D" parent="Raycasts/WallJump"]
-position = Vector2(-4, -4)
+position = Vector2(-4, -12)
 target_position = Vector2(-6, 0)
 
 [connection signal="enter_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_enter_state"]
@@ -1020,6 +1101,10 @@ target_position = Vector2(-6, 0)
 [connection signal="exit_state" from="StateMachine/Jump" to="JumpParticles" method="_on_jump_exit_state"]
 [connection signal="enter_state" from="StateMachine/Dash" to="DashParticles" method="_on_dash_enter_state"]
 [connection signal="exit_state" from="StateMachine/Dash" to="DashParticles" method="_on_dash_exit_state"]
+[connection signal="emit_left_particles" from="StateMachine/WallSlide" to="WallSlideLeftParticles" method="_on_wall_slide_emit_left_particles"]
+[connection signal="emit_right_particles" from="StateMachine/WallSlide" to="WallSlideRightParticles" method="_on_wall_slide_emit_right_particles"]
+[connection signal="stop_left_particles" from="StateMachine/WallSlide" to="WallSlideLeftParticles" method="_on_wall_slide_stop_left_particles"]
+[connection signal="stop_right_particles" from="StateMachine/WallSlide" to="WallSlideRightParticles" method="_on_wall_slide_stop_right_particles"]
 [connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Timers/DashBuffer" to="StateMachine/DashBuffer" method="_on_dash_buffer_timeout"]
 [connection signal="timeout" from="Timers/JumpBuffer" to="StateMachine/DashBuffer" method="_on_dash_buffer_timeout"]

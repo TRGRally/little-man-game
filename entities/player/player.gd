@@ -291,6 +291,8 @@ func _process(delta) -> void:
 	%DashParticles.global_position = midpointVector
 	%WalkParticles.global_position = feetVector
 	%JumpParticles.global_position = feetVector
+	%WallSlideLeftParticles.global_position = Vector2(feetVector.x - 6, feetVector.y)
+	%WallSlideRightParticles.global_position = Vector2(feetVector.x + 6, feetVector.y)
 
 #runs every physics tick (fixed interval)
 func _physics_process(delta: float) -> void:

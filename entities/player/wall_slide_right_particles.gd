@@ -1,12 +1,19 @@
-extends Label
+extends GPUParticles2D
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	self.top_level = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var fps = Engine.get_frames_per_second()
-	text = "FPS " + str(fps)
+	pass
+
+
+func _on_wall_slide_emit_right_particles() -> void:
+	self.emitting = true
+
+
+func _on_wall_slide_stop_right_particles() -> void:
+	self.emitting = false
