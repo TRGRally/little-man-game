@@ -11,7 +11,9 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_dash_enter_state() -> void:
+func _on_dash_enter_state(dashVector: Vector2) -> void:
+	var direction = dashVector.normalized()
+	self.process_material.direction = Vector3(dashVector.x, dashVector.y, 0)
 	self.emitting = true
 
 

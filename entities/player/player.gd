@@ -40,6 +40,7 @@ var allowedDashes = 1
 
 var inputVector = Vector2.ZERO
 var facingVector = Vector2.ZERO
+var dashVector = Vector2.ZERO
 var wallVector = Vector2.ZERO
 var lastWall = Vector2.ZERO
 var wishdir = sign(inputVector.x)
@@ -269,6 +270,12 @@ func GetRoundedPosition(atFeet = false):
 	else:
 		return Vector2(round(position.x), round(position.y + MIDPOINT_OFFSET))
 		
+		
+func InputOrLookDirection():
+	if inputVector != Vector2.ZERO:
+		dashVector = inputVector
+	else:
+		dashVector = facingVector
 	
 #runs every frame not every physics tick (variable interval)
 func _process(delta) -> void:
@@ -291,8 +298,8 @@ func _process(delta) -> void:
 	%DashParticles.global_position = midpointVector
 	%WalkParticles.global_position = feetVector
 	%JumpParticles.global_position = feetVector
-	%WallSlideLeftParticles.global_position = Vector2(feetVector.x - 6, feetVector.y)
-	%WallSlideRightParticles.global_position = Vector2(feetVector.x + 6, feetVector.y)
+	%WallSlideLeftParticles.global_position = Vector2(midpointVector.x - 6, midpointVector.y)
+	%WallSlideRightParticles.global_position = Vector2(midpointVector.x + 6, midpointVector.y)
 
 #runs every physics tick (fixed interval)
 func _physics_process(delta: float) -> void:
@@ -328,6 +335,8 @@ func _physics_process(delta: float) -> void:
 	
 	inputVector.x = horizontalDirection
 	inputVector.y = verticalDirection
+	
+	InputOrLookDirection()
 
 	#handle jump
 	HandleJump()

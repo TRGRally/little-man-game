@@ -4,12 +4,12 @@ signal enter_state
 signal exit_state
 
 func EnterState():
-	enter_state.emit()
+	enter_state.emit(Player.dashVector)
 	
 	Name = "Dash"
 	%DashTimer.start()
 	
-	var directionRaw = InputOrLookDirection()
+	var directionRaw = Player.dashVector
 	var direction = directionRaw.normalized()
 	
 	Player.dashCount = Player.dashCount + 1
@@ -32,12 +32,6 @@ func Update(delta: float):
 	Player.HandleJumpBuffer()
 	HandleAnimations()
 	
-	
-func InputOrLookDirection():
-	if Player.inputVector != Vector2.ZERO:
-		return Player.inputVector
-	else:
-		return Player.facingVector
 
 func HandleAnimations():
 	Player.sprite.animation = "dash"

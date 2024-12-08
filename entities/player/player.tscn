@@ -49,8 +49,8 @@ render_mode blend_add;
 shader = SubResource("Shader_15do6")
 
 [sub_resource type="Curve" id="Curve_hr5hw"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.327815, 0.202657), -1.05022, -1.05022, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_h7udx"]
 curve = SubResource("Curve_hr5hw")
@@ -63,23 +63,23 @@ colors = PackedColorArray(0.139453, 0.877208, 1, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_ppt7k")
 
 [sub_resource type="Curve" id="Curve_hlgc6"]
-min_value = 1.0
 max_value = 100.0
-_data = [Vector2(0.0298013, 100), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 51.498), 0.0, 0.0, 0, 0, Vector2(0.245033, 8.14019), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_24s8o"]
 curve = SubResource("Curve_hlgc6")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ax6rc"]
-lifetime_randomness = 0.4
+lifetime_randomness = 0.1
 particle_flag_disable_z = true
 particle_flag_damping_as_friction = true
 emission_shape_scale = Vector3(1, 1, 0)
 emission_shape = 3
 emission_box_extents = Vector3(2, 2, 1)
-direction = Vector3(0, 0, 0)
-spread = 180.0
+direction = Vector3(0, 1, 0)
+spread = 10.0
+flatness = 1.0
 initial_velocity_min = 50.0
 initial_velocity_max = 50.0
 angular_velocity_min = -720.0
@@ -901,8 +901,6 @@ points = PackedVector2Array(6, 12, -6, 12, -6, -12, 6, -12)
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 script = ExtResource("1_6enp7")
-normal_hitbox_shape = PackedVector2Array()
-shrunk_hitbox_shape = PackedVector2Array()
 
 [node name="DashParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
@@ -913,7 +911,6 @@ position = Vector2(0, -12)
 emitting = false
 amount = 200
 process_material = SubResource("ParticleProcessMaterial_ax6rc")
-lifetime = 0.5
 fixed_fps = 60
 interpolate = false
 trail_enabled = true
@@ -936,7 +933,6 @@ script = ExtResource("3_bx257")
 [node name="JumpParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
-visible = false
 z_index = 6
 emitting = false
 amount = 300
@@ -983,7 +979,7 @@ position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
 animation = &"walk"
 autoplay = "idle"
-frame_progress = 0.888396
+frame_progress = 0.0976254
 
 [node name="Hat" type="Sprite2D" parent="."]
 visible = false

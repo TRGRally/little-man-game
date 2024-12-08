@@ -2,7 +2,7 @@ extends Camera2D
 
 @export var VIEWPORT_HEIGHT = 360
 @export var VIEWPORT_WIDTH = 640
-@export var DEV_ROOM_POSITION = Vector2(-128,276)
+@export var DEV_ROOM_POSITION = Vector2(-1236,636)
 
 @onready var Camera = %Camera
 
