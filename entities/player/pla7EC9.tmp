@@ -1091,16 +1091,6 @@ target_position = Vector2(6, 0)
 position = Vector2(-4, -12)
 target_position = Vector2(-6, 0)
 
-[node name="Duck" type="Node2D" parent="Raycasts"]
-
-[node name="TopRight" type="RayCast2D" parent="Raycasts/Duck"]
-position = Vector2(6, -12)
-target_position = Vector2(0, -12)
-
-[node name="TopLeft" type="RayCast2D" parent="Raycasts/Duck"]
-position = Vector2(-6, -12)
-target_position = Vector2(0, -12)
-
 [connection signal="enter_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_enter_state"]
 [connection signal="exit_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_exit_state"]
 [connection signal="enter_state" from="StateMachine/Jump" to="JumpParticles" method="_on_jump_enter_state"]

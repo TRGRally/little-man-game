@@ -9,15 +9,21 @@ func EnterState():
 	Name = "Dash"
 	%DashTimer.start()
 	
-	var directionRaw = Player.dashVector
-	var direction = directionRaw.normalized()
+	var directionRaw: Vector2 = Player.dashVector
+	var direction: Vector2 = directionRaw.normalized()
 	
 	Player.dashCount = Player.dashCount + 1
 	
 	if Player.is_on_floor() and direction.y > 0:
-		Player.velocity = Player.DASH_SPEED * directionRaw
+		if abs(direction.dot(Player.velocity.normalized())) > 0 and Player.velocity.length() > Player.DASH_SPEED:
+			Player.velocity = Player.velocity.length() * directionRaw
+		else:
+			Player.velocity = Player.DASH_SPEED * directionRaw
 	else:
-		Player.velocity = Player.DASH_SPEED * direction
+		if abs(direction.dot(Player.velocity.normalized())) > 0 and Player.velocity.length() > Player.DASH_SPEED:
+			Player.velocity = Player.velocity.length() * direction
+		else:
+			Player.velocity = Player.DASH_SPEED * direction
 	
 
 func ExitState():

@@ -20,6 +20,9 @@ func set_velocity(velocity: Vector2):
 	%DevHUD/Xvel.text = str(snapped(velocity.x, 0))
 	%DevHUD/Yvel.text = str(snapped(abs(velocity.y), 0))
 	
+func set_max_speed(maxSpeedThisJump):
+	%DevHUD/MaxSpeedThisJump.text = str(snapped(maxSpeedThisJump, 0))
+	
 func set_input_direction(wishdir):
 	%DevHUD/InputDirection.text = str(wishdir)
 	
@@ -86,6 +89,13 @@ size_flags_horizontal = 0
 size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "yvel"
+
+[node name="MaxSpeedThisJump" type="Label" parent="Control/DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "0"
 
 [node name="InputDirection" type="Label" parent="Control/DevHUD"]
 layout_mode = 2

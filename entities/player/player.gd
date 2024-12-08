@@ -44,6 +44,10 @@ var dashVector = Vector2.ZERO
 var wallVector = Vector2.ZERO
 var lastWall = Vector2.ZERO
 var wishdir = sign(inputVector.x)
+var canUnDuck = false
+
+#debug
+var maxSpeedThisJump = 0
 
 #combat related variables
 var maxHealth = 5
@@ -71,12 +75,15 @@ func damage(amount):
 var currentState = null
 var previousState = null
 func ChangeState(newState):
-	if (newState != null):
+	if (newState != null and newState != currentState):
 		previousState = currentState
 		currentState = newState
 		previousState.ExitState()
 		currentState.EnterState()
 		print(previousState.Name + " -> " + currentState.Name)
+		return
+	else:
+		print("erroneous state change: " + currentState.name + " -> " + newState.Name)
 		return
 
 
@@ -84,6 +91,8 @@ func ChangeState(newState):
 @onready var sprite = $Sprite2D
 @onready var rc_bottomLeft = $Raycasts/WallJump/BottomLeft
 @onready var rc_bottomRight = $Raycasts/WallJump/BottomRight
+@onready var rc_duckRight = $Raycasts/Duck/TopRight
+@onready var rc_duckLeft = $Raycasts/Duck/TopLeft
 
 
 
@@ -226,7 +235,15 @@ func HandleJump():
 				dashCount = 0
 				ChangeState(States.Jump)
 				print("coyote time jump")
-		
+
+func isUnDuckSafe():
+	if rc_duckLeft.is_colliding() or rc_duckRight.is_colliding():
+		print("false")
+		return false
+	else:
+		print("true")
+		return true
+
 func GetWallDirection():
 	if rc_bottomRight.is_colliding():
 		wallVector = Vector2.RIGHT
@@ -305,6 +322,13 @@ func _process(delta) -> void:
 func _physics_process(delta: float) -> void:
 	#wall direction calculated at start so states use frame correct value
 	GetWallDirection()
+	
+	canUnDuck = isUnDuckSafe()
+
+	if currentState != States.Duck or currentState != States.DuckWalk:
+		if canUnDuck == true:
+			hitbox_shape.set_point_cloud(normal_hitbox_shape)
+		
 	#update the sprite facing direction if in a state that allows turning
 	#TODO: refactor to use multiple lists of states that allow different things
 	if currentState != States.Dash and currentState != States.WallGrab and currentState != States.WallSlide:
@@ -319,14 +343,6 @@ func _physics_process(delta: float) -> void:
 	HUD.set_health(currentHealth)
 	
 	
-	if Input.is_action_pressed("move_down"):
-		#fucked up nested if cause move_down should be the switch
-		if is_on_floor():
-			hitbox_shape.set_point_cloud(shrunk_hitbox_shape)
-			
-	else:
-		#TODO: use a method that checks if the player can uncrouch (is under a ceiling or not)
-		hitbox_shape.set_point_cloud(normal_hitbox_shape)
 	
 	
 	
@@ -359,6 +375,12 @@ func _physics_process(delta: float) -> void:
 	HandleDirection()
 	
 	$DebugText.text = currentState.Name
+	
+	if abs(velocity.x) > maxSpeedThisJump:
+		maxSpeedThisJump = abs(velocity.x)
+		HUD.set_max_speed(maxSpeedThisJump)
+	
+	
 	
 	#run physics
 	if not currentState == States.DashBuffer:

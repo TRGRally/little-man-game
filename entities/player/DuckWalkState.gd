@@ -3,6 +3,8 @@ extends PlayerState
 signal enter_state
 signal exit_state
 
+var canUnDuck = false
+
 func EnterState():
 	Name = "DuckWalk"
 	enter_state.emit()
@@ -16,6 +18,11 @@ func Draw():
 
 
 func Update(delta: float):
+	
+	Player.hitbox_shape.set_point_cloud(Player.shrunk_hitbox_shape)
+	
+	canUnDuck = Player.canUnDuck
+		
 	#handle movements
 	HandleDuck()
 	Player.HandleFalling()
@@ -27,19 +34,21 @@ func Update(delta: float):
 	
 func HandleIdle():
 	if (Player.inputVector.x == 0):
-		if Input.is_action_pressed("move_down"):
-			Player.ChangeState(States.Duck)
-		else:
-			Player.ChangeState(States.Idle)
+			
+			if canUnDuck == true and not Player.inputVector.y < 0:
+				Player.ChangeState(States.Idle)
+			else:
+				Player.ChangeState(States.Duck)
 
 func HandleMovement(delta):
 	if Player.inputVector.x != 0:
 		Player.velocity.x += Player.inputVector.x * Player.SPEED
 
 func HandleDuck():
-	if not Input.is_action_pressed("move_down"):
-		Player.ChangeState(States.Walk)	
-	
+	if canUnDuck == true:
+		if not Input.is_action_pressed("move_down"):
+			Player.ChangeState(States.Walk)	
+		
 	
 func HandleAnimations():
 	Player.sprite.animation = "duck_walk"

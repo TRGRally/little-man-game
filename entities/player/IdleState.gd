@@ -5,6 +5,7 @@ var landingFrames = 0
 
 func EnterState():
 	Name = "Idle"
+	Player.maxSpeedThisJump = 0
 	if Player.previousState == States.Fall:
 		landingFrames = 0
 
