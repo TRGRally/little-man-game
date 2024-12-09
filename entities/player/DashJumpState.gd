@@ -8,7 +8,7 @@ var currentFrame = 0
 
 func EnterState():
 	Name = "DashJump"
-	enter_state.emit()
+	enter_state.emit(Player.dashVector)
 	
 	#diagonal down dash jump goes less high to account for the fact the movement vector isnt normalised
 	#this lets the player choose distance at the cost of height
@@ -55,3 +55,4 @@ func HandleJumpToFall():
 	
 func HandleAnimations():
 	Player.sprite.animation = "jump_up"
+	Player.DashJumpParticles.process_material.direction = Vector3(Player.velocity.x, Player.velocity.y, 0)

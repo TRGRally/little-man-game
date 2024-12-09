@@ -10,9 +10,9 @@ const AIR_SPEED = 15.0
 const JUMP_SPEED = -300.0
 const WALL_JUMP_SPEED = -300.0
 const WALL_JUMP_KICKBACK_SPEED = 250.0
-const VARIABLE_JUMP_MULTIPLIER = 0.7
+const VARIABLE_JUMP_MULTIPLIER = 0.65
 const JUMP_BUFFER_TIME_S = 0.15
-const DASH_JUMP_SPEED = -250.0
+const DASH_JUMP_SPEED = -225.0
 const COYOTE_TIME_S = 0.15
 	
 const AIR_FRICTION = 0.99
@@ -21,7 +21,7 @@ const GRAVITY = 900
 const FALL_GRAVITY = 1200
 const MAX_FALL_SPEED = 450
 const FAST_FALL_SPEED_MULTIPLIER = 1.25
-const FAST_FALL_GRAVITY_MULTIPLIER = 1.2
+const FAST_FALL_GRAVITY_MULTIPLIER = 1.3
 const WALL_SLIDE_SPEED = 100
 const DASH_SPEED = 400
 const DASH_GRAVITY = 0
@@ -93,6 +93,10 @@ func ChangeState(newState):
 @onready var rc_bottomRight = $Raycasts/WallJump/BottomRight
 @onready var rc_duckRight = $Raycasts/Duck/TopRight
 @onready var rc_duckLeft = $Raycasts/Duck/TopLeft
+
+@onready var DashSFX = $DashSFX
+
+@onready var DashJumpParticles: GPUParticles2D = %DashJumpParticles
 
 
 
@@ -238,10 +242,8 @@ func HandleJump():
 
 func isUnDuckSafe():
 	if rc_duckLeft.is_colliding() or rc_duckRight.is_colliding():
-		print("false")
 		return false
 	else:
-		print("true")
 		return true
 
 func GetWallDirection():
@@ -296,6 +298,7 @@ func InputOrLookDirection():
 	
 #runs every frame not every physics tick (variable interval)
 func _process(delta) -> void:
+	DashJumpParticles = %DashJumpParticles
 	#floor to the nearest whole number
 	
 	# UNSECURED CANDIDATE
@@ -313,6 +316,7 @@ func _process(delta) -> void:
 	
 	sprite.global_position = midpointVector
 	%DashParticles.global_position = midpointVector
+	DashJumpParticles.global_position = midpointVector
 	%WalkParticles.global_position = feetVector
 	%JumpParticles.global_position = feetVector
 	%WallSlideLeftParticles.global_position = Vector2(midpointVector.x - 6, midpointVector.y)

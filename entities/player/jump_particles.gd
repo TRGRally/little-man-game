@@ -23,3 +23,11 @@ func _on_jump_enter_state() -> void:
 
 func _on_jump_exit_state() -> void:
 	doJumpFrame = false
+
+
+func _on_dash_jump_enter_state(dashVector: Vector2) -> void:
+	doJumpFrame = true
+
+
+func _on_dash_jump_exit_state() -> void:
+	doJumpFrame = false

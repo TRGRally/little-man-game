@@ -1,8 +1,9 @@
-[gd_scene load_steps=149 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=163 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
 [ext_resource type="Script" path="res://entities/player/dash_particles.gd" id="2_60ron"]
+[ext_resource type="Script" path="res://entities/player/dash_jump_particles_2.gd" id="3_037vy"]
 [ext_resource type="Script" path="res://entities/player/walk_particles.gd" id="3_bx257"]
 [ext_resource type="Script" path="res://entities/player/states.gd" id="3_ckwwy"]
 [ext_resource type="Texture2D" uid="uid://ih75tjr7oemq" path="res://assets/sprites/player/Crouch-Idle/Player Crouch-Idle 48x48.png" id="3_ecvq1"]
@@ -37,6 +38,8 @@
 [ext_resource type="Script" path="res://entities/player/DashBufferState.gd" id="16_i50og"]
 [ext_resource type="Script" path="res://entities/player/DuckWalkState.gd" id="25_5xafn"]
 [ext_resource type="Script" path="res://entities/player/DashWallJumpState.gd" id="32_3bs66"]
+[ext_resource type="AudioStream" uid="uid://dhf2t4v0bxd48" path="res://assets/sound/woosh.wav" id="39_1cjw1"]
+[ext_resource type="Script" path="res://entities/player/dash_sfx.gd" id="40_1i04k"]
 
 [sub_resource type="Shader" id="Shader_15do6"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
@@ -48,29 +51,29 @@ render_mode blend_add;
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lxiep"]
 shader = SubResource("Shader_15do6")
 
-[sub_resource type="Curve" id="Curve_hr5hw"]
+[sub_resource type="Curve" id="Curve_348bb"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.327815, 0.202657), -1.05022, -1.05022, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_h7udx"]
-curve = SubResource("Curve_hr5hw")
+[sub_resource type="CurveTexture" id="CurveTexture_udvoo"]
+curve = SubResource("Curve_348bb")
 
-[sub_resource type="Gradient" id="Gradient_ppt7k"]
+[sub_resource type="Gradient" id="Gradient_y7qen"]
 offsets = PackedFloat32Array(0, 0.3425)
 colors = PackedColorArray(0.139453, 0.877208, 1, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_2jnna"]
-gradient = SubResource("Gradient_ppt7k")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uiqyq"]
+gradient = SubResource("Gradient_y7qen")
 
-[sub_resource type="Curve" id="Curve_hlgc6"]
+[sub_resource type="Curve" id="Curve_0iqij"]
 max_value = 100.0
 _data = [Vector2(0, 51.498), 0.0, 0.0, 0, 0, Vector2(0.245033, 8.14019), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_24s8o"]
-curve = SubResource("Curve_hlgc6")
+[sub_resource type="CurveTexture" id="CurveTexture_x01nk"]
+curve = SubResource("Curve_0iqij")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ax6rc"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bcgya"]
 lifetime_randomness = 0.1
 particle_flag_disable_z = true
 particle_flag_damping_as_friction = true
@@ -84,15 +87,60 @@ initial_velocity_min = 50.0
 initial_velocity_max = 50.0
 angular_velocity_min = -720.0
 angular_velocity_max = 720.0
-velocity_limit_curve = SubResource("CurveTexture_24s8o")
+velocity_limit_curve = SubResource("CurveTexture_x01nk")
 gravity = Vector3(0, 0, 0)
 radial_accel_min = -5.0
 radial_accel_max = 5.0
 damping_min = 1.0
 damping_max = 2.0
 attractor_interaction_enabled = false
-color_ramp = SubResource("GradientTexture1D_2jnna")
-alpha_curve = SubResource("CurveTexture_h7udx")
+color_ramp = SubResource("GradientTexture1D_uiqyq")
+alpha_curve = SubResource("CurveTexture_udvoo")
+
+[sub_resource type="Curve" id="Curve_3htn8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.327815, 0.202657), -1.05022, -1.05022, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_xor2e"]
+curve = SubResource("Curve_3htn8")
+
+[sub_resource type="Gradient" id="Gradient_8b0vo"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bcifn"]
+gradient = SubResource("Gradient_8b0vo")
+
+[sub_resource type="Curve" id="Curve_07o86"]
+max_value = 100.0
+_data = [Vector2(0, 51.498), 0.0, 0.0, 0, 0, Vector2(0.245033, 8.14019), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_t0gl1"]
+curve = SubResource("Curve_07o86")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4nipb"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape_scale = Vector3(1, 1, 0)
+emission_shape = 3
+emission_box_extents = Vector3(2, 4, 1)
+direction = Vector3(0, 1, 0)
+spread = 0.0
+flatness = 1.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+velocity_limit_curve = SubResource("CurveTexture_t0gl1")
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -5.0
+radial_accel_max = 5.0
+damping_min = 1.0
+damping_max = 2.0
+attractor_interaction_enabled = false
+color_ramp = SubResource("GradientTexture1D_bcifn")
+alpha_curve = SubResource("CurveTexture_xor2e")
 
 [sub_resource type="Shader" id="Shader_rcppc"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
@@ -104,14 +152,14 @@ render_mode blend_mix;
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6yrdc"]
 shader = SubResource("Shader_rcppc")
 
-[sub_resource type="Curve" id="Curve_unnw2"]
+[sub_resource type="Curve" id="Curve_xj428"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.253886, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_g478v"]
-curve = SubResource("Curve_unnw2")
+[sub_resource type="CurveTexture" id="CurveTexture_enx1b"]
+curve = SubResource("Curve_xj428")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vw6ks"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ulbea"]
 lifetime_randomness = 1.0
 particle_flag_disable_z = true
 emission_shape = 3
@@ -128,29 +176,36 @@ radial_accel_min = -7.04
 radial_accel_max = 8.45
 damping_min = 8.018
 damping_max = 30.712
-alpha_curve = SubResource("CurveTexture_g478v")
+alpha_curve = SubResource("CurveTexture_enx1b")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(10, 0, 0)
 
-[sub_resource type="Curve" id="Curve_c81c2"]
+[sub_resource type="Curve" id="Curve_0ycde"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_t507g"]
-curve = SubResource("Curve_c81c2")
+[sub_resource type="CurveTexture" id="CurveTexture_ept1t"]
+curve = SubResource("Curve_0ycde")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_77f24"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jhn08"]
 particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(5, -2, 1)
 gravity = Vector3(0, 98, 0)
 linear_accel_min = -100.0
 linear_accel_max = -100.0
-alpha_curve = SubResource("CurveTexture_t507g")
+alpha_curve = SubResource("CurveTexture_ept1t")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(0, -2, 0)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v1ss4"]
+[sub_resource type="Curve" id="Curve_gw2ud"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.253886, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_kib1c"]
+curve = SubResource("Curve_gw2ud")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_13ulk"]
 lifetime_randomness = 1.0
 particle_flag_disable_z = true
 emission_shape = 3
@@ -167,11 +222,18 @@ radial_accel_min = -7.04
 radial_accel_max = 8.45
 damping_min = 8.018
 damping_max = 30.712
-alpha_curve = SubResource("CurveTexture_g478v")
+alpha_curve = SubResource("CurveTexture_kib1c")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(10, 0, 0)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dj80r"]
+[sub_resource type="Curve" id="Curve_o6wm2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.253886, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_7avxa"]
+curve = SubResource("Curve_o6wm2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i5wob"]
 lifetime_randomness = 1.0
 particle_flag_disable_z = true
 emission_shape = 3
@@ -188,7 +250,7 @@ radial_accel_min = -7.04
 radial_accel_max = 8.45
 damping_min = 8.018
 damping_max = 30.712
-alpha_curve = SubResource("CurveTexture_g478v")
+alpha_curve = SubResource("CurveTexture_7avxa")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(10, 0, 0)
 
@@ -910,12 +972,29 @@ material = SubResource("ShaderMaterial_lxiep")
 position = Vector2(0, -12)
 emitting = false
 amount = 200
-process_material = SubResource("ParticleProcessMaterial_ax6rc")
+process_material = SubResource("ParticleProcessMaterial_bcgya")
 fixed_fps = 60
 interpolate = false
 trail_enabled = true
 trail_lifetime = 0.1
 script = ExtResource("2_60ron")
+
+[node name="DashJumpParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+physics_interpolation_mode = 2
+z_index = 6
+material = SubResource("ShaderMaterial_lxiep")
+position = Vector2(0, -12)
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_4nipb")
+lifetime = 2.0
+randomness = 0.5
+fixed_fps = 60
+interpolate = false
+trail_enabled = true
+trail_lifetime = 0.1
+script = ExtResource("3_037vy")
 
 [node name="WalkParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
@@ -924,7 +1003,7 @@ z_index = 6
 material = SubResource("ShaderMaterial_6yrdc")
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_vw6ks")
+process_material = SubResource("ParticleProcessMaterial_ulbea")
 fixed_fps = 15
 interpolate = false
 fract_delta = false
@@ -936,7 +1015,7 @@ physics_interpolation_mode = 2
 z_index = 6
 emitting = false
 amount = 300
-process_material = SubResource("ParticleProcessMaterial_77f24")
+process_material = SubResource("ParticleProcessMaterial_jhn08")
 lifetime = 0.5
 fixed_fps = 60
 interpolate = false
@@ -951,7 +1030,7 @@ position = Vector2(-6, -12)
 rotation = 1.5708
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_v1ss4")
+process_material = SubResource("ParticleProcessMaterial_13ulk")
 fixed_fps = 15
 interpolate = false
 fract_delta = false
@@ -966,7 +1045,7 @@ position = Vector2(6, -12)
 rotation = -1.5708
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_dj80r")
+process_material = SubResource("ParticleProcessMaterial_i5wob")
 fixed_fps = 15
 interpolate = false
 fract_delta = false
@@ -1101,16 +1180,28 @@ target_position = Vector2(0, -12)
 position = Vector2(-6, -12)
 target_position = Vector2(0, -12)
 
+[node name="DashSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("39_1cjw1")
+script = ExtResource("40_1i04k")
+
 [connection signal="enter_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_enter_state"]
 [connection signal="exit_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_exit_state"]
+[connection signal="enter_state" from="StateMachine/DuckWalk" to="WalkParticles" method="_on_duck_walk_enter_state"]
+[connection signal="exit_state" from="StateMachine/DuckWalk" to="WalkParticles" method="_on_duck_walk_exit_state"]
 [connection signal="enter_state" from="StateMachine/Jump" to="JumpParticles" method="_on_jump_enter_state"]
 [connection signal="exit_state" from="StateMachine/Jump" to="JumpParticles" method="_on_jump_exit_state"]
 [connection signal="enter_state" from="StateMachine/Dash" to="DashParticles" method="_on_dash_enter_state"]
+[connection signal="enter_state" from="StateMachine/Dash" to="DashSFX" method="_on_dash_enter_state"]
 [connection signal="exit_state" from="StateMachine/Dash" to="DashParticles" method="_on_dash_exit_state"]
 [connection signal="emit_left_particles" from="StateMachine/WallSlide" to="WallSlideLeftParticles" method="_on_wall_slide_emit_left_particles"]
 [connection signal="emit_right_particles" from="StateMachine/WallSlide" to="WallSlideRightParticles" method="_on_wall_slide_emit_right_particles"]
 [connection signal="stop_left_particles" from="StateMachine/WallSlide" to="WallSlideLeftParticles" method="_on_wall_slide_stop_left_particles"]
 [connection signal="stop_right_particles" from="StateMachine/WallSlide" to="WallSlideRightParticles" method="_on_wall_slide_stop_right_particles"]
+[connection signal="enter_state" from="StateMachine/DashJump" to="JumpParticles" method="_on_dash_jump_enter_state"]
+[connection signal="enter_state" from="StateMachine/DashJump" to="DashJumpParticles" method="_on_dash_jump_enter_state"]
+[connection signal="exit_state" from="StateMachine/DashJump" to="JumpParticles" method="_on_dash_jump_exit_state"]
+[connection signal="exit_state" from="StateMachine/DashJump" to="DashJumpParticles" method="_on_dash_jump_exit_state"]
+[connection signal="enter_state" from="StateMachine/DashBuffer" to="DashSFX" method="_on_dash_buffer_enter_state"]
 [connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Timers/DashBuffer" to="StateMachine/DashBuffer" method="_on_dash_buffer_timeout"]
 [connection signal="timeout" from="Timers/JumpBuffer" to="StateMachine/DashBuffer" method="_on_dash_buffer_timeout"]

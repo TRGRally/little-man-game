@@ -1,14 +1,17 @@
 extends PlayerState
 
+signal enter_state
+signal exit_state
 
 func EnterState():
 	Name = "DashBuffer"
+	enter_state.emit()
 	#starts the buffer countdown on state entry
 	%DashBuffer.start(Player.DASH_BUFFER_TIME_S)
 
 func ExitState():
 	#Player.inputVectorBuffer = inputVectorBuffer
-	pass
+	exit_state.emit()
 	
 func Draw():
 	pass

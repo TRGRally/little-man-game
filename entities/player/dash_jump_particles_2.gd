@@ -11,17 +11,10 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_walk_enter_state() -> void:
+
+func _on_dash_jump_enter_state(dashVector: Vector2) -> void:
 	self.emitting = true
 
 
-func _on_walk_exit_state() -> void:
-	self.emitting = false
-
-
-func _on_duck_walk_enter_state() -> void:
-	self.emitting = true
-
-
-func _on_duck_walk_exit_state() -> void:
+func _on_dash_jump_exit_state() -> void:
 	self.emitting = false

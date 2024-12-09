@@ -15,12 +15,12 @@ func EnterState():
 	Player.dashCount = Player.dashCount + 1
 	
 	if Player.is_on_floor() and direction.y > 0:
-		if abs(direction.dot(Player.velocity.normalized())) > 0 and Player.velocity.length() > Player.DASH_SPEED:
+		if direction.dot(Player.velocity.normalized()) > 0 and Player.velocity.length() > Player.DASH_SPEED:
 			Player.velocity = Player.velocity.length() * directionRaw
 		else:
 			Player.velocity = Player.DASH_SPEED * directionRaw
 	else:
-		if abs(direction.dot(Player.velocity.normalized())) > 0 and Player.velocity.length() > Player.DASH_SPEED:
+		if direction.dot(Player.velocity.normalized()) > 0 and Player.velocity.length() > Player.DASH_SPEED:
 			Player.velocity = Player.velocity.length() * direction
 		else:
 			Player.velocity = Player.DASH_SPEED * direction
