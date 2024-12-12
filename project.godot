@@ -23,9 +23,7 @@ window/size/viewport_height=360
 window/size/mode=4
 window/size/resizable=false
 window/energy_saving/keep_screen_on=false
-window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
-window/vsync/vsync_mode=0
+window/stretch/mode="canvas_items"
 
 [global_group]
 
