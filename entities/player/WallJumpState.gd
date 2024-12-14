@@ -54,6 +54,7 @@ func Update(delta: float):
 func HandleJumpToFall():
 	if not Input.is_action_pressed("jump"):
 		Player.velocity.y *= Player.VARIABLE_JUMP_MULTIPLIER
+		Player.velocity.x *= Player.VARIABLE_WALLJUMP_MULTIPLIER
 		Player.ChangeState(States.JumpPeak)
 	
 	if Player.velocity.y >= 0:

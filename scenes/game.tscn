@@ -446,6 +446,7 @@ shadow_enabled = true
 shadow_color = Color(0, 0, 0, 1)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 position = Vector2(-1536, 520)
 rotation = 1.00996
 scale = Vector2(0.572917, 0.729167)
