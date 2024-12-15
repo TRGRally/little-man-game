@@ -1,5 +1,8 @@
 extends PlayerState
 
+signal enter_state
+signal exit_state
+
 
 #true = right
 var flipDirection = true
@@ -10,9 +13,12 @@ var currentFrames = 0
 func EnterState():
 	Name = "WallJump"
 	
+	
 	currentFrames = 0
 	
 	Player.lastWall = Player.wallVector
+	
+	enter_state.emit(Player.lastWall)
 	
 	if Player.velocity.y > Player.WALL_JUMP_SPEED:
 		#-y is up, player is travelling slower than wall jump
@@ -34,7 +40,7 @@ func EnterState():
 	
 
 func ExitState():
-	pass
+	exit_state.emit(Player.lastWall)
 	
 	
 func Draw():
@@ -65,7 +71,7 @@ func HandleAnimations():
 	Player.sprite.animation = "jump_up"
 	
 	if currentFrames <= LOCK_FRAMES:
-		print("flipping" + str(flipDirection))
+		#print("flipping" + str(flipDirection))
 		Player.sprite.flip_h = flipDirection
 	
 	

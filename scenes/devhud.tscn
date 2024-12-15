@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=3 uid="uid://13rlrnnioq0r"]
+
+[ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="1_rkq84"]
+[ext_resource type="Script" path="res://scenes/fps.gd" id="2_ymect"]
+
+[node name="Control" type="Control"]
+layout_direction = 2
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("1_rkq84")
+
+[node name="DevHUD" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 2.0
+offset_right = 26.0
+offset_bottom = 104.0
+theme_override_constants/separation = 0
+
+[node name="FPS" type="Label" parent="DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "FPS
+"
+script = ExtResource("2_ymect")
+
+[node name="Velocity" type="Label" parent="DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "vel"
+
+[node name="Xvel" type="Label" parent="DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "xvel"
+
+[node name="Yvel" type="Label" parent="DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "yvel"
+
+[node name="MaxSpeedThisJump" type="Label" parent="DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "0"
+
+[node name="InputDirection" type="Label" parent="DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "xdir
+"
+
+[node name="FacingDirection" type="Label" parent="DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "xdir
+"
+
+[node name="Deaths" type="Label" parent="DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "0
+"
+horizontal_alignment = 3
+
+[node name="Health" type="Label" parent="DevHUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "0
+"
+horizontal_alignment = 3
+
+[node name="Speedometer" type="ProgressBar" parent="DevHUD"]
+layout_mode = 2
+max_value = 1000.0
+step = 1.0
+rounded = true
+show_percentage = false

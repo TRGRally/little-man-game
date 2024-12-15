@@ -320,6 +320,8 @@ func _process(delta) -> void:
 	DashJumpParticles.global_position = midpointVector
 	%WalkParticles.global_position = feetVector
 	%JumpParticles.global_position = feetVector
+	%WallJumpLeftParticles.global_position = Vector2(midpointVector.x - 7, midpointVector.y)
+	%WallJumpRightParticles.global_position = Vector2(midpointVector.x + 7, midpointVector.y)
 	%WallSlideLeftParticles.global_position = Vector2(midpointVector.x - 6, midpointVector.y)
 	%WallSlideRightParticles.global_position = Vector2(midpointVector.x + 6, midpointVector.y)
 
@@ -390,6 +392,8 @@ func _physics_process(delta: float) -> void:
 	#run physics
 	if not currentState == States.DashBuffer:
 		move_and_slide()
+	else:
+		print("vel in buffer = " + str(velocity.length()) + " " + str(velocity)) 
 	
 	
 		

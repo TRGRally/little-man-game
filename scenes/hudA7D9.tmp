@@ -17,10 +17,8 @@ func set_health(health):
 func set_velocity(velocity: Vector2):
 	var speed = snapped(velocity.length(), 0)
 	%DevHUD/Velocity.text = str(speed)
-	%DevHUD/Speedometer.value = speed
 	%DevHUD/Xvel.text = str(abs(snapped(velocity.x, 0)))
 	%DevHUD/Yvel.text = str(abs(snapped(abs(velocity.y), 0)))
-	
 	
 func set_max_speed(maxSpeedThisJump):
 	%DevHUD/MaxSpeedThisJump.text = str(snapped(maxSpeedThisJump, 0))
@@ -132,10 +130,3 @@ theme_type_variation = &"HeaderSmall"
 text = "0
 "
 horizontal_alignment = 3
-
-[node name="Speedometer" type="ProgressBar" parent="Control/DevHUD"]
-layout_mode = 2
-max_value = 1000.0
-step = 1.0
-rounded = true
-show_percentage = false

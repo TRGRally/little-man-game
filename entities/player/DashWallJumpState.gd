@@ -64,7 +64,7 @@ func HandleAnimations():
 	Player.sprite.animation = "jump_up"
 	
 	if currentFrames <= LOCK_FRAMES:
-		print("flipping" + str(flipDirection))
+		#print( "flipping" + str(flipDirection))
 		Player.sprite.flip_h = flipDirection
 	
 	

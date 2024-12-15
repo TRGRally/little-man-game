@@ -1,7 +1,13 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b5715plb4akvc"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://b5715plb4akvc"]
 
 [ext_resource type="FontFile" uid="uid://bhwmojb6xye7q" path="res://assets/fonts/GeistMono-VariableFont_wght.ttf" id="1_vncdc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phoyc"]
+bg_color = Color(0, 0, 0, 0.392157)
+border_width_left = 2
+border_width_top = 2
 
 [resource]
 default_font = ExtResource("1_vncdc")
 default_font_size = 8
+ProgressBar/styles/background = SubResource("StyleBoxFlat_phoyc")

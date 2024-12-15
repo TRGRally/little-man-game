@@ -1,4 +1,4 @@
-[gd_scene load_steps=163 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=170 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -20,8 +20,10 @@
 [ext_resource type="Script" path="res://entities/player/JumpPeakState.gd" id="7_ortu5"]
 [ext_resource type="Script" path="res://entities/player/FallState.gd" id="8_0rjko"]
 [ext_resource type="Texture2D" uid="uid://co4bk5cdeea5x" path="res://assets/sprites/player/Player Land/player land 48x48.png" id="8_romr0"]
+[ext_resource type="Script" path="res://entities/player/wall_jump_left_particles.gd" id="8_vpufh"]
 [ext_resource type="Texture2D" uid="uid://b1bcfh4l2vkgd" path="res://assets/sprites/player/Player Run/player run 48x48.png" id="9_8krlu"]
 [ext_resource type="Texture2D" uid="uid://ck6lh8lajqfgs" path="res://assets/sprites/player/Hat/Player_Idle_With_Hat_And_No_Outline_At_All_48x48.png" id="9_belvd"]
+[ext_resource type="Script" path="res://entities/player/wall_jump_right_particles.gd" id="9_r65lo"]
 [ext_resource type="Script" path="res://entities/player/DashState.gd" id="10_5p7vt"]
 [ext_resource type="Texture2D" uid="uid://qnfgbbt2fnyi" path="res://assets/sprites/player/PlayerWalk/PlayerWalk 48x48.png" id="10_ib0vp"]
 [ext_resource type="Texture2D" uid="uid://d3ydq8jqnyeko" path="res://assets/sprites/player/Player Wall Land/player wall land 48x48.png" id="11_nk0yv"]
@@ -41,18 +43,11 @@
 [ext_resource type="AudioStream" uid="uid://dhf2t4v0bxd48" path="res://assets/sound/woosh.wav" id="39_1cjw1"]
 [ext_resource type="Script" path="res://entities/player/dash_sfx.gd" id="40_1i04k"]
 
-[sub_resource type="Shader" id="Shader_15do6"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
-
-shader_type canvas_item;
-render_mode blend_add;
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lxiep"]
-shader = SubResource("Shader_15do6")
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wxvhd"]
+light_mode = 1
 
 [sub_resource type="Curve" id="Curve_348bb"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.327815, 0.202657), -1.05022, -1.05022, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.493631, 0.496827), -1.94258, -1.94258, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_udvoo"]
@@ -60,10 +55,11 @@ curve = SubResource("Curve_348bb")
 
 [sub_resource type="Gradient" id="Gradient_y7qen"]
 offsets = PackedFloat32Array(0, 0.3425)
-colors = PackedColorArray(0.139453, 0.877208, 1, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0.4, 2, 3, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_uiqyq"]
 gradient = SubResource("Gradient_y7qen")
+use_hdr = true
 
 [sub_resource type="Curve" id="Curve_0iqij"]
 max_value = 100.0
@@ -96,6 +92,16 @@ damping_max = 2.0
 attractor_interaction_enabled = false
 color_ramp = SubResource("GradientTexture1D_uiqyq")
 alpha_curve = SubResource("CurveTexture_udvoo")
+
+[sub_resource type="Shader" id="Shader_15do6"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_add;
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lxiep"]
+shader = SubResource("Shader_15do6")
 
 [sub_resource type="Curve" id="Curve_3htn8"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.327815, 0.202657), -1.05022, -1.05022, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -191,6 +197,7 @@ curve = SubResource("Curve_0ycde")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jhn08"]
 particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, 3, 0)
 emission_shape = 3
 emission_box_extents = Vector3(5, -2, 1)
 gravity = Vector3(0, 98, 0)
@@ -255,6 +262,60 @@ damping_max = 30.712
 alpha_curve = SubResource("CurveTexture_7avxa")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(10, 0, 0)
+
+[sub_resource type="Curve" id="Curve_h104x"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hdpkn"]
+curve = SubResource("Curve_h104x")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p55dh"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape = 3
+emission_box_extents = Vector3(2, 6, 1)
+spread = 49.474
+initial_velocity_min = 10.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -100.0
+linear_accel_max = -100.0
+damping_min = 1.0
+damping_max = 1.0
+alpha_curve = SubResource("CurveTexture_hdpkn")
+turbulence_enabled = true
+turbulence_noise_strength = 1.48
+turbulence_noise_scale = 9.378
+turbulence_noise_speed = Vector3(1, 0, 0)
+turbulence_noise_speed_random = 0.11
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.367
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dl44g"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape = 3
+emission_box_extents = Vector3(2, 6, 1)
+direction = Vector3(-1, 0, 0)
+spread = 49.474
+initial_velocity_min = 10.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -100.0
+linear_accel_max = -100.0
+damping_min = 1.0
+damping_max = 1.0
+alpha_curve = SubResource("CurveTexture_hdpkn")
+turbulence_enabled = true
+turbulence_noise_strength = 1.48
+turbulence_noise_scale = 9.378
+turbulence_noise_speed = Vector3(1, 0, 0)
+turbulence_noise_speed_random = 0.11
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.367
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rooes"]
 atlas = ExtResource("8_romr0")
@@ -908,7 +969,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 18.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -969,8 +1030,7 @@ script = ExtResource("1_6enp7")
 [node name="DashParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
-z_index = 6
-material = SubResource("ShaderMaterial_lxiep")
+material = SubResource("CanvasItemMaterial_wxvhd")
 position = Vector2(0, -12)
 emitting = false
 amount = 200
@@ -1052,6 +1112,30 @@ fixed_fps = 15
 interpolate = false
 fract_delta = false
 script = ExtResource("6_v8acb")
+
+[node name="WallJumpLeftParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+physics_interpolation_mode = 2
+z_index = 6
+emitting = false
+amount = 300
+process_material = SubResource("ParticleProcessMaterial_p55dh")
+lifetime = 0.5
+fixed_fps = 60
+interpolate = false
+script = ExtResource("8_vpufh")
+
+[node name="WallJumpRightParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+physics_interpolation_mode = 2
+z_index = 6
+emitting = false
+amount = 300
+process_material = SubResource("ParticleProcessMaterial_dl44g")
+lifetime = 0.5
+fixed_fps = 60
+interpolate = false
+script = ExtResource("9_r65lo")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 2
@@ -1199,6 +1283,10 @@ script = ExtResource("40_1i04k")
 [connection signal="emit_right_particles" from="StateMachine/WallSlide" to="WallSlideRightParticles" method="_on_wall_slide_emit_right_particles"]
 [connection signal="stop_left_particles" from="StateMachine/WallSlide" to="WallSlideLeftParticles" method="_on_wall_slide_stop_left_particles"]
 [connection signal="stop_right_particles" from="StateMachine/WallSlide" to="WallSlideRightParticles" method="_on_wall_slide_stop_right_particles"]
+[connection signal="enter_state" from="StateMachine/WallJump" to="WallJumpLeftParticles" method="_on_wall_jump_enter_state"]
+[connection signal="enter_state" from="StateMachine/WallJump" to="WallJumpRightParticles" method="_on_wall_jump_enter_state"]
+[connection signal="exit_state" from="StateMachine/WallJump" to="WallJumpLeftParticles" method="_on_wall_jump_exit_state"]
+[connection signal="exit_state" from="StateMachine/WallJump" to="WallJumpRightParticles" method="_on_wall_jump_exit_state"]
 [connection signal="enter_state" from="StateMachine/DashJump" to="DashJumpParticles" method="_on_dash_jump_enter_state"]
 [connection signal="enter_state" from="StateMachine/DashJump" to="JumpParticles" method="_on_dash_jump_enter_state"]
 [connection signal="exit_state" from="StateMachine/DashJump" to="DashJumpParticles" method="_on_dash_jump_exit_state"]
