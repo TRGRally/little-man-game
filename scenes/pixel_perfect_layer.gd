@@ -4,6 +4,9 @@ class_name PixelPerfectLayer
 @export var main_camera: Camera2D
 @export var pp_camera: Camera2D
 
+@export var canvas_width = 640
+@export var canvas_height = 360
+
 @onready var sub_viewport: SubViewport = $SubViewport
 
 func _ready() -> void:
@@ -15,6 +18,15 @@ func _ready() -> void:
 		
 
 func _process(delta: float) -> void:
+	
 	if !pp_camera or !main_camera: return
-	pp_camera.set_global_transform(main_camera.get_global_transform())
+	#multiplier from main window to pixel perfect window
+	var resolutionRatio = DisplayServer.screen_get_size().x / canvas_width
+	print(resolutionRatio)
+	
+	var newSpeed = main_camera.position_smoothing_speed / resolutionRatio
+	print(newSpeed)
 	pp_camera.position_smoothing_enabled = main_camera.position_smoothing_enabled
+	pp_camera.position_smoothing_speed = (main_camera.position_smoothing_speed / resolutionRatio) + 1
+	pp_camera.set_global_transform(main_camera.get_global_transform())
+	

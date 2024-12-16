@@ -1027,7 +1027,7 @@ points = PackedVector2Array(6, 12, -6, 12, -6, -12, 6, -12)
 z_index = 5
 script = ExtResource("1_6enp7")
 
-[node name="DashParticles" type="GPUParticles2D" parent="."]
+[node name="DashParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 material = SubResource("CanvasItemMaterial_wxvhd")
@@ -1041,7 +1041,7 @@ trail_enabled = true
 trail_lifetime = 0.1
 script = ExtResource("2_60ron")
 
-[node name="DashJumpParticles" type="GPUParticles2D" parent="."]
+[node name="DashJumpParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
@@ -1058,7 +1058,7 @@ trail_enabled = true
 trail_lifetime = 0.1
 script = ExtResource("3_037vy")
 
-[node name="WalkParticles" type="GPUParticles2D" parent="."]
+[node name="WalkParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
@@ -1071,7 +1071,7 @@ interpolate = false
 fract_delta = false
 script = ExtResource("3_bx257")
 
-[node name="JumpParticles" type="GPUParticles2D" parent="."]
+[node name="JumpParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
@@ -1083,7 +1083,7 @@ fixed_fps = 60
 interpolate = false
 script = ExtResource("4_tdood")
 
-[node name="WallSlideLeftParticles" type="GPUParticles2D" parent="."]
+[node name="WallSlideLeftParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
@@ -1098,7 +1098,7 @@ interpolate = false
 fract_delta = false
 script = ExtResource("5_uecvt")
 
-[node name="WallSlideRightParticles" type="GPUParticles2D" parent="."]
+[node name="WallSlideRightParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
@@ -1113,7 +1113,7 @@ interpolate = false
 fract_delta = false
 script = ExtResource("6_v8acb")
 
-[node name="WallJumpLeftParticles" type="GPUParticles2D" parent="."]
+[node name="WallJumpLeftParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
@@ -1125,7 +1125,7 @@ fixed_fps = 60
 interpolate = false
 script = ExtResource("8_vpufh")
 
-[node name="WallJumpRightParticles" type="GPUParticles2D" parent="."]
+[node name="WallJumpRightParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6

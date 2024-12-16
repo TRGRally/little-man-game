@@ -97,7 +97,14 @@ func ChangeState(newState):
 
 @onready var DashSFX = $DashSFX
 
+@onready var DashParticles: GPUParticles2D = %DashParticles
 @onready var DashJumpParticles: GPUParticles2D = %DashJumpParticles
+@onready var WalkParticles: GPUParticles2D = %WalkParticles
+@onready var JumpParticles: GPUParticles2D = %JumpParticles
+@onready var WallSlideLeftParticles: GPUParticles2D = %WallSlideLeftParticles
+@onready var WallSlideRightParticles: GPUParticles2D = %WallSlideRightParticles
+@onready var WallJumpLeftParticles: GPUParticles2D = %WallJumpLeftParticles
+@onready var WallJumpRightParticles: GPUParticles2D = %WallJumpRightParticles
 
 
 
@@ -299,7 +306,6 @@ func InputOrLookDirection():
 	
 #runs every frame not every physics tick (variable interval)
 func _process(delta) -> void:
-	DashJumpParticles = %DashJumpParticles
 	#floor to the nearest whole number
 	
 	# UNSECURED CANDIDATE
@@ -316,14 +322,14 @@ func _process(delta) -> void:
 	var feetVector = GetRoundedPosition(true)
 	
 	sprite.global_position = midpointVector
-	%DashParticles.global_position = midpointVector
+	DashParticles.global_position = midpointVector
 	DashJumpParticles.global_position = midpointVector
-	%WalkParticles.global_position = feetVector
-	%JumpParticles.global_position = feetVector
-	%WallJumpLeftParticles.global_position = Vector2(midpointVector.x - 7, midpointVector.y)
-	%WallJumpRightParticles.global_position = Vector2(midpointVector.x + 7, midpointVector.y)
-	%WallSlideLeftParticles.global_position = Vector2(midpointVector.x - 6, midpointVector.y)
-	%WallSlideRightParticles.global_position = Vector2(midpointVector.x + 6, midpointVector.y)
+	WalkParticles.global_position = feetVector
+	JumpParticles.global_position = feetVector
+	WallJumpLeftParticles.global_position = Vector2(midpointVector.x - 7, midpointVector.y)
+	WallJumpRightParticles.global_position = Vector2(midpointVector.x + 7, midpointVector.y)
+	WallSlideLeftParticles.global_position = Vector2(midpointVector.x - 6, midpointVector.y)
+	WallSlideRightParticles.global_position = Vector2(midpointVector.x + 6, midpointVector.y)
 
 #runs every physics tick (fixed interval)
 func _physics_process(delta: float) -> void:
