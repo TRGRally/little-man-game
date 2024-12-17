@@ -47,6 +47,7 @@ var lastWall = Vector2.ZERO
 var wishdir = sign(inputVector.x)
 var canUnDuck = false
 
+
 #debug
 var maxSpeedThisJump = 0
 

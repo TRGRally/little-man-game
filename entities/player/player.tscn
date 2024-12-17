@@ -47,7 +47,7 @@
 light_mode = 1
 
 [sub_resource type="Curve" id="Curve_348bb"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.493631, 0.496827), -1.94258, -1.94258, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.493631, 0.496827), -1.94258, -1.94258, 0, 0, Vector2(0.763441, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_udvoo"]
@@ -61,13 +61,12 @@ colors = PackedColorArray(0.4, 2, 3, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_y7qen")
 use_hdr = true
 
-[sub_resource type="Curve" id="Curve_0iqij"]
-max_value = 100.0
-_data = [Vector2(0, 51.498), 0.0, 0.0, 0, 0, Vector2(0.245033, 8.14019), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
+[sub_resource type="Curve" id="Curve_524yh"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.501718, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_x01nk"]
-curve = SubResource("Curve_0iqij")
+[sub_resource type="CurveTexture" id="CurveTexture_bbcdt"]
+curve = SubResource("Curve_524yh")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bcgya"]
 lifetime_randomness = 0.1
@@ -75,23 +74,28 @@ particle_flag_disable_z = true
 particle_flag_damping_as_friction = true
 emission_shape_scale = Vector3(1, 1, 0)
 emission_shape = 3
-emission_box_extents = Vector3(2, 2, 1)
+emission_box_extents = Vector3(4, 4, 1)
+angle_min = -4.99999
+angle_max = 5.00001
 direction = Vector3(0, 1, 0)
 spread = 10.0
-flatness = 1.0
-initial_velocity_min = 50.0
-initial_velocity_max = 50.0
+initial_velocity_min = 35.19
+initial_velocity_max = 123.53
 angular_velocity_min = -720.0
 angular_velocity_max = 720.0
-velocity_limit_curve = SubResource("CurveTexture_x01nk")
 gravity = Vector3(0, 0, 0)
 radial_accel_min = -5.0
 radial_accel_max = 5.0
 damping_min = 1.0
 damping_max = 2.0
-attractor_interaction_enabled = false
 color_ramp = SubResource("GradientTexture1D_uiqyq")
 alpha_curve = SubResource("CurveTexture_udvoo")
+turbulence_enabled = true
+turbulence_noise_strength = 19.75
+turbulence_noise_speed_random = 0.5
+turbulence_influence_min = 0.065
+turbulence_influence_max = 0.205
+turbulence_influence_over_life = SubResource("CurveTexture_bbcdt")
 
 [sub_resource type="Shader" id="Shader_15do6"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
@@ -104,8 +108,8 @@ render_mode blend_add;
 shader = SubResource("Shader_15do6")
 
 [sub_resource type="Curve" id="Curve_3htn8"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.327815, 0.202657), -1.05022, -1.05022, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 0.543192), 0.0, 0.0, 0, 0, Vector2(0.327815, 0.202657), -1.05022, -1.05022, 0, 0, Vector2(0.501792, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_xor2e"]
 curve = SubResource("Curve_3htn8")
@@ -118,7 +122,7 @@ gradient = SubResource("Gradient_8b0vo")
 
 [sub_resource type="Curve" id="Curve_07o86"]
 max_value = 100.0
-_data = [Vector2(0, 51.498), 0.0, 0.0, 0, 0, Vector2(0.245033, 8.14019), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 51.498), 0.0, 0.0, 0, 0, Vector2(0.245033, 8.14019), 0.0, 0.0, 0, 0, Vector2(0.505376, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_t0gl1"]
@@ -127,23 +131,19 @@ curve = SubResource("Curve_07o86")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4nipb"]
 lifetime_randomness = 0.5
 particle_flag_disable_z = true
-particle_flag_damping_as_friction = true
 emission_shape_scale = Vector3(1, 1, 0)
 emission_shape = 3
-emission_box_extents = Vector3(2, 4, 1)
+emission_box_extents = Vector3(1, 1, 1)
 direction = Vector3(0, 1, 0)
-spread = 0.0
-flatness = 1.0
+spread = 7.0
 initial_velocity_min = 50.0
-initial_velocity_max = 50.0
-angular_velocity_min = -720.0
-angular_velocity_max = 720.0
+initial_velocity_max = 152.94
 velocity_limit_curve = SubResource("CurveTexture_t0gl1")
 gravity = Vector3(0, 0, 0)
 radial_accel_min = -5.0
 radial_accel_max = 5.0
-damping_min = 1.0
-damping_max = 2.0
+damping_min = 100.0
+damping_max = 100.0
 attractor_interaction_enabled = false
 scale_over_velocity_min = 1000.0
 scale_over_velocity_max = 1000.0
@@ -200,11 +200,14 @@ particle_flag_disable_z = true
 emission_shape_offset = Vector3(0, 3, 0)
 emission_shape = 3
 emission_box_extents = Vector3(5, -2, 1)
+direction = Vector3(1, 1, 0)
+spread = 90.0
+initial_velocity_min = 1.0
+initial_velocity_max = 10.0
 gravity = Vector3(0, 98, 0)
-linear_accel_min = -100.0
-linear_accel_max = -100.0
+damping_min = 100.0
+damping_max = 100.0
 alpha_curve = SubResource("CurveTexture_ept1t")
-turbulence_enabled = true
 turbulence_noise_speed = Vector3(0, -2, 0)
 
 [sub_resource type="Curve" id="Curve_gw2ud"]
@@ -1033,9 +1036,10 @@ physics_interpolation_mode = 2
 material = SubResource("CanvasItemMaterial_wxvhd")
 position = Vector2(0, -12)
 emitting = false
-amount = 200
+amount = 75
 process_material = SubResource("ParticleProcessMaterial_bcgya")
-fixed_fps = 60
+lifetime = 0.7
+fixed_fps = 24
 interpolate = false
 trail_enabled = true
 trail_lifetime = 0.1
@@ -1048,11 +1052,11 @@ z_index = 6
 material = SubResource("ShaderMaterial_lxiep")
 position = Vector2(0, -12)
 emitting = false
-amount = 100
+amount = 300
 process_material = SubResource("ParticleProcessMaterial_4nipb")
 lifetime = 2.0
 randomness = 0.5
-fixed_fps = 60
+fixed_fps = 48
 interpolate = false
 trail_enabled = true
 trail_lifetime = 0.1
@@ -1064,9 +1068,9 @@ physics_interpolation_mode = 2
 z_index = 6
 material = SubResource("ShaderMaterial_6yrdc")
 emitting = false
-amount = 50
+amount = 35
 process_material = SubResource("ParticleProcessMaterial_ulbea")
-fixed_fps = 15
+fixed_fps = 24
 interpolate = false
 fract_delta = false
 script = ExtResource("3_bx257")
