@@ -540,5 +540,3 @@ unique_name_in_owner = true
 [connection signal="body_entered" from="Killzone" to="." method="_on_area_2d_body_entered"]
 [connection signal="area_entered" from="GravPusher" to="." method="_on_grav_pusher_area_entered"]
 [connection signal="area_exited" from="GravPusher" to="." method="_on_grav_pusher_area_exited"]
-[connection signal="body_entered" from="GravPusher" to="." method="_on_grav_pusher_body_entered"]
-[connection signal="body_exited" from="GravPusher" to="." method="_on_grav_pusher_body_exited"]

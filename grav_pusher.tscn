@@ -1,8 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgg5j7144n06e"]
+[gd_scene load_steps=5 format=3 uid="uid://cgg5j7144n06e"]
 
+[ext_resource type="Shader" path="res://grav_pusher.gdshader" id="1_sc4pa"]
 [ext_resource type="Script" path="res://grav_pusher.gd" id="1_w6v4d"]
 
-[node name="GravPusher" type="Node2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjkre"]
+shader = ExtResource("1_sc4pa")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/direction = -1.0
+shader_parameter/frequency = 9.1
+shader_parameter/speed = 6.0
+shader_parameter/radius = 1.0
+shader_parameter/line_thickness = 0.04
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ngftf"]
+size = Vector2(1, 1)
+
+[node name="GravPusher" type="Area2D"]
+top_level = true
+z_index = 100
+material = SubResource("ShaderMaterial_pjkre")
+gravity_space_override = 3
+gravity_point_center = Vector2(0, -1)
+gravity_direction = Vector2(0, -1)
 script = ExtResource("1_w6v4d")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ngftf")

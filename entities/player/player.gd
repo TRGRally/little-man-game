@@ -48,6 +48,8 @@ var wishdir = sign(inputVector.x)
 var canUnDuck = false
 
 
+var externalForce: Vector2 = Vector2.ZERO
+
 #debug
 var maxSpeedThisJump = 0
 
@@ -398,6 +400,7 @@ func _physics_process(delta: float) -> void:
 	
 	#run physics
 	if not currentState == States.DashBuffer:
+		velocity += externalForce
 		move_and_slide()
 	else:
 		print("vel in buffer = " + str(velocity.length()) + " " + str(velocity)) 

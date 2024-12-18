@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgg5j7144n06e"]
+
+[ext_resource type="Script" path="res://grav_pusher.gd" id="1_w6v4d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ngftf"]
+
+[node name="GravPusher" type="Node2D"]
+script = ExtResource("1_w6v4d")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ngftf")

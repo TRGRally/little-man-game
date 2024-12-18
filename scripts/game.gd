@@ -44,3 +44,17 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	var deaths = gameManager.add_death()
 	HUD.set_deaths(deaths)
 	
+
+
+
+
+func _on_grav_pusher_body_entered(body: Node2D) -> void:
+	if body == player:
+		player.externalForce = Vector2(0, -30)
+		print(player.externalForce)
+
+
+
+func _on_grav_pusher_body_exited(body: Node2D) -> void:
+	player.externalForce = Vector2.ZERO
+	print(player.externalForce)
