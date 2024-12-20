@@ -18,12 +18,8 @@ func _process(delta: float) -> void:
 		enableSmoothingNextFrame = false
 		camera.position_smoothing_enabled = true
 			
-	#camera toggle	
-	if Input.is_action_just_pressed("ui_cancel"): #escape
+
 		
-			
-		var mode = gameManager.toggle_cam()
-		set_cam_mode(mode)
 		
 
 func set_cam_mode(isFollowing):
@@ -58,3 +54,15 @@ func _on_grav_pusher_body_entered(body: Node2D) -> void:
 func _on_grav_pusher_body_exited(body: Node2D) -> void:
 	player.externalForce = Vector2.ZERO
 	print(player.externalForce)
+
+
+func _on_level_body_entered(body: Node2D) -> void:
+	if body == player:
+		var mode = gameManager.room_cam()
+		set_cam_mode(mode)
+
+
+func _on_level_body_exited(body: Node2D) -> void:
+	if body == player:
+		var mode = gameManager.follow_cam()
+		set_cam_mode(mode)

@@ -2,12 +2,14 @@ extends PlayerState
 
 const LANDING_ANIMATION_LENGTH = 8
 var landingFrames = 0
+var landingSoundPlayed = false
 
 func EnterState():
 	Name = "Idle"
 	Player.maxSpeedThisJump = 0
 	if Player.previousState == States.Fall:
 		landingFrames = 0
+		landingSoundPlayed = false
 
 func ExitState():
 	pass
@@ -43,5 +45,10 @@ func HandleDuck():
 func HandleAnimations():
 	if landingFrames <= LANDING_ANIMATION_LENGTH:
 		Player.sprite.animation = "land"
+		if landingSoundPlayed == false:
+			landingSoundPlayed = true
+			Player.load_sfx(Player.sfx_landing)
+			%SFXPlayer.play()
+			
 	else:
 		Player.sprite.animation = "idle"

@@ -8,6 +8,7 @@ func EnterState():
 	enter_state.emit()
 	#starts the buffer countdown on state entry
 	%DashBuffer.start(Player.DASH_BUFFER_TIME_S)
+	
 
 func ExitState():
 	#Player.inputVectorBuffer = inputVectorBuffer

@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Player
 
+var rng = RandomNumberGenerator.new()
+
 #fake
 const MOVE_SPEED = 140.0
 const DASH_JUMP_MOVE_SPEED = DASH_SPEED
@@ -35,6 +37,13 @@ const MIDPOINT_OFFSET = -16
 @export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)])
 @export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
 
+@export var sfx_dash: Array[AudioStream]
+@export var sfx_footsteps: Array[AudioStream]
+@export var sfx_landing: Array[AudioStream]
+@export var sfx_jump: Array[AudioStream]
+
+#when to play footstep sounds in the walk animation
+var walk_footstep_frames = [3,7]
 
 var dashCount = 0
 var allowedDashes = 1
@@ -52,6 +61,16 @@ var externalForce: Vector2 = Vector2.ZERO
 
 #debug
 var maxSpeedThisJump = 0
+
+
+
+func load_sfx(sfx_to_load: Array):
+	#picks one sound from that category to play (e.g. one footstep of many)
+	var index = (rng.randi_range(1, sfx_to_load.size())) - 1
+	print(str(sfx_to_load[index]))	
+	if %SFXPlayer.stream != sfx_to_load[index]:
+		%SFXPlayer.stream = sfx_to_load[index]
+
 
 #combat related variables
 var maxHealth = 5
@@ -417,3 +436,23 @@ func _on_dash_timer_timeout() -> void:
 			ChangeState(States.Idle)
 		else:
 			ChangeState(States.Fall)
+
+
+func _on_sprite_2d_frame_changed() -> void:
+	if sprite.animation != "walk": return
+	 
+	
+	if sprite.frame in walk_footstep_frames: 
+		load_sfx(sfx_footsteps)
+		%SFXPlayer.play()
+
+
+func _on_dash_buffer_enter_state() -> void:
+	load_sfx(sfx_dash)
+	%SFXPlayer.play()
+	
+	
+
+func _on_jump_enter_state() -> void:
+	load_sfx(sfx_jump)
+	%SFXPlayer.play()

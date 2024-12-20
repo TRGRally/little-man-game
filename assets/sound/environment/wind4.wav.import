@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dhf2t4v0bxd48"
-path="res://.godot/imported/woosh.wav-923b57bcf8b3cefa950644a11274321f.sample"
+uid="uid://d1ls1selvfo2"
+path="res://.godot/imported/wind4.wav-879ce135601c349cebe1795cd7dce9a7.sample"
 
 [deps]
 
-source_file="res://assets/sound/woosh.wav"
-dest_files=["res://.godot/imported/woosh.wav-923b57bcf8b3cefa950644a11274321f.sample"]
+source_file="res://assets/sound/environment/wind4.wav"
+dest_files=["res://.godot/imported/wind4.wav-879ce135601c349cebe1795cd7dce9a7.sample"]
 
 [params]
 

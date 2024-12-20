@@ -10,7 +10,7 @@ script/source = "extends CanvasLayer
 
 func set_deaths(deaths):
 	%DevHUD/Deaths.text = str(deaths)
-
+	 	
 func set_health(health):
 	%DevHUD/Health.text = str(health)
 	
