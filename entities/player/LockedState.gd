@@ -1,7 +1,8 @@
 extends PlayerState
 
+
 func EnterState():
-	pass
+	%LockedTimer.start(Player.ROOM_LOCKED_TIME_S)
 	
 
 func ExitState():

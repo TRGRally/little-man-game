@@ -19,26 +19,11 @@ resource_name = "res://scripts/game_manager.gd"
 script/source = "extends Node
 
 var deaths = 0
-var followingCam = true
 
 func add_death():
 	deaths += 1
 	return deaths
 	
-func toggle_cam():
-	#flips between following the player and being fixed on the dev room (for now)
-	followingCam = !followingCam
-	return followingCam
-	
-	
-func follow_cam():
-	followingCam = true
-	return followingCam
-	
-func room_cam():
-	followingCam = false
-	return followingCam
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -446,6 +431,7 @@ position = Vector2(-1100, 520)
 slide_on_ceiling = false
 
 [node name="PointLight2D2" type="PointLight2D" parent="Player"]
+visible = false
 show_behind_parent = true
 z_index = -1
 position = Vector2(0, -12)
@@ -502,6 +488,7 @@ z_index = 1
 color = Color(0.65, 0.65, 0.65, 1)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
 rotation = -0.755728
 color = Color(1, 0.993, 0.79, 1)
 energy = 2.0
@@ -543,7 +530,6 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(640, 360)
 
 [node name="PPCamera" type="Camera2D" parent="PixelPerfectLayer/SubViewport"]
-position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 
 [node name="ViewportTexture" type="TextureRect" parent="PixelPerfectLayer"]

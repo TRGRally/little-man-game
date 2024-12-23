@@ -12,9 +12,7 @@ func EnterState():
 	var directionRaw: Vector2 = Player.dashVector
 	var direction: Vector2 = directionRaw.normalized()
 	
-	if direction.y > 0:
-		Player.hitbox_shape.set_point_cloud(Player.shrunk_hitbox_shape)
-		print("dash duck hitbox")
+	Player.hitbox_shape.set_point_cloud(Player.shrunk_hitbox_shape)
 	
 	Player.dashCount = Player.dashCount + 1
 	

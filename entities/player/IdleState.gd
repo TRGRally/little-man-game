@@ -51,4 +51,7 @@ func HandleAnimations():
 			%SFXPlayer.play()
 			
 	else:
-		Player.sprite.animation = "idle"
+		if Player.canUnDuck == true:
+			Player.sprite.animation = "idle"
+		else:
+			Player.sprite.animation = "duck"

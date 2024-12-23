@@ -3,7 +3,7 @@ extends Node2D
 @export var PUSH_DIRECTION: Vector2 = Vector2(0,-1)
 @export var PUSH_SPEED: float = 1000.0
 
-@onready var collisionShape: CollisionShape2D = $ollisionShape2D
+@onready var collisionShape: CollisionShape2D = $CollisionShape2D
 
 
 # Called when the node enters the scene tree for the first time.

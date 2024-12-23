@@ -26,7 +26,5 @@ func _process(delta: float) -> void:
 	
 	var newSpeed = main_camera.position_smoothing_speed / resolutionRatio
 	#print(newSpeed)
-	pp_camera.position_smoothing_enabled = main_camera.position_smoothing_enabled
-	pp_camera.position_smoothing_speed = (main_camera.position_smoothing_speed / resolutionRatio) + 1
 	pp_camera.set_global_transform(main_camera.get_global_transform())
 	

@@ -32,6 +32,8 @@ const DASH_FRICTION = 0
 const DASH_TIME_S = 0.1
 const DASH_BUFFER_TIME_S = 0.04
 
+const ROOM_LOCKED_TIME_S = 0.5
+
 #model
 const MIDPOINT_OFFSET = -16
 @export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)])
@@ -379,6 +381,7 @@ func _physics_process(delta: float) -> void:
 	if currentState != States.Duck and currentState != States.DuckWalk and currentState != States.Dash:
 		if canUnDuck == true:
 			hitbox_shape.set_point_cloud(normal_hitbox_shape)
+			
 		
 	#update the sprite facing direction if in a state that allows turning
 	#TODO: refactor to use multiple lists of states that allow different things
@@ -434,15 +437,13 @@ func _physics_process(delta: float) -> void:
 	
 	
 	#run physics
-	if not currentState == States.DashBuffer:
+	if not currentState == States.DashBuffer and not currentState == States.Locked:
 		velocity += externalForce
 		move_and_slide()
 	else:
 		pass
 		#print("vel in buffer = " + str(velocity.length()) + " " + str(velocity)) 
 	
-	
-		
 
 
 
@@ -478,3 +479,8 @@ func _on_jump_enter_state() -> void:
 func _on_dash_jump_enter_state(_dashVector: Vector2) -> void:
 	load_sfx(sfx_jump)
 	%SFXPlayer.play()
+
+
+func _on_locked_timer_timeout() -> void:
+	if currentState == States.Locked:
+		ChangeState(previousState)

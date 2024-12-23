@@ -7,40 +7,36 @@ extends Node2D
 
 var enableSmoothingNextFrame = false
 
+var cameraFollowObject: Node2D
+var cameraFollowSpeed: float = 5.0
+var cameraIsFollowing = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Engine.set_time_scale(1.0)
+	cameraFollowObject = player
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if enableSmoothingNextFrame:
-		enableSmoothingNextFrame = false
-		camera.position_smoothing_enabled = true
-			
-
+	if cameraFollowObject != null:
 		
-		
+		if cameraIsFollowing == true:
+			var direction: Vector2 = camera.global_position - player.global_position
+			var transform: Vector2 = direction * cameraFollowSpeed * delta
+			camera.global_position -= transform
+		else:
+			var direction: Vector2 = camera.global_position - camera.DEV_ROOM_POSITION
+			var transform: Vector2 = direction * cameraFollowSpeed * delta
+			camera.global_position -= transform
 
-func set_cam_mode(isFollowing):
-	if isFollowing:
-		camera.position_smoothing_enabled = false
-		camera.reparent(player, false)
-		camera.global_position = player.position
-		enableSmoothingNextFrame = true
-	else:
-		camera.position_smoothing_enabled = false
-		camera.reparent(self, false)
-		camera.global_position = camera.DEV_ROOM_POSITION
-		enableSmoothingNextFrame = true
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	body.position = Vector2(0,100)
 	var deaths = gameManager.add_death()
 	HUD.set_deaths(deaths)
-	
-
 
 
 
@@ -58,11 +54,11 @@ func _on_grav_pusher_body_exited(body: Node2D) -> void:
 
 func _on_level_body_entered(body: Node2D) -> void:
 	if body == player:
-		var mode = gameManager.room_cam()
-		set_cam_mode(mode)
+		cameraIsFollowing = false
+		player.ChangeState(player.States.Locked)
 
 
 func _on_level_body_exited(body: Node2D) -> void:
 	if body == player:
-		var mode = gameManager.follow_cam()
-		set_cam_mode(mode)
+		cameraIsFollowing = true 
+		player.ChangeState(player.States.Locked)
