@@ -12,6 +12,10 @@ func EnterState():
 	var directionRaw: Vector2 = Player.dashVector
 	var direction: Vector2 = directionRaw.normalized()
 	
+	if direction.y > 0:
+		Player.hitbox_shape.set_point_cloud(Player.shrunk_hitbox_shape)
+		print("dash duck hitbox")
+	
 	Player.dashCount = Player.dashCount + 1
 	
 	if Player.is_on_floor() and direction.y > 0:
@@ -36,6 +40,7 @@ func Draw():
 
 func Update(delta: float):
 	Player.HandleJumpBuffer()
+	Player.HandleDashFloor()
 	HandleAnimations()
 	
 

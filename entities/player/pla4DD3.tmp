@@ -1,4 +1,4 @@
-[gd_scene load_steps=192 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=189 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -56,11 +56,8 @@
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="15_r22h3"]
 [ext_resource type="Texture2D" uid="uid://df410wat8cotf" path="res://assets/sprites/player/Player Wall Slide/player wall slide 48x48.png" id="16_gxdh8"]
 [ext_resource type="Script" path="res://entities/player/DashBufferState.gd" id="16_i50og"]
-[ext_resource type="AudioStream" uid="uid://clp5dw3g1y4q0" path="res://assets/sound/player/landing/land2.wav" id="20_b32oe"]
-[ext_resource type="AudioStream" uid="uid://diflqyxlqb8xi" path="res://assets/sound/player/landing/land3.wav" id="21_vrmhw"]
+[ext_resource type="AudioStream" uid="uid://e4olxeeqd7dv" path="res://assets/sound/player/landing/thwack-10.wav" id="21_7rx7g"]
 [ext_resource type="AudioStream" uid="uid://lc85g1mpo1vw" path="res://assets/sound/player/jump/jump_launch_01.wav" id="21_ynsao"]
-[ext_resource type="AudioStream" uid="uid://cjof5jdyklpar" path="res://assets/sound/player/landing/land4.wav" id="22_snk8a"]
-[ext_resource type="AudioStream" uid="uid://dx2s7dj06122" path="res://assets/sound/player/landing/land.wav" id="23_4r587"]
 [ext_resource type="Script" path="res://entities/player/DuckWalkState.gd" id="25_5xafn"]
 [ext_resource type="Script" path="res://entities/player/DashWallJumpState.gd" id="32_3bs66"]
 [ext_resource type="AudioStream" uid="uid://dhf2t4v0bxd48" path="res://assets/sound/player/woosh.wav" id="39_1cjw1"]
@@ -1053,7 +1050,7 @@ z_index = 5
 script = ExtResource("1_6enp7")
 sfx_dash = Array[AudioStream]([ExtResource("2_7qe32"), ExtResource("3_qh4xb"), ExtResource("4_1ur1r"), ExtResource("5_cfsso"), ExtResource("6_50fo6"), ExtResource("7_3a31s"), ExtResource("8_3ahtt"), ExtResource("9_a1y7p"), ExtResource("10_ciajc")])
 sfx_footsteps = Array[AudioStream]([ExtResource("3_1g82e"), ExtResource("4_cfktp"), ExtResource("5_fa1io"), ExtResource("6_yp7lq"), ExtResource("7_7cjsy"), ExtResource("8_y3dqo"), ExtResource("9_2aqsv"), ExtResource("10_4iu73"), ExtResource("11_r6aqj")])
-sfx_landing = Array[AudioStream]([ExtResource("20_b32oe"), ExtResource("21_vrmhw"), ExtResource("22_snk8a"), ExtResource("23_4r587")])
+sfx_landing = Array[AudioStream]([ExtResource("21_7rx7g")])
 sfx_jump = Array[AudioStream]([ExtResource("21_ynsao")])
 
 [node name="DashParticles" type="GPUParticles2D" parent="." groups=["PP"]]
@@ -1079,7 +1076,6 @@ material = SubResource("ShaderMaterial_lxiep")
 position = Vector2(0, -12)
 emitting = false
 amount = 300
-amount_ratio = 0.5
 process_material = SubResource("ParticleProcessMaterial_4nipb")
 lifetime = 2.0
 randomness = 0.5

@@ -55,6 +55,7 @@ var wallVector = Vector2.ZERO
 var lastWall = Vector2.ZERO
 var wishdir = sign(inputVector.x)
 var canUnDuck = false
+var canStartCoyoteTime = true
 
 
 var externalForce: Vector2 = Vector2.ZERO
@@ -67,7 +68,7 @@ var maxSpeedThisJump = 0
 func load_sfx(sfx_to_load: Array):
 	#picks one sound from that category to play (e.g. one footstep of many)
 	var index = (rng.randi_range(1, sfx_to_load.size())) - 1
-	print(str(sfx_to_load[index]))	
+	#print(str(sfx_to_load[index]))	
 	if %SFXPlayer.stream != sfx_to_load[index]:
 		%SFXPlayer.stream = sfx_to_load[index]
 
@@ -217,8 +218,20 @@ func HandleFalling():
 	#standard falling off ledge check
 	if (!is_on_floor()):
 		%CoyoteTimer.start(COYOTE_TIME_S)
+		print("started coyote timer")
 		ChangeState(States.Fall)
 
+func HandleDashFloor():
+	
+	if is_on_floor():
+		canStartCoyoteTime = true
+		return
+		
+	#you dont "fall" off a ledge in dash but we still need to check if the player has
+	#stopped contacting the ground to apply coyote time
+	if (!is_on_floor() and canStartCoyoteTime):
+		canStartCoyoteTime = false
+		%CoyoteTimer.start(COYOTE_TIME_S)
 
 func HandleAirMovement(delta, allowedSpeed):
 	if inputVector.x != 0:
@@ -267,7 +280,10 @@ func HandleJump():
 			if Input.is_action_just_pressed("jump"):
 				%CoyoteTimer.stop()
 				dashCount = 0
-				ChangeState(States.Jump)
+				if currentState == States.Dash or currentState == States.DashBuffer:
+					ChangeState(States.DashJump)
+				else:
+					ChangeState(States.Jump)
 				print("coyote time jump")
 
 func isUnDuckSafe():
@@ -360,7 +376,7 @@ func _physics_process(delta: float) -> void:
 	
 	canUnDuck = isUnDuckSafe()
 
-	if currentState != States.Duck or currentState != States.DuckWalk:
+	if currentState != States.Duck and currentState != States.DuckWalk and currentState != States.Dash:
 		if canUnDuck == true:
 			hitbox_shape.set_point_cloud(normal_hitbox_shape)
 		
@@ -422,7 +438,8 @@ func _physics_process(delta: float) -> void:
 		velocity += externalForce
 		move_and_slide()
 	else:
-		print("vel in buffer = " + str(velocity.length()) + " " + str(velocity)) 
+		pass
+		#print("vel in buffer = " + str(velocity.length()) + " " + str(velocity)) 
 	
 	
 		
@@ -454,5 +471,10 @@ func _on_dash_buffer_enter_state() -> void:
 	
 
 func _on_jump_enter_state() -> void:
+	load_sfx(sfx_jump)
+	%SFXPlayer.play()
+
+
+func _on_dash_jump_enter_state(_dashVector: Vector2) -> void:
 	load_sfx(sfx_jump)
 	%SFXPlayer.play()

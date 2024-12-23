@@ -17,7 +17,7 @@ func set_health(health):
 func set_velocity(velocity: Vector2):
 	var speed = snapped(velocity.length(), 0)
 	%DevHUD/Velocity.text = str(speed)
-	%DevHUD/Speedometer.value = speed
+	%DevHUD/Speedometer.value = 	abs(snapped(velocity.x, 0))
 	%DevHUD/Xvel.text = str(abs(snapped(velocity.x, 0)))
 	%DevHUD/Yvel.text = str(abs(snapped(abs(velocity.y), 0)))
 	
