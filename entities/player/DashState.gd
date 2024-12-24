@@ -26,10 +26,15 @@ func EnterState():
 			Player.velocity = Player.velocity.length() * direction
 		else:
 			Player.velocity = Player.DASH_SPEED * direction
+			
+	#dash coyote time reset
+	if Player.is_on_floor():
+		Player.canStartCoyoteTime = true
 	
 
 func ExitState():
 	exit_state.emit()
+	Player.canStartCoyoteTime = false
 	
 	
 func Draw():

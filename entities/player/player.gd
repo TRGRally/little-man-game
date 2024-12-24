@@ -225,13 +225,10 @@ func HandleFalling():
 
 func HandleDashFloor():
 	
-	if is_on_floor():
-		canStartCoyoteTime = true
-		return
-		
 	#you dont "fall" off a ledge in dash but we still need to check if the player has
 	#stopped contacting the ground to apply coyote time
 	if (!is_on_floor() and canStartCoyoteTime):
+		print("dash coyote start")
 		canStartCoyoteTime = false
 		%CoyoteTimer.start(COYOTE_TIME_S)
 
@@ -284,9 +281,11 @@ func HandleJump():
 				dashCount = 0
 				if currentState == States.Dash or currentState == States.DashBuffer:
 					ChangeState(States.DashJump)
+					print("coyote time dash jump")
 				else:
 					ChangeState(States.Jump)
-				print("coyote time jump")
+					print("coyote time jump")
+				
 
 func isUnDuckSafe():
 	if rc_duckLeft.is_colliding() or rc_duckRight.is_colliding():
