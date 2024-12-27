@@ -402,8 +402,8 @@ func _physics_process(delta: float) -> void:
 	var horizontalDirection := Input.get_axis("move_left", "move_right")
 	var verticalDirection := Input.get_axis("move_up", "move_down")
 	
-	inputVector.x = horizontalDirection
-	inputVector.y = verticalDirection
+	inputVector.x = sign(horizontalDirection)
+	inputVector.y = sign(verticalDirection)
 	
 	InputOrLookDirection()
 
