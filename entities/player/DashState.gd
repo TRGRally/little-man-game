@@ -3,6 +3,9 @@ extends PlayerState
 signal enter_state
 signal exit_state
 
+var dashPushVector: Vector2 = Vector2.ZERO
+var floorDash: bool = false
+
 func EnterState():
 	enter_state.emit(Player.dashVector)
 	
@@ -16,16 +19,25 @@ func EnterState():
 	
 	Player.dashCount = Player.dashCount + 1
 	
+	if Player.is_on_floor():
+		floorDash = true
+	else:
+		floorDash = false
+	
 	if Player.is_on_floor() and direction.y > 0:
 		if direction.dot(Player.velocity.normalized()) > 0 and Player.velocity.length() > Player.DASH_SPEED:
-			Player.velocity = Player.velocity.length() * directionRaw
+			dashPushVector = Player.velocity.length() * directionRaw
+			Player.velocity = dashPushVector
 		else:
-			Player.velocity = Player.DASH_SPEED * directionRaw
+			dashPushVector = Player.DASH_SPEED * directionRaw
+			Player.velocity = dashPushVector
 	else:
 		if direction.dot(Player.velocity.normalized()) > 0 and Player.velocity.length() > Player.DASH_SPEED:
-			Player.velocity = Player.velocity.length() * direction
+			dashPushVector = Player.velocity.length() * direction
+			Player.velocity = dashPushVector
 		else:
-			Player.velocity = Player.DASH_SPEED * direction
+			dashPushVector = Player.DASH_SPEED * direction
+			Player.velocity = dashPushVector
 			
 	#dash coyote time reset
 	if Player.is_on_floor():
@@ -45,6 +57,9 @@ func Update(delta: float):
 	Player.HandleJumpBuffer()
 	Player.HandleDashFloor()
 	HandleAnimations()
+	
+	if not floorDash:
+		Player.velocity = dashPushVector
 	
 
 func HandleAnimations():
