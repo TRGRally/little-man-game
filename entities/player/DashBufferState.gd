@@ -9,6 +9,9 @@ func EnterState():
 	#starts the buffer countdown on state entry
 	%DashBuffer.start(Player.DASH_BUFFER_TIME_S)
 	
+	#dash highlight shader
+	Player.dashHighlight()
+	
 
 func ExitState():
 	#Player.inputVectorBuffer = inputVectorBuffer

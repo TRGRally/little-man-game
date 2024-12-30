@@ -1,4 +1,4 @@
-[gd_scene load_steps=192 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=194 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -63,6 +63,7 @@
 [ext_resource type="AudioStream" uid="uid://dx2s7dj06122" path="res://assets/sound/player/landing/land.wav" id="23_4r587"]
 [ext_resource type="Script" path="res://entities/player/DuckWalkState.gd" id="25_5xafn"]
 [ext_resource type="Script" path="res://entities/player/DashWallJumpState.gd" id="32_3bs66"]
+[ext_resource type="Shader" path="res://scenes/smoothpixel.gdshader" id="33_xl5yw"]
 [ext_resource type="AudioStream" uid="uid://dhf2t4v0bxd48" path="res://assets/sound/player/woosh.wav" id="39_1cjw1"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wxvhd"]
@@ -124,6 +125,8 @@ code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's C
 
 shader_type canvas_item;
 render_mode blend_add;
+
+
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lxiep"]
@@ -341,6 +344,9 @@ turbulence_noise_speed = Vector3(1, 0, 0)
 turbulence_noise_speed_random = 0.11
 turbulence_influence_min = 0.0
 turbulence_influence_max = 0.367
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_njtbj"]
+shader = ExtResource("33_xl5yw")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rooes"]
 atlas = ExtResource("8_romr0")
@@ -1169,8 +1175,8 @@ interpolate = false
 script = ExtResource("9_r65lo")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
-texture_filter = 2
-material = ExtResource("2_5x65k")
+texture_filter = 1
+material = SubResource("ShaderMaterial_njtbj")
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
 animation = &"walk"

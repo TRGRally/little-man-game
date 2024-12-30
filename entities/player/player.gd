@@ -3,6 +3,9 @@ class_name Player
 
 var rng = RandomNumberGenerator.new()
 
+@onready var HighlightShader = preload("res://entities/player/color replace.gdshader")
+@onready var SmoothPixelShader = preload("res://scenes/smoothpixel.gdshader")
+
 #fake
 const MOVE_SPEED = 140.0
 const DASH_JUMP_MOVE_SPEED = DASH_SPEED
@@ -169,6 +172,18 @@ func is_dash_available():
 	if dashCount >= allowedDashes:
 		return false
 	return true
+	
+
+func dashHighlight():
+	sprite.material.shader = HighlightShader
+	sprite.material.set_shader_parameter("masque", Vector3(255.0,255.0,255.0))
+	sprite.texture_filter = 1
+	
+	
+func removeDashHighlight():
+	sprite.material.shader = SmoothPixelShader
+	sprite.texture_filter = 0
+
 	
 func HandleDirection():
 	#both Vector2(x,y)
@@ -425,6 +440,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and is_dash_available():
 		ChangeState(States.DashBuffer)
 		
+		
 	
 	if is_on_floor() and not (currentState == States.Dash or currentState == States.DashBuffer):
 		dashCount = 0
@@ -457,6 +473,7 @@ func _physics_process(delta: float) -> void:
 func _on_dash_timer_timeout() -> void:
 	#avoids race condition where dash ends after jumping and triggers falling too soon
 	if currentState == States.Dash:
+		removeDashHighlight() 
 		if is_on_floor():
 			ChangeState(States.Idle)
 		else:

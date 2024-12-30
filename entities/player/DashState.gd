@@ -47,6 +47,7 @@ func EnterState():
 func ExitState():
 	exit_state.emit()
 	Player.canStartCoyoteTime = false
+	Player.removeDashHighlight()
 	
 	
 func Draw():

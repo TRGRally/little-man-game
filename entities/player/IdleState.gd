@@ -6,6 +6,7 @@ var landingSoundPlayed = false
 
 func EnterState():
 	Name = "Idle"
+	Player.removeDashHighlight()
 	Player.maxSpeedThisJump = 0
 	if Player.previousState == States.Fall:
 		landingFrames = 0
