@@ -37,6 +37,8 @@ const ROOM_LOCKED_TIME_S = 0.5
 #model
 const MIDPOINT_OFFSET = -16
 @export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)])
+@export var air_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
+@export var wall_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(0,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
 @export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
 
 @export var sfx_dash: Array[AudioStream]
@@ -379,7 +381,13 @@ func _physics_process(delta: float) -> void:
 
 	if currentState != States.Duck and currentState != States.DuckWalk and currentState != States.Dash:
 		if canUnDuck == true:
-			hitbox_shape.set_point_cloud(normal_hitbox_shape)
+			if is_on_floor():
+				hitbox_shape.set_point_cloud(normal_hitbox_shape)
+			else:
+				if velocity.y < 0 and currentState != States.WallGrab and currentState != States.WallSlide:
+					hitbox_shape.set_point_cloud(wall_coersion_hitbox_shape)
+				else:
+					hitbox_shape.set_point_cloud(air_coersion_hitbox_shape)
 			
 		
 	#update the sprite facing direction if in a state that allows turning
