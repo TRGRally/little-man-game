@@ -2,6 +2,7 @@ extends PlayerState
 
 
 func EnterState():
+	Name = "Locked"
 	%LockedTimer.start(Player.ROOM_LOCKED_TIME_S)
 	
 
