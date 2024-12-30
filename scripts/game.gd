@@ -13,7 +13,7 @@ var cameraIsFollowing = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Engine.set_time_scale(1.0)
+	Engine.set_time_scale(1)
 	cameraFollowObject = player
 
 
