@@ -75,9 +75,15 @@ var maxSpeedThisJump = 0
 func load_sfx(sfx_to_load: Array):
 	#picks one sound from that category to play (e.g. one footstep of many)
 	var index = (rng.randi_range(1, sfx_to_load.size())) - 1
-	#print(str(sfx_to_load[index]))	
-	if %SFXPlayer.stream != sfx_to_load[index]:
-		%SFXPlayer.stream = sfx_to_load[index]
+
+	#creates a new AudioStreamPlayer to allow for overlapping different sound effects
+	var newAudioStream = AudioStreamPlayer.new()
+	add_child(newAudioStream)
+	newAudioStream.stream = sfx_to_load[index]
+	newAudioStream.play()
+	
+	#if %SFXPlayer.stream != sfx_to_load[index]:
+		#%SFXPlayer.stream = sfx_to_load[index]
 
 
 #combat related variables
@@ -176,7 +182,7 @@ func is_dash_available():
 
 func dashHighlight():
 	sprite.material.shader = HighlightShader
-	sprite.material.set_shader_parameter("masque", Vector3(255.0,255.0,255.0))
+	sprite.material.set_shader_parameter("masque", Vector3(500.0,500.0,500.0))
 	sprite.texture_filter = 1
 	
 	
@@ -403,6 +409,10 @@ func _physics_process(delta: float) -> void:
 					hitbox_shape.set_point_cloud(wall_coersion_hitbox_shape)
 				else:
 					hitbox_shape.set_point_cloud(air_coersion_hitbox_shape)
+					
+					
+	if is_dash_available():
+		removeDashHighlight()
 			
 		
 	#update the sprite facing direction if in a state that allows turning
@@ -473,7 +483,6 @@ func _physics_process(delta: float) -> void:
 func _on_dash_timer_timeout() -> void:
 	#avoids race condition where dash ends after jumping and triggers falling too soon
 	if currentState == States.Dash:
-		removeDashHighlight() 
 		if is_on_floor():
 			ChangeState(States.Idle)
 		else:
@@ -486,23 +495,23 @@ func _on_sprite_2d_frame_changed() -> void:
 	
 	if sprite.frame in walk_footstep_frames: 
 		load_sfx(sfx_footsteps)
-		%SFXPlayer.play()
+		#%SFXPlayer.play()
 
 
 func _on_dash_buffer_enter_state() -> void:
 	load_sfx(sfx_dash)
-	%SFXPlayer.play()
+	#%SFXPlayer.play()
 	
 	
 
 func _on_jump_enter_state() -> void:
 	load_sfx(sfx_jump)
-	%SFXPlayer.play()
+	#%SFXPlayer.play()
 
 
 func _on_dash_jump_enter_state(_dashVector: Vector2) -> void:
 	load_sfx(sfx_jump)
-	%SFXPlayer.play()
+	#%SFXPlayer.play()
 
 
 func _on_locked_timer_timeout() -> void:

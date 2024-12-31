@@ -16,6 +16,7 @@ func EnterState():
 func ExitState():
 	#Player.inputVectorBuffer = inputVectorBuffer
 	exit_state.emit()
+
 	
 func Draw():
 	pass
