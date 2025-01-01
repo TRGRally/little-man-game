@@ -10,4 +10,5 @@ border_width_top = 2
 [resource]
 default_font = ExtResource("1_vncdc")
 default_font_size = 8
+ProgressBar/constants/outline_size = 2
 ProgressBar/styles/background = SubResource("StyleBoxFlat_phoyc")

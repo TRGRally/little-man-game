@@ -6,19 +6,20 @@ var rng = RandomNumberGenerator.new()
 @onready var HighlightShader = preload("res://entities/player/color replace.gdshader")
 @onready var SmoothPixelShader = preload("res://scenes/smoothpixel.gdshader")
 
-#fake
+
 const MOVE_SPEED = 140.0
 const DASH_JUMP_MOVE_SPEED = DASH_SPEED
+const MAX_BOOST_SPEED = 400
 
 const SPEED = 25.0
-const AIR_SPEED = 15.0
+const AIR_SPEED = 20.0
 const JUMP_SPEED = -300.0
 const WALL_JUMP_SPEED = -300.0
 const WALL_JUMP_KICKBACK_SPEED = 250.0
 const VARIABLE_JUMP_MULTIPLIER = 0.55
 const VARIABLE_WALLJUMP_MULTIPLIER = 0.85
 const JUMP_BUFFER_TIME_S = 0.15
-const DASH_JUMP_SPEED = -225.0
+const DASH_JUMP_SPEED = -250.0
 const COYOTE_TIME_S = 0.15
 	
 const AIR_FRICTION = 0.99
@@ -182,7 +183,7 @@ func is_dash_available():
 
 func dashHighlight():
 	sprite.material.shader = HighlightShader
-	sprite.material.set_shader_parameter("masque", Vector3(500.0,500.0,500.0))
+	sprite.material.set_shader_parameter("masque", Vector3(0.4, 0.85, 1.0))
 	sprite.texture_filter = 1
 	
 	
@@ -471,7 +472,8 @@ func _physics_process(delta: float) -> void:
 	
 	#run physics
 	if not currentState == States.DashBuffer and not currentState == States.Locked:
-		velocity += externalForce
+		if velocity.length() < MAX_BOOST_SPEED or velocity.dot(externalForce) < 0:
+			velocity += externalForce
 		move_and_slide()
 	else:
 		pass

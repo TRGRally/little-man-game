@@ -42,13 +42,13 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 func _on_grav_pusher_body_entered(body: Node2D) -> void:
 	if body == player:
-		player.externalForce = Vector2(0, -35)
+		player.externalForce = Vector2(0, -50)
 		print(player.externalForce)
 		
 		
 func _on_grav_pusher_2_body_entered(body: Node2D) -> void:
 	if body == player:
-		player.externalForce = Vector2(0, -35)
+		player.externalForce = Vector2(0, -50)
 		print(player.externalForce)
 		
 func _on_grav_pusher_2_body_exited(body: Node2D) -> void:

@@ -1068,7 +1068,6 @@ sfx_jump = Array[AudioStream]([ExtResource("21_ynsao")])
 [node name="DashParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
-z_index = -100
 material = SubResource("CanvasItemMaterial_wxvhd")
 position = Vector2(0, -12)
 emitting = false
