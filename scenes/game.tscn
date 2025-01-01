@@ -445,6 +445,7 @@ position = Vector2(-1100, 520)
 slide_on_ceiling = false
 
 [node name="PointLight2D2" type="PointLight2D" parent="Player"]
+visible = false
 show_behind_parent = true
 z_index = -1
 position = Vector2(0, -12)

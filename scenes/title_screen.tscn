@@ -1,12 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxryp23dychcl"]
+[gd_scene load_steps=13 format=3 uid="uid://dxryp23dychcl"]
 
 [ext_resource type="Texture2D" uid="uid://c7fjpdtyw5f40" path="res://assets/backgrounds/Clouds 1/1.png" id="1_a3ckq"]
+[ext_resource type="Script" path="res://scenes/title_screen.gd" id="1_awwcl"]
 [ext_resource type="Texture2D" uid="uid://c6njhn4f6drj5" path="res://assets/backgrounds/Clouds 1/2.png" id="2_ubdfc"]
 [ext_resource type="Texture2D" uid="uid://cw7y7lpyrin3h" path="res://assets/backgrounds/Clouds 1/4.png" id="3_srrjx"]
 [ext_resource type="Texture2D" uid="uid://c0jfxyifjq666" path="res://assets/menus/titlescreen_hero.png" id="4_kxa4d"]
 [ext_resource type="Texture2D" uid="uid://bqbe2wujuu8l1" path="res://assets/backgrounds/Clouds 1/3.png" id="5_q0dwa"]
+[ext_resource type="FontFile" uid="uid://doxfdb1b0kpbm" path="res://assets/fonts/AOTFShinGoProLight.otf" id="7_jrmpr"]
+[ext_resource type="FontFile" uid="uid://ccd5f2cqw3ydk" path="res://assets/fonts/AOTFShinGoProExLight.otf" id="8_8b608"]
+[ext_resource type="Texture2D" uid="uid://cwt5xmwkel783" path="res://assets/menus/play_circle_24dp_FFFFFF_FILL0_wght300_GRAD200_opsz40.svg" id="9_xr7e4"]
+
+[sub_resource type="Theme" id="Theme_17h53"]
+VBoxContainer/constants/separation = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_u2vh1"]
+font = ExtResource("7_jrmpr")
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_2i2es"]
+line_spacing = -10.0
+font = ExtResource("8_8b608")
+font_size = 20
 
 [node name="TitleScreen" type="Node2D"]
+script = ExtResource("1_awwcl")
 
 [node name="Sky" type="Sprite2D" parent="."]
 scale = Vector2(1.111, 1.111)
@@ -37,23 +54,60 @@ offset = Vector2(176, -72)
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(640, 360)
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
 offset_right = 640.0
 offset_bottom = 360.0
+grow_horizontal = 2
+theme = SubResource("Theme_17h53")
 
 [node name="HBoxContainer" type="VBoxContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 126.0
+offset_bottom = 68.0
+theme_override_constants/separation = 12
 
-[node name="Label2" type="Label" parent="Control/HBoxContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="Control/HBoxContainer"]
 layout_mode = 2
-text = "ｕｎSERIOUS"
 
-[node name="Label" type="Label" parent="Control/HBoxContainer"]
+[node name="Label2" type="Label" parent="Control/HBoxContainer/HBoxContainer"]
 layout_mode = 2
+text = "unSERIOUS"
+label_settings = SubResource("LabelSettings_u2vh1")
+horizontal_alignment = 2
+justification_flags = 0
+
+[node name="Label" type="Label" parent="Control/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 0
 text = "CANDIDATE
 "
+label_settings = SubResource("LabelSettings_2i2es")
+justification_flags = 0
+
+[node name="StartButton" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_jrmpr")
+theme_override_font_sizes/font_size = 12
+text = "start"
+icon = ExtResource("9_xr7e4")
+alignment = 0
+expand_icon = true
+
+[node name="TestButton" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_jrmpr")
+theme_override_font_sizes/font_size = 12
+text = "test"
+icon = ExtResource("9_xr7e4")
+flat = true
+alignment = 0
+expand_icon = true
+
+[connection signal="pressed" from="Control/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/TestButton" to="." method="_on_test_button_pressed"]

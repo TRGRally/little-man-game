@@ -21,6 +21,7 @@ const VARIABLE_WALLJUMP_MULTIPLIER = 0.85
 const JUMP_BUFFER_TIME_S = 0.15
 const DASH_JUMP_SPEED = -250.0
 const COYOTE_TIME_S = 0.15
+const DASH_COYOTE_TIME_S = 0.1
 	
 const AIR_FRICTION = 0.99
 const FRICTION = 0.85
@@ -254,7 +255,7 @@ func HandleDashFloor():
 	if (!is_on_floor() and canStartCoyoteTime):
 		print("dash coyote start")
 		canStartCoyoteTime = false
-		%CoyoteTimer.start(COYOTE_TIME_S)
+		%CoyoteTimer.start(DASH_COYOTE_TIME_S)
 
 func HandleAirMovement(delta, allowedSpeed):
 	if inputVector.x != 0:
@@ -276,14 +277,14 @@ func HandleAirMovement(delta, allowedSpeed):
 func HandleJumpBuffer():
 	if %JumpBuffer.time_left > 0:
 		pass
-		#print(%JumpBuffer.time_left)
+		print(%JumpBuffer.time_left)
 	if Input.is_action_just_pressed("jump"):
-		#print("jump buffer started")
+		print("jump buffer started")
 		%JumpBuffer.start(JUMP_BUFFER_TIME_S)
 	#they must have jump pressed when landing to use their jump buffer
 	if not Input.is_action_pressed("jump"):
 		if %JumpBuffer.time_left > 0:
-			#print("jump buffer cancelled")
+			print("jump buffer cancelled")
 			%JumpBuffer.stop()
 		
 
@@ -291,6 +292,8 @@ func HandleJump():
 	if (is_on_floor()):
 		#jump either just pressed or buffered previously
 		if (%JumpBuffer.time_left > 0 or Input.is_action_just_pressed("jump")):
+			if %JumpBuffer.time_left > 0 and not Input.is_action_just_pressed("jump"):
+				print("BUFFERED JUMP")
 			%JumpBuffer.stop()
 			dashCount = 0
 			if currentState == States.Dash or currentState == States.DashBuffer:
@@ -399,6 +402,8 @@ func _physics_process(delta: float) -> void:
 	#wall direction calculated at start so states use frame correct value
 	GetWallDirection()
 	
+	HandleJumpBuffer()
+		
 	canUnDuck = isUnDuckSafe()
 
 	if currentState != States.Duck and currentState != States.DuckWalk and currentState != States.Dash:
@@ -424,10 +429,21 @@ func _physics_process(delta: float) -> void:
 		else:
 			sprite.flip_h = false
 		
+		
+	
+	
+	
 	currentState.Update(delta)
+	
+	#Dash
+	if Input.is_action_just_pressed("dash") and is_dash_available():
+		print("DASHING")
+		ChangeState(States.DashBuffer)	
 	
 	#health
 	HUD.set_health(currentHealth)
+	
+	
 	
 	
 	
@@ -440,16 +456,11 @@ func _physics_process(delta: float) -> void:
 	inputVector.y = sign(verticalDirection)
 	
 	InputOrLookDirection()
-
-	#handle jump
-	HandleJump()
 		
 	
 		
 		
-	#Dash
-	if Input.is_action_just_pressed("dash") and is_dash_available():
-		ChangeState(States.DashBuffer)
+	
 		
 		
 	

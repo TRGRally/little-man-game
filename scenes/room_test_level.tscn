@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://6rihcwuk2to2"]
+
+[ext_resource type="PackedScene" uid="uid://20vymhe38nsq" path="res://entities/player/player.tscn" id="1_xif2u"]
+[ext_resource type="PackedScene" uid="uid://dwo5jg10b1tbh" path="res://scenes/hud.tscn" id="2_o61hk"]
+
+[node name="RoomTestLevel" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_xif2u")]
+
+[node name="HUD" parent="." instance=ExtResource("2_o61hk")]
+unique_name_in_owner = true

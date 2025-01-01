@@ -40,7 +40,7 @@ func EnterState():
 			Player.velocity = dashPushVector
 			
 	#dash coyote time reset
-	if Player.is_on_floor():
+	if Player.is_on_floor() and direction.y >= 0:
 		Player.canStartCoyoteTime = true
 	
 
@@ -54,12 +54,14 @@ func Draw():
 	
 
 func Update(delta: float):
-	Player.HandleJumpBuffer()
 	Player.HandleDashFloor()
+	
 	HandleAnimations()
 	
 	if not floorDash:
 		Player.velocity = dashPushVector
+		
+	Player.HandleJump()
 	
 
 func HandleAnimations():

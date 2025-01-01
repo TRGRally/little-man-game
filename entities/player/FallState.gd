@@ -22,7 +22,6 @@ func Update(delta: float):
 	#we handle jump before checking for landing to allow the player to get a perf hop
 	Player.HandleLanding()
 	Player.HandleJump()
-	Player.HandleJumpBuffer()
 	Player.HandleAirMovement(delta, Player.MOVE_SPEED)
 	Player.HandleFriction()
 	Player.HandleWall()

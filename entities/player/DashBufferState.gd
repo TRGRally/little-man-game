@@ -24,6 +24,7 @@ func Draw():
 
 func Update(delta: float):
 	HandleAnimations()
+	Player.HandleJump()
 	
 	
 
