@@ -7,44 +7,62 @@ var rng = RandomNumberGenerator.new()
 @onready var SmoothPixelShader = preload("res://scenes/smoothpixel.gdshader")
 
 
-const MOVE_SPEED = 140.0
-const DASH_JUMP_MOVE_SPEED = DASH_SPEED
-const MAX_BOOST_SPEED = 400
+const MOVE_SPEED: float = 140.0
+const DASH_JUMP_MOVE_SPEED: float = DASH_SPEED
+const MAX_BOOST_SPEED: float = 400.0
 
-const SPEED = 25.0
-const AIR_SPEED = 20.0
-const JUMP_SPEED = -300.0
-const WALL_JUMP_SPEED = -300.0
-const WALL_JUMP_KICKBACK_SPEED = 250.0
-const VARIABLE_JUMP_MULTIPLIER = 0.55
-const VARIABLE_WALLJUMP_MULTIPLIER = 0.85
-const JUMP_BUFFER_TIME_S = 0.15
-const DASH_JUMP_SPEED = -250.0
-const COYOTE_TIME_S = 0.15
-const DASH_COYOTE_TIME_S = 0.1
-	
-const AIR_FRICTION = 0.99
-const FRICTION = 0.85
-const GRAVITY = 900
-const FALL_GRAVITY = 1200
-const MAX_FALL_SPEED = 450
-const FAST_FALL_SPEED_MULTIPLIER = 1.25
-const FAST_FALL_GRAVITY_MULTIPLIER = 1.3
-const WALL_SLIDE_SPEED = 100
-const DASH_SPEED = 400
-const DASH_GRAVITY = 0
-const DASH_FRICTION = 0
-const DASH_TIME_S = 0.1
-const DASH_BUFFER_TIME_S = 0.04
+const SPEED: float = 25.0
+const AIR_SPEED: float = 20.0
+const JUMP_SPEED: float = -300.0
+const WALL_JUMP_SPEED: float = -300.0
+const WALL_JUMP_KICKBACK_SPEED: float = 250.0
+const VARIABLE_JUMP_MULTIPLIER: float = 0.5
+const VARIABLE_WALLJUMP_MULTIPLIER: float = 0.85
+const JUMP_BUFFER_TIME_S: float = 0.15
+const DASH_JUMP_SPEED: float = -250.0
+const COYOTE_TIME_S: float = 0.15
+const DASH_COYOTE_TIME_S: float = 0.1
 
-const ROOM_LOCKED_TIME_S = 0.5
+const AIR_FRICTION: float = 0.99
+const FRICTION: float = 0.85
+const GRAVITY: float = 900.0
+const FALL_GRAVITY: float = 1200.0
+const MAX_FALL_SPEED: float = 400.0
+const FAST_FALL_SPEED_MULTIPLIER: float = 1.2
+const FAST_FALL_GRAVITY_MULTIPLIER: float = 1.3
+const WALL_SLIDE_SPEED: float = 100.0
+const DASH_SPEED: float = 400.0
+const DASH_GRAVITY: float = 0.0
+const DASH_FRICTION: float = 0.0
+const DASH_TIME_S: float = 0.1
+const DASH_BUFFER_TIME_S: float = 0.04
+
+const ROOM_LOCKED_TIME_S: float = 0.5
 
 #model
-const MIDPOINT_OFFSET = -16
-@export var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)])
-@export var air_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
-@export var wall_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(0,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
-@export var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
+const MIDPOINT_OFFSET: int = -16
+var hitboxes = {
+	"default": PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)]),
+	"fall_coersion": PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)]),
+	"air_coersion": PackedVector2Array([Vector2(0,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)]),
+	"shrunk": PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
+}
+var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)])
+var fall_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
+var air_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(0,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
+var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
+
+
+var currentHitboxName = "default"
+
+func changeHitbox(newHitboxName):
+	if currentHitboxName == newHitboxName:
+		return
+		
+	print("[hitbox] " + str(newHitboxName))
+	hitbox_shape.set_point_cloud(hitboxes[newHitboxName])
+	currentHitboxName = newHitboxName
+	
 
 @export var sfx_dash: Array[AudioStream]
 @export var sfx_footsteps: Array[AudioStream]
@@ -52,25 +70,29 @@ const MIDPOINT_OFFSET = -16
 @export var sfx_jump: Array[AudioStream]
 
 #when to play footstep sounds in the walk animation
-var walk_footstep_frames = [3,7]
+var walk_footstep_frames: Array[int] = [3, 7]
 
-var dashCount = 0
-var allowedDashes = 1
+var dashCount: int = 0
+var allowedDashes: int = 1
 
-var inputVector = Vector2.ZERO
-var facingVector = Vector2.ZERO
-var dashVector = Vector2.ZERO
-var wallVector = Vector2.ZERO
-var lastWall = Vector2.ZERO
-var wishdir = sign(inputVector.x)
-var canUnDuck = false
-var canStartCoyoteTime = true
+var previousPositionVector: Vector2 = Vector2.ZERO
 
+var inputVector: Vector2 = Vector2.ZERO
+var facingVector: Vector2 = Vector2.ZERO
+var dashVector: Vector2 = Vector2.ZERO
+var wallVector: Vector2 = Vector2.ZERO
+var lastWall: Vector2 = Vector2.ZERO
+var wishdir: int = sign(inputVector.x)
+var canUnDuck: bool = false
+var canStartCoyoteTime: bool = true
+
+var wallSpeedRetained: float = 0.0
 
 var externalForce: Vector2 = Vector2.ZERO
 
 #debug
-var maxSpeedThisJump = 0
+var maxSpeedThisJump: float = 0.0
+
 
 
 
@@ -79,8 +101,9 @@ func load_sfx(sfx_to_load: Array):
 	var index = (rng.randi_range(1, sfx_to_load.size())) - 1
 
 	#creates a new AudioStreamPlayer to allow for overlapping different sound effects
-	var newAudioStream = AudioStreamPlayer.new()
+	var newAudioStream: Node = AudioStreamPlayer.new()
 	add_child(newAudioStream)
+	newAudioStream.bus = "Player"
 	newAudioStream.stream = sfx_to_load[index]
 	newAudioStream.play()
 	
@@ -89,10 +112,10 @@ func load_sfx(sfx_to_load: Array):
 
 
 #combat related variables
-var maxHealth = 5
-var startingHealth = maxHealth
+var maxHealth: int = 5
+var startingHealth: int = maxHealth
 
-var currentHealth = startingHealth
+var currentHealth: int = startingHealth
 
 func damage(amount):
 	var newHealth = currentHealth - amount
@@ -110,10 +133,11 @@ func damage(amount):
 
 
 #state machine stuff
-@onready var States = $StateMachine
-var currentState = null
-var previousState = null
-func ChangeState(newState):
+@onready var States: Node = $StateMachine
+var currentState: PlayerState = null
+var previousState: PlayerState = null
+
+func ChangeState(newState: PlayerState):
 	if (newState != null and newState != currentState):
 		previousState = currentState
 		currentState = newState
@@ -126,14 +150,14 @@ func ChangeState(newState):
 		return
 
 
-@onready var HUD = %HUD
+@onready var HUD: CanvasLayer = %HUD
 @onready var sprite = $Sprite2D
-@onready var rc_bottomLeft = $Raycasts/WallJump/BottomLeft
-@onready var rc_bottomRight = $Raycasts/WallJump/BottomRight
-@onready var rc_duckRight = $Raycasts/Duck/TopRight
-@onready var rc_duckLeft = $Raycasts/Duck/TopLeft
-
-@onready var DashSFX = $DashSFX
+@onready var rc_bottomLeft: RayCast2D = $Raycasts/WallJump/BottomLeft
+@onready var rc_topLeft: RayCast2D = $Raycasts/WallJump/TopLeft
+@onready var rc_bottomRight: RayCast2D = $Raycasts/WallJump/BottomRight
+@onready var rc_topRight: RayCast2D = $Raycasts/WallJump/TopRight
+@onready var rc_duckRight: RayCast2D = $Raycasts/Duck/TopRight
+@onready var rc_duckLeft: RayCast2D = $Raycasts/Duck/TopLeft
 
 @onready var DashParticles: GPUParticles2D = %DashParticles
 @onready var DashJumpParticles: GPUParticles2D = %DashJumpParticles
@@ -156,7 +180,9 @@ func _ready():
 	
 	#raycast exceptions
 	rc_bottomLeft.add_exception(self)
+	rc_topLeft.add_exception(self)
 	rc_bottomRight.add_exception(self)
+	rc_topRight.add_exception(self)
 	
 	
 	#init statemachine
@@ -187,6 +213,11 @@ func dashHighlight():
 	sprite.material.set_shader_parameter("masque", Vector3(0.4, 0.85, 1.0))
 	sprite.texture_filter = 1
 	
+func dashBufferHighlight():
+	sprite.material.shader = HighlightShader
+	sprite.material.set_shader_parameter("masque", Vector3(1.0, 1.0, 1.0))
+	sprite.texture_filter = 1
+	
 	
 func removeDashHighlight():
 	sprite.material.shader = SmoothPixelShader
@@ -197,9 +228,13 @@ func HandleDirection():
 	#both Vector2(x,y)
 	var activeDirection = inputVector
 	var passiveDirection = Vector2(sign(velocity.x), sign(velocity.y))
+	var prevDirection = facingVector
+	
 	#separately assign x and y so they dont overwrite each other
 	if activeDirection.x != 0:
 		facingVector.x = activeDirection.x
+	else:
+		facingVector.x = prevDirection.x
 	#y should only persist in dash or dash buffering
 	if currentState == States.Dash or currentState == States.DashBuffer:
 		#individial movement direction is pressed, favour orthogonal over diagonal
@@ -232,13 +267,16 @@ func HandleGravity(delta, gravity = GRAVITY, maxFallSpeed = MAX_FALL_SPEED):
 func HandleFalling():
 	if currentState == States.WallSlide:
 		if not (Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")):
+			print("-> Player released slide input on wall")
 			ChangeState(States.Fall)
 		if wallVector == Vector2.ZERO:
+			print("-> wallVector is zero")
 			ChangeState(States.Fall)
 		return
 	
 	if currentState == States.WallGrab:
 		if not Input.is_action_pressed("grab"):
+			print("-> Player let go of wall")
 			ChangeState(States.Fall)
 		return
 		
@@ -246,6 +284,7 @@ func HandleFalling():
 	if (!is_on_floor()):
 		%CoyoteTimer.start(COYOTE_TIME_S)
 		print("started coyote timer")
+		print("-> Standard falling off ledge check, started coyote timer. " + currentState.Name + " from " + previousState.Name)
 		ChangeState(States.Fall)
 
 func HandleDashFloor():
@@ -277,7 +316,7 @@ func HandleAirMovement(delta, allowedSpeed):
 func HandleJumpBuffer():
 	if %JumpBuffer.time_left > 0:
 		pass
-		print(%JumpBuffer.time_left)
+		#print(%JumpBuffer.time_left)
 	if Input.is_action_just_pressed("jump"):
 		print("jump buffer started")
 		%JumpBuffer.start(JUMP_BUFFER_TIME_S)
@@ -296,7 +335,12 @@ func HandleJump():
 				print("BUFFERED JUMP")
 			%JumpBuffer.stop()
 			dashCount = 0
-			if currentState == States.Dash or currentState == States.DashBuffer:
+			if currentState == States.Dash:
+				if dashVector.x != 0:
+					ChangeState(States.DashJump)
+				else: 
+					return
+			elif currentState == States.DashBuffer:
 				ChangeState(States.DashJump)
 			else:
 				ChangeState(States.Jump)
@@ -321,9 +365,9 @@ func isUnDuckSafe():
 		return true
 
 func GetWallDirection():
-	if rc_bottomRight.is_colliding():
+	if rc_bottomRight.is_colliding() or rc_topRight.is_colliding():
 		wallVector = Vector2.RIGHT
-	elif rc_bottomLeft.is_colliding():
+	elif rc_bottomLeft.is_colliding() or rc_topLeft.is_colliding():
 		wallVector = Vector2.LEFT
 	else:
 		wallVector = Vector2.ZERO
@@ -331,7 +375,7 @@ func GetWallDirection():
 		
 func HandleWall():
 	if wallVector != Vector2.ZERO:
-		if Input.is_action_pressed("grab") and currentState != States.WallGrab:
+		if Input.is_action_pressed("grab") and currentState != States.WallGrab and velocity.y >= 0:
 			ChangeState(States.WallGrab)
 			return
 	
@@ -406,15 +450,23 @@ func _physics_process(delta: float) -> void:
 		
 	canUnDuck = isUnDuckSafe()
 
-	if currentState != States.Duck and currentState != States.DuckWalk and currentState != States.Dash:
+	if currentState != States.Duck and currentState != States.DuckWalk and currentState != States.Dash and currentState != States.DashJump:
+		#print("[hitbox] in state to change hitbox")
 		if canUnDuck == true:
+			#print("[hitbox] canUnDuck == true")
 			if is_on_floor():
-				hitbox_shape.set_point_cloud(normal_hitbox_shape)
+				#print("[hitbox] is_on_floor(): normal_hitbox_shape")
+				changeHitbox("default")
 			else:
-				if velocity.y < 0 and currentState != States.WallGrab and currentState != States.WallSlide:
-					hitbox_shape.set_point_cloud(wall_coersion_hitbox_shape)
+				if currentState == States.WallGrab or currentState == States.WallSlide:
+					#print("[hitbox] WallGrab or WallSlide: normal_hitbox_shape")
+					changeHitbox("default")
+				elif velocity.y < 0:
+					#print("[hitbox] velocity < 0: wall_coersion_hitbox_shape")
+					changeHitbox("air_coersion")
 				else:
-					hitbox_shape.set_point_cloud(air_coersion_hitbox_shape)
+					#print("[hitbox] else: air_coersion_hitbox_shape")
+					changeHitbox("fall_coersion")
 					
 					
 	if is_dash_available():
@@ -444,11 +496,6 @@ func _physics_process(delta: float) -> void:
 	HUD.set_health(currentHealth)
 	
 	
-	
-	
-	
-	
-	
 	var horizontalDirection := Input.get_axis("move_left", "move_right")
 	var verticalDirection := Input.get_axis("move_up", "move_down")
 	
@@ -456,39 +503,37 @@ func _physics_process(delta: float) -> void:
 	inputVector.y = sign(verticalDirection)
 	
 	InputOrLookDirection()
-		
-	
-		
-		
-	
-		
-		
+
 	
 	if is_on_floor() and not (currentState == States.Dash or currentState == States.DashBuffer):
 		dashCount = 0
 			
-	HUD.set_velocity(velocity)
+	
 	wishdir = sign(inputVector.x)
 	HUD.set_input_direction(wishdir)
 	
 	HandleDirection()
 	
-	$DebugText.text = currentState.Name
 	
-	if abs(velocity.x) > maxSpeedThisJump:
-		maxSpeedThisJump = abs(velocity.x)
-		HUD.set_max_speed(maxSpeedThisJump)
-	
-	
-	
+	previousPositionVector = global_position
 	#run physics
 	if not currentState == States.DashBuffer and not currentState == States.Locked:
+		
 		if velocity.length() < MAX_BOOST_SPEED or velocity.dot(externalForce) < 0:
 			velocity += externalForce
+			
+		HUD.set_velocity(velocity)
+		$DebugText.text = currentState.Name
+		if abs(velocity.x) > maxSpeedThisJump:
+			maxSpeedThisJump = abs(velocity.x)
+			HUD.set_max_speed(maxSpeedThisJump)
+		
 		move_and_slide()
 	else:
 		pass
 		#print("vel in buffer = " + str(velocity.length()) + " " + str(velocity)) 
+	
+	
 	
 
 
@@ -497,7 +542,17 @@ func _on_dash_timer_timeout() -> void:
 	#avoids race condition where dash ends after jumping and triggers falling too soon
 	if currentState == States.Dash:
 		if is_on_floor():
-			ChangeState(States.Idle)
+			if inputVector.x != 0:
+				if inputVector.y > 0:
+					ChangeState(States.DuckWalk)
+				else:
+					print("-> Dash timer timeout, change to walk")
+					ChangeState(States.Walk)
+			else:
+				if inputVector.y > 0:
+					ChangeState(States.Duck)
+				else:
+					ChangeState(States.Idle)
 		else:
 			ChangeState(States.Fall)
 
@@ -530,3 +585,8 @@ func _on_dash_jump_enter_state(_dashVector: Vector2) -> void:
 func _on_locked_timer_timeout() -> void:
 	if currentState == States.Locked:
 		ChangeState(previousState)
+
+
+func _on_wall_jump_enter_state(_lastWall) -> void:
+	print("WALL JUMPING")
+	load_sfx(sfx_jump)

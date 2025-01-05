@@ -68,6 +68,7 @@
 [ext_resource type="LabelSettings" uid="uid://bjchqc57a2i27" path="res://scenes/devhud_label_settings.tres" id="65_8wb8o"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wxvhd"]
+blend_mode = 1
 light_mode = 1
 
 [sub_resource type="Curve" id="Curve_348bb"]
@@ -1065,7 +1066,7 @@ sfx_jump = Array[AudioStream]([ExtResource("21_ynsao")])
 [node name="DashParticles" type="GPUParticles2D" parent="." groups=["PP"]]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
-z_index = 6
+z_index = -100
 material = SubResource("CanvasItemMaterial_wxvhd")
 position = Vector2(0, -12)
 emitting = false
@@ -1323,7 +1324,6 @@ target_position = Vector2(0, -12)
 unique_name_in_owner = true
 stream = ExtResource("39_1cjw1")
 max_polyphony = 10
-bus = &"Player"
 
 [connection signal="frame_changed" from="Sprite2D" to="." method="_on_sprite_2d_frame_changed"]
 [connection signal="enter_state" from="StateMachine/Walk" to="WalkParticles" method="_on_walk_enter_state"]
@@ -1340,7 +1340,6 @@ bus = &"Player"
 [connection signal="emit_right_particles" from="StateMachine/WallSlide" to="WallSlideRightParticles" method="_on_wall_slide_emit_right_particles"]
 [connection signal="stop_left_particles" from="StateMachine/WallSlide" to="WallSlideLeftParticles" method="_on_wall_slide_stop_left_particles"]
 [connection signal="stop_right_particles" from="StateMachine/WallSlide" to="WallSlideRightParticles" method="_on_wall_slide_stop_right_particles"]
-[connection signal="enter_state" from="StateMachine/WallJump" to="." method="_on_wall_jump_enter_state"]
 [connection signal="enter_state" from="StateMachine/WallJump" to="WallJumpLeftParticles" method="_on_wall_jump_enter_state"]
 [connection signal="enter_state" from="StateMachine/WallJump" to="WallJumpRightParticles" method="_on_wall_jump_enter_state"]
 [connection signal="exit_state" from="StateMachine/WallJump" to="WallJumpLeftParticles" method="_on_wall_jump_exit_state"]

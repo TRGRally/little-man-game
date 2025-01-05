@@ -17,11 +17,7 @@ func _ready() -> void:
 	cameraFollowObject = player
 
 
-func _input(event) -> void:
-	if event.is_action_pressed("menu"):
-		print("menu pressed")
-		get_tree().change_scene_to_file("res://scenes/title_screen.tscn")
-
+ 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

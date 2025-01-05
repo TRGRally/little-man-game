@@ -1,14 +1,25 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://b5715plb4akvc"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://b5715plb4akvc"]
 
 [ext_resource type="FontFile" uid="uid://bhwmojb6xye7q" path="res://assets/fonts/GeistMono-VariableFont_wght.ttf" id="1_vncdc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phoyc"]
 bg_color = Color(0, 0, 0, 0.392157)
-border_width_left = 2
-border_width_top = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mq2uk"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 0.603922)
+border_color = Color(0.8, 1, 1, 0)
+anti_aliasing = false
 
 [resource]
 default_font = ExtResource("1_vncdc")
-default_font_size = 8
-ProgressBar/constants/outline_size = 2
+default_font_size = 7
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+ProgressBar/colors/font_color = Color(0.95, 0.95, 0.95, 1)
+ProgressBar/colors/font_outline_color = Color(0, 0, 0, 1)
+ProgressBar/constants/outline_size = 0
 ProgressBar/styles/background = SubResource("StyleBoxFlat_phoyc")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_mq2uk")

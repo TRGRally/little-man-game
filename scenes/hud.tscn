@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwo5jg10b1tbh"]
+[gd_scene load_steps=5 format=3 uid="uid://dwo5jg10b1tbh"]
 
 [ext_resource type="Script" path="res://scenes/fps.gd" id="1_852id"]
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="1_pwwql"]
+[ext_resource type="LabelSettings" uid="uid://bjchqc57a2i27" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
 
 [sub_resource type="GDScript" id="GDScript_6laai"]
 resource_name = "res://scripts/hud.gd"
@@ -17,8 +18,8 @@ func set_health(health):
 func set_velocity(velocity: Vector2):
 	var speed = snapped(velocity.length(), 0)
 	%DevHUD/Velocity.text = str(speed)
-	%DevHUD/Speedometer.value = 	abs(snapped(velocity.x, 0))
-	%DevHUD/Xvel.text = str(abs(snapped(velocity.x, 0)))
+	%Speedometer/Bar.value = abs(snapped(velocity.x, 0))
+	%Speedometer/Xvel.text = str(abs(snapped(velocity.x, 0)))
 	%DevHUD/Yvel.text = str(abs(snapped(abs(velocity.y), 0)))
 	
 	
@@ -49,18 +50,22 @@ script = SubResource("GDScript_6laai")
 [node name="Control" type="Control" parent="."]
 layout_direction = 2
 layout_mode = 3
-anchors_preset = 0
-size_flags_horizontal = 0
-size_flags_vertical = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("1_pwwql")
 
 [node name="DevHUD" type="VBoxContainer" parent="Control"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 1
-offset_left = 2.0
-offset_right = 26.0
-offset_bottom = 104.0
-theme_override_constants/separation = 0
+offset_right = 72.0
+offset_bottom = 73.0
+theme_override_constants/separation = -1
 
 [node name="FPS" type="Label" parent="Control/DevHUD"]
 layout_mode = 2
@@ -69,6 +74,7 @@ size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "FPS
 "
+label_settings = ExtResource("2_0avo8")
 script = ExtResource("1_852id")
 
 [node name="Velocity" type="Label" parent="Control/DevHUD"]
@@ -77,13 +83,7 @@ size_flags_horizontal = 0
 size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "vel"
-
-[node name="Xvel" type="Label" parent="Control/DevHUD"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_stretch_ratio = 0.48
-theme_type_variation = &"HeaderSmall"
-text = "xvel"
+label_settings = ExtResource("2_0avo8")
 
 [node name="Yvel" type="Label" parent="Control/DevHUD"]
 layout_mode = 2
@@ -91,6 +91,7 @@ size_flags_horizontal = 0
 size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "yvel"
+label_settings = ExtResource("2_0avo8")
 
 [node name="MaxSpeedThisJump" type="Label" parent="Control/DevHUD"]
 layout_mode = 2
@@ -98,6 +99,7 @@ size_flags_horizontal = 0
 size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "0"
+label_settings = ExtResource("2_0avo8")
 
 [node name="InputDirection" type="Label" parent="Control/DevHUD"]
 layout_mode = 2
@@ -106,6 +108,7 @@ size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "xdir
 "
+label_settings = ExtResource("2_0avo8")
 
 [node name="FacingDirection" type="Label" parent="Control/DevHUD"]
 layout_mode = 2
@@ -114,6 +117,7 @@ size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "xdir
 "
+label_settings = ExtResource("2_0avo8")
 
 [node name="Deaths" type="Label" parent="Control/DevHUD"]
 layout_mode = 2
@@ -122,6 +126,7 @@ size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "0
 "
+label_settings = ExtResource("2_0avo8")
 horizontal_alignment = 3
 
 [node name="Health" type="Label" parent="Control/DevHUD"]
@@ -131,11 +136,42 @@ size_flags_stretch_ratio = 0.48
 theme_type_variation = &"HeaderSmall"
 text = "0
 "
+label_settings = ExtResource("2_0avo8")
 horizontal_alignment = 3
 
-[node name="Speedometer" type="ProgressBar" parent="Control/DevHUD"]
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -13.0
+offset_right = 30.0
+grow_vertical = 0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Speedometer" type="HBoxContainer" parent="Control/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Bar" type="ProgressBar" parent="Control/MarginContainer/Speedometer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 max_value = 1000.0
 step = 1.0
-rounded = true
 show_percentage = false
+
+[node name="Xvel" type="Label" parent="Control/MarginContainer/Speedometer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.48
+theme_type_variation = &"HeaderSmall"
+text = "xvel"
+label_settings = ExtResource("2_0avo8")

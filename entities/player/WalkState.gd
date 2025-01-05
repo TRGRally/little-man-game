@@ -3,12 +3,23 @@ extends PlayerState
 signal enter_state
 signal exit_state
 
+const LANDING_ANIMATION_LENGTH = 8
+var landingFrames = 0
+var landingSoundPlayed = false
+
+var firstFrame = true
+
 func EnterState():
 	enter_state.emit()
 	
 	Name = "Walk"
+	
+	if Player.previousState == States.Fall:
+		landingFrames = 0
+		landingSoundPlayed = false
 
 func ExitState():
+	firstFrame = true
 	exit_state.emit()
 	
 	
@@ -21,9 +32,19 @@ func Update(delta: float):
 	Player.HandleFalling()
 	Player.HandleJump()
 	HandleMovement(delta)
-	Player.HandleFriction()
+	
+	if not firstFrame:
+		Player.HandleFriction()
+	else:
+		print("SKIPPING FRICTION")
+		
 	HandleAnimations()
 	HandleIdle()
+	
+	landingFrames += 1
+	
+	if firstFrame == true:
+		firstFrame = false
 	
 	
 func HandleIdle():

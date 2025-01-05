@@ -6,9 +6,18 @@ signal exit_state
 const JUMP_PARTICLE_FRAMES = 0
 var currentFrame = 0
 
+var horizontalPushSpeed = 0
+var preWallHorizontalSpeed = 0
+
 func EnterState():
 	Name = "DashJump"
 	enter_state.emit(Player.dashVector)
+	
+	Player.changeHitbox("shrunk")
+	
+	var facingVector = Player.facingVector
+	if facingVector.x == 0:
+		facingVector = Vector2.RIGHT
 	
 	#diagonal down dash jump goes less high to account for the fact the movement vector isnt normalised
 	#this lets the player choose distance at the cost of height
@@ -18,9 +27,11 @@ func EnterState():
 		Player.velocity.y = Player.JUMP_SPEED
 	
 	if Player.inputVector.x != 0:
-		Player.velocity.x = max(abs(Player.velocity.x), Player.inputVector.length() * Player.DASH_SPEED) * Player.inputVector.x
+		horizontalPushSpeed = max(abs(Player.velocity.x), Player.inputVector.length() * Player.DASH_SPEED) * Player.inputVector.x
+		Player.velocity.x = horizontalPushSpeed
 	else:
-		Player.velocity.x = max(abs(Player.velocity.x), Player.facingVector.length() * Player.DASH_SPEED) * Player.facingVector.x
+		horizontalPushSpeed = max(abs(Player.velocity.x), facingVector.length() * Player.DASH_SPEED) * facingVector.x
+		Player.velocity.x = horizontalPushSpeed
 
 	print(str(Player.velocity.x))
 	
@@ -42,6 +53,13 @@ func Update(delta: float):
 	Player.HandleFriction()
 	HandleAnimations()
 	
+	
+	if Player.is_on_wall_only():
+		if preWallHorizontalSpeed != 0:
+			Player.velocity.x = preWallHorizontalSpeed
+	else:
+		preWallHorizontalSpeed = Player.velocity.x
+	
 	currentFrame += 1
 
 	
@@ -54,5 +72,8 @@ func HandleJumpToFall():
 		Player.ChangeState(States.JumpPeak)
 	
 func HandleAnimations():
-	Player.sprite.animation = "jump_up"
+	if Player.dashVector.y > 0:
+		Player.sprite.animation = "dash"
+	else:
+		Player.sprite.animation = "jump_up"
 	Player.DashJumpParticles.process_material.direction = Vector3(Player.velocity.x, Player.velocity.y, 0)

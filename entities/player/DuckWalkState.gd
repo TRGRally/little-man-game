@@ -19,7 +19,7 @@ func Draw():
 
 func Update(delta: float):
 	
-	Player.hitbox_shape.set_point_cloud(Player.shrunk_hitbox_shape)
+	Player.changeHitbox("shrunk")
 	
 	canUnDuck = Player.canUnDuck
 		
@@ -47,7 +47,12 @@ func HandleMovement(delta):
 func HandleDuck():
 	if canUnDuck == true:
 		if not Input.is_action_pressed("move_down"):
-			Player.ChangeState(States.Walk)	
+			if Player.inputVector.x == 0:
+				print("-> Unducking and still, change to idle")
+				Player.ChangeState(States.Idle)
+			else:
+				print("-> Unducking and moving, change to walk")
+				Player.ChangeState(States.Walk)	
 		
 	
 func HandleAnimations():

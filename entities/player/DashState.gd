@@ -13,9 +13,15 @@ func EnterState():
 	%DashTimer.start()
 	
 	var directionRaw: Vector2 = Player.dashVector
+	if directionRaw == Vector2.ZERO:
+		directionRaw = Vector2.RIGHT
+	
 	var direction: Vector2 = directionRaw.normalized()
 	
-	Player.hitbox_shape.set_point_cloud(Player.shrunk_hitbox_shape)
+	Player.changeHitbox("shrunk")
+	
+	#dash highlight shader
+	Player.dashHighlight()
 	
 	Player.dashCount = Player.dashCount + 1
 	
@@ -32,7 +38,7 @@ func EnterState():
 			dashPushVector = Player.DASH_SPEED * directionRaw
 			Player.velocity = dashPushVector
 	else:
-		if direction.dot(Player.velocity.normalized()) > 0 and Player.velocity.length() > Player.DASH_SPEED:
+		if direction.dot(Player.velocity.normalized()) > 0 and Player.velocity.length() > Player.DASH_SPEED and direction.y > 0:
 			dashPushVector = Player.velocity.length() * direction
 			Player.velocity = dashPushVector
 		else:

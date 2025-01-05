@@ -26,7 +26,11 @@ func EnterState():
 	else:
 		#keep y speed if theyre already travelling upward
 		Player.velocity.y = Player.velocity.y
-	Player.velocity.x = Player.WALL_JUMP_KICKBACK_SPEED * (-1 * Player.wallVector.x)
+	
+	if Player.previousState == States.WallGrab:
+		Player.velocity.x = (Player.WALL_JUMP_KICKBACK_SPEED / 3) * (-1 * Player.wallVector.x)
+	else:
+		Player.velocity.x = Player.WALL_JUMP_KICKBACK_SPEED * (-1 * Player.wallVector.x)
 	
 	
 	if Player.lastWall.x > 0:
