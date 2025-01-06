@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/fps.gd" id="1_852id"]
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="1_pwwql"]
-[ext_resource type="LabelSettings" uid="uid://bjchqc57a2i27" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
+[ext_resource type="LabelSettings" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
 
 [sub_resource type="GDScript" id="GDScript_6laai"]
 resource_name = "res://scripts/hud.gd"
@@ -24,7 +24,14 @@ func set_velocity(velocity: Vector2):
 	
 func set_state(state: String):
 	%DevHUD/State.text = state
+
+func set_timer(time: float):
+	print(\"setting timer\")
+	var timeInt = int(time)
+	#time is ms so convert to minutes and seconds string
+	var timeFormatted = snapped(time, 0.01)
 	
+	%DevHUD/RaceTime.text = str(timeFormatted)
 	
 func set_max_speed(maxSpeedThisJump: float):
 	%DevHUD/MaxSpeedThisJump.text = str(snapped(maxSpeedThisJump, 0))
@@ -143,6 +150,10 @@ label_settings = ExtResource("2_0avo8")
 horizontal_alignment = 3
 
 [node name="State" type="Label" parent="Control/DevHUD"]
+layout_mode = 2
+label_settings = ExtResource("2_0avo8")
+
+[node name="RaceTime" type="Label" parent="Control/DevHUD"]
 layout_mode = 2
 label_settings = ExtResource("2_0avo8")
 

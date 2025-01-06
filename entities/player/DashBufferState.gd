@@ -10,6 +10,7 @@ func EnterState():
 	%DashBuffer.start(Player.DASH_BUFFER_TIME_S)
 	
 	Player.dashBufferHighlight()
+	#Player.dashStamps()
 	
 
 func ExitState():

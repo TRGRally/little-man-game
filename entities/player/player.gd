@@ -210,18 +210,55 @@ func is_dash_available():
 
 func dashHighlight():
 	sprite.material.shader = HighlightShader
-	sprite.material.set_shader_parameter("masque", Vector3(0.4, 0.85, 1.0))
+	sprite.material.set_shader_parameter("masque", Vector4(0.4, 0.85, 1.0, 1.0))
 	sprite.texture_filter = 1
 	
 func dashBufferHighlight():
 	sprite.material.shader = HighlightShader
-	sprite.material.set_shader_parameter("masque", Vector3(1.0, 1.0, 1.0))
+	sprite.material.set_shader_parameter("masque", Vector4(1.0, 1.0, 1.0, 1.0))
 	sprite.texture_filter = 1
 	
 	
 func removeDashHighlight():
 	sprite.material.shader = SmoothPixelShader
 	sprite.texture_filter = 0
+ 
+func stampSprite():
+	#creates a new sprite2d copy of the player's current sprite and places it where the player is
+	var stamp: Node2D = AnimatedSprite2D.new()
+	stamp.sprite_frames = sprite.sprite_frames
+	stamp.animation = "dash"
+	stamp.frame = stamp.frame
+	
+	stamp.pause()
+	stamp.flip_h = sprite.flip_h
+	stamp.position = Vector2(self.position.x, self.position.y + MIDPOINT_OFFSET)
+	var mat = ShaderMaterial.new()
+	mat.shader = load("res://ghost.gdshader")
+	mat.shader
+	stamp.material = mat
+	
+	get_tree().root.add_child(stamp)
+	var stampTimer: Timer = Timer.new()
+	stampTimer.one_shot = true
+	add_child(stampTimer)
+	stampTimer.start(DASH_BUFFER_TIME_S + DASH_TIME_S + 0.1)
+	
+	await stampTimer.timeout
+	stamp.queue_free()
+	
+	
+func dashStamps():
+	stampSprite()
+	var timer: Timer = Timer.new()
+	timer.one_shot = true
+	add_child(timer)
+	timer.start(0.08)
+	await timer.timeout
+	stampSprite()
+	timer.start(0.08)
+	await timer.timeout
+	stampSprite()
 
 	
 func HandleDirection():

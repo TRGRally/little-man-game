@@ -1,19 +1,20 @@
 shader_type canvas_item;
 
 //uniforms for color replacement
-uniform vec3 masque = vec3(0.1, 0.85, 1.0);
+uniform vec4 masque = vec4(0.1, 0.85, 1.0, 1.0);
 uniform vec4 outline_color = vec4(0.0, 0.6, 1.0, 1.0);
-//hard-coded values for outline
+uniform float flickering_speed = 25.0; //alerts the player that this is a vulnerable state by flashing the outline
+uniform float minimal_flickering_alpha = 0.2; //how transparent the outline goes
+//hard-coded value for outline
 const int width = 1; //this can be made float if we dont care about pixel perfect
-const float flickering_speed = 25.0; //alerts the player that this is a vulnerable state by flashing the outline
-const float minimal_flickering_alpha = 0.2; //how transparent the outline goes
+
 
 
 void fragment() {
     vec4 base_color = texture(TEXTURE, UV);
 
     // Apply color replacement
-    base_color.rgb = normalize(masque);
+    base_color.rgb = normalize(masque.rgb);
 
     float pixel_size_x = 1.0 / float(textureSize(TEXTURE, 0).x);
     float pixel_size_y = 1.0 / float(textureSize(TEXTURE, 0).y);
@@ -37,11 +38,11 @@ void fragment() {
             }
         }
     }
-
+	
     // Set the final color
     if (is_inside_outline) {
-        COLOR = resulting_color;
+        COLOR = vec4(resulting_color.r, resulting_color.g, resulting_color.b, masque.a);
     } else {
-        COLOR = base_color;
+        COLOR = vec4(base_color.r, base_color.g, base_color.b, base_color.a);
     }
 }

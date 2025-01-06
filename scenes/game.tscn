@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://dwvu6qqm1x438"]
+[gd_scene load_steps=57 format=4 uid="uid://dwvu6qqm1x438"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8bmj7"]
 [ext_resource type="PackedScene" uid="uid://20vymhe38nsq" path="res://entities/player/player.tscn" id="1_rss1j"]
@@ -424,6 +424,12 @@ adjustment_enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0koo"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_43ro4"]
+size = Vector2(12, 72)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ospmc"]
+size = Vector2(36, 12)
+
 [node name="Game" type="Node2D"]
 texture_filter = 2
 script = ExtResource("1_8bmj7")
@@ -588,6 +594,19 @@ position = Vector2(10, 10)
 shape = SubResource("RectangleShape2D_b0koo")
 debug_color = Color(0.653333, 0.7, 0, 0.0392157)
 
+[node name="DebugStart" type="Area2D" parent="."]
+position = Vector2(-2216, -736)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugStart"]
+position = Vector2(-24, -8)
+shape = SubResource("RectangleShape2D_43ro4")
+
+[node name="DebugFinish" type="Area2D" parent="."]
+position = Vector2(-2166, 318)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugFinish"]
+shape = SubResource("RectangleShape2D_ospmc")
+
 [connection signal="finished" from="SFXEnvironment" to="SFXEnvironment" method="_on_finished"]
 [connection signal="body_entered" from="Killzone" to="." method="_on_area_2d_body_entered"]
 [connection signal="area_entered" from="GravPusher" to="." method="_on_grav_pusher_area_entered"]
@@ -600,3 +619,5 @@ debug_color = Color(0.653333, 0.7, 0, 0.0392157)
 [connection signal="body_exited" from="GravPusher3" to="." method="_on_grav_pusher_3_body_exited"]
 [connection signal="body_entered" from="Level" to="." method="_on_level_body_entered"]
 [connection signal="body_exited" from="Level" to="." method="_on_level_body_exited"]
+[connection signal="body_entered" from="DebugStart" to="." method="_on_debug_start_body_entered"]
+[connection signal="body_entered" from="DebugFinish" to="." method="_on_debug_finish_body_entered"]

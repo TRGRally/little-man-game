@@ -11,6 +11,10 @@ var cameraFollowObject: Node2D
 var cameraFollowSpeed: float = 5.0
 var cameraIsFollowing = true
 
+var startedDebugRace = false
+var currentDebugRaceTimer: float = 0.0
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Engine.set_time_scale(1)
@@ -32,6 +36,13 @@ func _process(delta: float) -> void:
 			var transform: Vector2 = direction * cameraFollowSpeed * delta
 			camera.global_position -= transform
 
+
+func _physics_process(delta: float) -> void:
+	print("[race]" + str(startedDebugRace))
+	if startedDebugRace:
+		
+		currentDebugRaceTimer += delta
+		HUD.set_timer(currentDebugRaceTimer)
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
@@ -84,3 +95,16 @@ func _on_grav_pusher_3_body_entered(body: Node2D) -> void:
 func _on_grav_pusher_3_body_exited(body: Node2D) -> void:
 	player.externalForce = Vector2.ZERO
 	print(player.externalForce)
+
+
+func _on_debug_start_body_entered(body: Node2D) -> void:
+	if body == player and startedDebugRace == false:
+		print("starting race")
+		currentDebugRaceTimer = 0.0
+		startedDebugRace = true
+
+
+func _on_debug_finish_body_entered(body: Node2D) -> void:
+	if body == player and startedDebugRace == true:
+		print("finishing race")
+		startedDebugRace = false
