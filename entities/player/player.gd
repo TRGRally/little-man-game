@@ -517,13 +517,14 @@ func _physics_process(delta: float) -> void:
 	
 	previousPositionVector = global_position
 	#run physics
+	HUD.set_state(currentState.Name)
 	if not currentState == States.DashBuffer and not currentState == States.Locked:
 		
 		if velocity.length() < MAX_BOOST_SPEED or velocity.dot(externalForce) < 0:
 			velocity += externalForce
 			
 		HUD.set_velocity(velocity)
-		$DebugText.text = currentState.Name
+		
 		if abs(velocity.x) > maxSpeedThisJump:
 			maxSpeedThisJump = abs(velocity.x)
 			HUD.set_max_speed(maxSpeedThisJump)

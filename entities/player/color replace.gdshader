@@ -1,13 +1,12 @@
 shader_type canvas_item;
 
-// Uniforms for color replacement
+//uniforms for color replacement
 uniform vec3 masque = vec3(0.1, 0.85, 1.0);
-
-// Hard-coded values for outline
-const int width = 1; // Outline width
-const vec4 outline_color = vec4(0.0, 0.6, 1.0, 1.0);
-const float flickering_speed = 20.0; // Flickering speed
-const float minimal_flickering_alpha = 0.2; // Minimal alpha for flickering
+uniform vec4 outline_color = vec4(0.0, 0.6, 1.0, 1.0);
+//hard-coded values for outline
+const int width = 1; //this can be made float if we dont care about pixel perfect
+const float flickering_speed = 25.0; //alerts the player that this is a vulnerable state by flashing the outline
+const float minimal_flickering_alpha = 0.2; //how transparent the outline goes
 
 
 void fragment() {

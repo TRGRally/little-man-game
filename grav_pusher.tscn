@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgg5j7144n06e"]
+[gd_scene load_steps=8 format=3 uid="uid://cgg5j7144n06e"]
 
 [ext_resource type="Shader" path="res://grav_pusher.gdshader" id="1_sc4pa"]
 [ext_resource type="Script" path="res://grav_pusher.gd" id="1_w6v4d"]
@@ -15,12 +15,16 @@ shader_parameter/line_thickness = 0.04
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ngftf"]
 size = Vector2(1, 1)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e8kxt"]
+light_mode = 1
+
 [sub_resource type="Gradient" id="Gradient_o1h1x"]
 colors = PackedColorArray(1, 1, 0, 0.176471, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_8bx5n"]
 gradient = SubResource("Gradient_o1h1x")
 width = 1
+use_hdr = true
 
 [node name="GravPusher" type="Area2D"]
 top_level = true
@@ -35,4 +39,5 @@ script = ExtResource("1_w6v4d")
 shape = SubResource("RectangleShape2D_ngftf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_e8kxt")
 texture = SubResource("GradientTexture1D_8bx5n")

@@ -73,3 +73,14 @@ func _on_level_body_exited(body: Node2D) -> void:
 	if body == player:
 		cameraIsFollowing = true 
 		player.ChangeState(player.States.Locked)
+
+
+func _on_grav_pusher_3_body_entered(body: Node2D) -> void:
+	if body == player:
+		player.externalForce = Vector2(0, -50)
+		print(player.externalForce)
+
+
+func _on_grav_pusher_3_body_exited(body: Node2D) -> void:
+	player.externalForce = Vector2.ZERO
+	print(player.externalForce)

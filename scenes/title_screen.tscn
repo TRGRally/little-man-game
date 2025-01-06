@@ -26,6 +26,9 @@ font_size = 24
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_awwcl")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
 [node name="Sky" type="Sprite2D" parent="."]
 scale = Vector2(1.111, 1.111)
 texture = ExtResource("1_a3ckq")

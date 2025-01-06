@@ -1,4 +1,4 @@
-[gd_scene load_steps=196 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=193 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -52,7 +52,6 @@
 [ext_resource type="Texture2D" uid="uid://b8yyu3l47tkx5" path="res://assets/sprites/player/Hat/hat.png" id="14_yvoow"]
 [ext_resource type="Script" path="res://entities/player/WallJumpState.gd" id="15_3kl73"]
 [ext_resource type="Script" path="res://entities/player/DashJumpState.gd" id="15_007vb"]
-[ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="15_r22h3"]
 [ext_resource type="Texture2D" uid="uid://df410wat8cotf" path="res://assets/sprites/player/Player Wall Slide/player wall slide 48x48.png" id="16_gxdh8"]
 [ext_resource type="Script" path="res://entities/player/DashBufferState.gd" id="16_i50og"]
 [ext_resource type="AudioStream" uid="uid://clp5dw3g1y4q0" path="res://assets/sound/player/landing/land2.wav" id="20_b32oe"]
@@ -65,7 +64,6 @@
 [ext_resource type="Shader" path="res://scenes/smoothpixel.gdshader" id="33_xl5yw"]
 [ext_resource type="AudioStream" uid="uid://dhf2t4v0bxd48" path="res://assets/sound/player/woosh.wav" id="39_1cjw1"]
 [ext_resource type="Texture2D" uid="uid://tshj0mrswti2" path="res://assets/sprites/player/Hat/PlayerWalk 48x48 Hat.png" id="42_12mfm"]
-[ext_resource type="LabelSettings" uid="uid://bjchqc57a2i27" path="res://scenes/devhud_label_settings.tres" id="65_8wb8o"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wxvhd"]
 light_mode = 1
@@ -1050,9 +1048,6 @@ light_mode = 1
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_w6gbp"]
 points = PackedVector2Array(6, 12, -6, 12, -6, -12, 6, -12)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ekhjq"]
-light_mode = 1
-
 [node name="Player" type="CharacterBody2D"]
 physics_interpolation_mode = 1
 z_index = 5
@@ -1271,23 +1266,6 @@ one_shot = true
 unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
-
-[node name="DebugText" type="Label" parent="."]
-z_index = 1
-material = SubResource("CanvasItemMaterial_ekhjq")
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -18.0
-offset_top = -44.0
-offset_right = 22.0
-offset_bottom = -21.0
-grow_horizontal = 2
-theme = ExtResource("15_r22h3")
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-label_settings = ExtResource("65_8wb8o")
-horizontal_alignment = 1
 
 [node name="Raycasts" type="Node2D" parent="."]
 
