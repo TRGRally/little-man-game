@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwo5jg10b1tbh"]
+[gd_scene load_steps=6 format=3 uid="uid://dwo5jg10b1tbh"]
 
 [ext_resource type="Script" path="res://scenes/fps.gd" id="1_852id"]
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="1_pwwql"]
-[ext_resource type="LabelSettings" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
+[ext_resource type="LabelSettings" uid="uid://bjchqc57a2i27" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
 
 [sub_resource type="GDScript" id="GDScript_6laai"]
 resource_name = "res://scripts/hud.gd"
@@ -27,11 +27,14 @@ func set_state(state: String):
 
 func set_timer(time: float):
 	print(\"setting timer\")
-	var timeInt = int(time)
-	#time is ms so convert to minutes and seconds string
+	#time is seconds decimal so convert to minutes and seconds string
 	var timeFormatted = snapped(time, 0.01)
+	%RaceTime.text = str(timeFormatted)
 	
-	%DevHUD/RaceTime.text = str(timeFormatted)
+func set_best_time(time: float):
+	print(\"setting best\")
+	var timeFormatted = snapped(time, 0.01)
+	%BestTime.text = \"BEST \" + str(timeFormatted)
 	
 func set_max_speed(maxSpeedThisJump: float):
 	%DevHUD/MaxSpeedThisJump.text = str(snapped(maxSpeedThisJump, 0))
@@ -53,6 +56,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 "
+
+[sub_resource type="LabelSettings" id="LabelSettings_w3035"]
+line_spacing = 0.0
+font_size = 10
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_offset = Vector2(0, 0)
 
 [node name="HUD" type="CanvasLayer"]
 script = SubResource("GDScript_6laai")
@@ -153,10 +164,6 @@ horizontal_alignment = 3
 layout_mode = 2
 label_settings = ExtResource("2_0avo8")
 
-[node name="RaceTime" type="Label" parent="Control/DevHUD"]
-layout_mode = 2
-label_settings = ExtResource("2_0avo8")
-
 [node name="MarginContainer" type="MarginContainer" parent="Control"]
 custom_minimum_size = Vector2(96, 0)
 layout_mode = 1
@@ -190,3 +197,35 @@ size_flags_horizontal = 8
 theme_type_variation = &"HeaderSmall"
 text = "xvel"
 label_settings = ExtResource("2_0avo8")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -11.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="BestTime" type="Label" parent="Control/MarginContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = ExtResource("2_0avo8")
+
+[node name="RaceTime" type="Label" parent="Control/MarginContainer2/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+label_settings = SubResource("LabelSettings_w3035")

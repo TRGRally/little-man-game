@@ -13,6 +13,7 @@ var cameraIsFollowing = true
 
 var startedDebugRace = false
 var currentDebugRaceTimer: float = 0.0
+var bestRaceTime: float = 9999.0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -38,9 +39,7 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	print("[race]" + str(startedDebugRace))
 	if startedDebugRace:
-		
 		currentDebugRaceTimer += delta
 		HUD.set_timer(currentDebugRaceTimer)
 
@@ -107,4 +106,8 @@ func _on_debug_start_body_entered(body: Node2D) -> void:
 func _on_debug_finish_body_entered(body: Node2D) -> void:
 	if body == player and startedDebugRace == true:
 		print("finishing race")
+		if currentDebugRaceTimer < bestRaceTime:
+			HUD.set_best_time(currentDebugRaceTimer)
+			bestRaceTime = currentDebugRaceTimer
 		startedDebugRace = false
+		
