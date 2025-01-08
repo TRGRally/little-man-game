@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/fps.gd" id="1_852id"]
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="1_pwwql"]
-[ext_resource type="LabelSettings" uid="uid://bjchqc57a2i27" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
+[ext_resource type="LabelSettings" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
 
 [sub_resource type="GDScript" id="GDScript_6laai"]
 resource_name = "res://scripts/hud.gd"
@@ -49,7 +49,7 @@ func set_facing_direction(facingDirection: Vector2):
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	pass	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -58,9 +58,14 @@ func _process(delta: float) -> void:
 	
 func _physics_process(delta: float) -> void:
 	var window_size = DisplayServer.window_get_size()
+	var screen_size = DisplayServer.screen_get_size()
+	var dpi = DisplayServer.screen_get_dpi()
+	var max_scale = DisplayServer.screen_get_max_scale()
 	var viewport_width = ProjectSettings.get(\"display/window/size/viewport_width\")
 	var viewport_height = ProjectSettings.get(\"display/window/size/viewport_height\")
-	%DevHUD/Resolution.text = str(window_size.x) + \"x\" + str(window_size.y) + \" (\" + str(viewport_width) + \"x\" + str(viewport_height) + \")\"
+	var retina_scale = DisplayServer.screen_get_scale()
+	
+	%DevHUD/Resolution.text = str(window_size.x) + \"x\" + str(window_size.y) + \" \" + str(screen_size.x) + \"x\" + str(screen_size.y) +  \" (\" + str(viewport_width) + \"x\" + str(viewport_height) + \") scale \" + str(retina_scale) + \" DPI \" + str(dpi) + \" (max \" + str(max_scale) + \")\"
 "
 
 [sub_resource type="LabelSettings" id="LabelSettings_w3035"]
