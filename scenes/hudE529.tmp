@@ -58,8 +58,8 @@ func _process(delta: float) -> void:
 	
 func _physics_process(delta: float) -> void:
 	var window_size = DisplayServer.window_get_size()
-	var viewport_width = ProjectSettings.get(\"display/window/size/viewport_width\")
-	var viewport_height = ProjectSettings.get(\"display/window/size/viewport_height\")
+	var viewport_width = ProjectSettings.get(\"display/window/viewport_width\")
+	var viewport_height = ProjectSettings.get(\"display/window/viewport_height\")
 	%DevHUD/Resolution.text = str(window_size.x) + \"x\" + str(window_size.y) + \" (\" + str(viewport_width) + \"x\" + str(viewport_height) + \")\"
 "
 
@@ -90,8 +90,7 @@ theme = ExtResource("1_pwwql")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 0)
 layout_mode = 1
-offset_left = 1.0
-offset_right = 73.0
+offset_right = 72.0
 offset_bottom = 73.0
 theme_override_constants/separation = -1
 
