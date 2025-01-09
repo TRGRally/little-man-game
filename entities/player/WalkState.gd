@@ -34,7 +34,7 @@ func Update(delta: float):
 	HandleMovement(delta)
 	
 	if not firstFrame:
-		print("[movement] applying friction Walk")
+		#print("[movement] applying friction Walk")
 		Player.HandleFriction()
 	else:
 		print("SKIPPING FRICTION")

@@ -8,7 +8,7 @@ func EnterState():
 	
 	if Player.wallVector.x < 0:
 		var grabPosBottom = Player.rc_bottomLeft.get_collision_point()
-		var grabPosTop = Player.rc_TopLeft.get_collision_point()
+		var grabPosTop = Player.rc_topLeft.get_collision_point()
 		
 		#check top then bottom then fail
 		if grabPosTop:
@@ -24,7 +24,7 @@ func EnterState():
 		
 	else:
 		var grabPosBottom = Player.rc_bottomRight.get_collision_point()
-		var grabPosTop = Player.rc_TopRight.get_collision_point()
+		var grabPosTop = Player.rc_topRight.get_collision_point()
 		
 		#check top then bottom then fail
 		if grabPosTop:
