@@ -29,13 +29,13 @@ const GRAVITY: float = 900.0
 const FALL_GRAVITY: float = 1200.0
 const MAX_FALL_SPEED: float = 400.0
 const FAST_FALL_SPEED_MULTIPLIER: float = 1.2
-const FAST_FALL_GRAVITY_MULTIPLIER: float = 1.3
+const FAST_FALL_GRAVITY_MULTIPLIER: float = 1.5
 const WALL_SLIDE_SPEED: float = 100.0
 const DASH_SPEED: float = 400.0
 const DASH_GRAVITY: float = 0.0
 const DASH_FRICTION: float = 0.0
 const DASH_TIME_S: float = 0.1
-const DASH_BUFFER_TIME_S: float = 0.04
+const DASH_BUFFER_TIME_S: float = 0.05
 
 const ROOM_LOCKED_TIME_S: float = 0.5
 
@@ -287,7 +287,7 @@ func HandleDirection():
 #regular gravity unless specified
 func HandleGravity(delta, gravity = GRAVITY, maxFallSpeed = MAX_FALL_SPEED):
 	#crazy function parameter mutation but idc rn
-	if inputVector.y > 0:
+	if inputVector.y > 0 and velocity.y > 0:
 		maxFallSpeed *= FAST_FALL_SPEED_MULTIPLIER
 		gravity *= FAST_FALL_GRAVITY_MULTIPLIER
 	

@@ -7,13 +7,34 @@ func EnterState():
 	Player.velocity.x = 0
 	
 	if Player.wallVector.x < 0:
-		var grabPos = Player.rc_bottomLeft.get_collision_point()
-		Player.position.x = grabPos.x
-		Player.position.y += 1
+		var grabPosBottom = Player.rc_bottomLeft.get_collision_point()
+		var grabPosTop = Player.rc_TopLeft.get_collision_point()
+		
+		#check top then bottom then fail
+		if grabPosTop:
+			Player.position.x = grabPosTop.x
+			Player.position.y += 1
+		elif grabPosBottom:
+			Player.position.x = grabPosBottom.x
+			Player.position.y += 1
+		else:
+			print("FUCK :sob:")
+			
+		
+		
 	else:
-		var grabPos = Player.rc_bottomRight.get_collision_point()
-		Player.position.x = grabPos.x
-		Player.position.y += 1
+		var grabPosBottom = Player.rc_bottomRight.get_collision_point()
+		var grabPosTop = Player.rc_TopRight.get_collision_point()
+		
+		#check top then bottom then fail
+		if grabPosTop:
+			Player.position.x = grabPosTop.x
+			Player.position.y += 1
+		elif grabPosBottom:
+			Player.position.x = grabPosBottom.x
+			Player.position.y += 1
+		else:
+			print("FUCK :sob:")
 		
 	
 
