@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dl45tdp3hh6dv"]
+[gd_scene load_steps=4 format=3 uid="uid://dl45tdp3hh6dv"]
 
+[ext_resource type="Script" path="res://scenes/room_test_level.gd" id="1_2ux44"]
 [ext_resource type="PackedScene" uid="uid://20vymhe38nsq" path="res://entities/player/player.tscn" id="1_xif2u"]
 [ext_resource type="PackedScene" uid="uid://dwo5jg10b1tbh" path="res://scenes/hud.tscn" id="2_o61hk"]
 
 [node name="RoomTestLevel" type="Node2D"]
+script = ExtResource("1_2ux44")
 
 [node name="Player" parent="." instance=ExtResource("1_xif2u")]
 
