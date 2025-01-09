@@ -23,7 +23,7 @@ func Draw():
 	pass
 	
 
-func Update(delta: float):
+func Update(_delta: float):
 	
 	if (Player.inputVector.x != 0):
 		if Input.is_action_pressed("move_down"):
@@ -33,6 +33,7 @@ func Update(delta: float):
 			Player.ChangeState(States.Walk)
 			
 	if not firstFrame:
+		#print("[movement] applying friction Idle")
 		Player.HandleFriction()
 	else:
 		print("SKIPPING FRICTION")

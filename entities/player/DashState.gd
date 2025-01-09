@@ -59,7 +59,7 @@ func Draw():
 	pass
 	
 
-func Update(delta: float):
+func Update(_delta: float):
 	Player.HandleDashFloor()
 	
 	HandleAnimations()

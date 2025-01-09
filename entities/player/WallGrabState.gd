@@ -25,7 +25,7 @@ func Draw():
 	pass
 	
 
-func Update(delta: float):
+func Update(_delta: float):
 	Player.velocity.y = 0
 	Player.HandleWallJump()
 	Player.HandleFalling()

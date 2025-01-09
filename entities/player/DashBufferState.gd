@@ -22,7 +22,7 @@ func Draw():
 	pass
 	
 
-func Update(delta: float):
+func Update(_delta: float):
 	HandleAnimations()
 	Player.HandleJump()
 	

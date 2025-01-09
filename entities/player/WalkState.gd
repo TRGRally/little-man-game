@@ -34,6 +34,7 @@ func Update(delta: float):
 	HandleMovement(delta)
 	
 	if not firstFrame:
+		print("[movement] applying friction Walk")
 		Player.HandleFriction()
 	else:
 		print("SKIPPING FRICTION")
@@ -51,7 +52,7 @@ func HandleIdle():
 	if (Player.inputVector == Vector2.ZERO):
 		Player.ChangeState(States.Idle)
 
-func HandleMovement(delta):
+func HandleMovement(_delta):
 	if Player.inputVector.x != 0:
 		Player.velocity.x += Player.inputVector.x * Player.SPEED
 

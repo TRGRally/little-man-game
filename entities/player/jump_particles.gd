@@ -8,7 +8,7 @@ func _ready() -> void:
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if doJumpFrame:
 		doJumpFrame = false
 		self.emitting = true
@@ -25,7 +25,7 @@ func _on_jump_exit_state() -> void:
 	doJumpFrame = false
 
 
-func _on_dash_jump_enter_state(dashVector: Vector2) -> void:
+func _on_dash_jump_enter_state(_dashVector: Vector2) -> void:
 	doJumpFrame = true
 
 

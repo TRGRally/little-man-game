@@ -12,7 +12,7 @@ func Draw():
 	pass
 	
 
-func Update(delta: float):
+func Update(_delta: float):
 	HandleAnimations()
 	#prank the state machine by making this state transitive.
 	#makes the next state's previousState be THIS state's previousState

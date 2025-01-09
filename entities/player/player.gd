@@ -235,7 +235,6 @@ func stampSprite():
 	stamp.position = Vector2(self.position.x, self.position.y + MIDPOINT_OFFSET)
 	var mat = ShaderMaterial.new()
 	mat.shader = load("res://ghost.gdshader")
-	mat.shader
 	stamp.material = mat
 	
 	get_tree().root.add_child(stamp)
@@ -402,9 +401,9 @@ func isUnDuckSafe():
 		return true
 
 func GetWallDirection():
-	if rc_bottomRight.is_colliding() or rc_topRight.is_colliding():
+	if rc_bottomRight.is_colliding() and rc_topRight.is_colliding():
 		wallVector = Vector2.RIGHT
-	elif rc_bottomLeft.is_colliding() or rc_topLeft.is_colliding():
+	elif rc_bottomLeft.is_colliding() and rc_topLeft.is_colliding():
 		wallVector = Vector2.LEFT
 	else:
 		wallVector = Vector2.ZERO
@@ -452,7 +451,7 @@ func InputOrLookDirection():
 		dashVector = facingVector
 	
 #runs every frame not every physics tick (variable interval)
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	#floor to the nearest whole number
 	
 	# UNSECURED CANDIDATE

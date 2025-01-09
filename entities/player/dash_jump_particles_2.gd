@@ -7,12 +7,12 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
 
-func _on_dash_jump_enter_state(dashVector: Vector2) -> void:
+func _on_dash_jump_enter_state(_dashVector: Vector2) -> void:
 	self.emitting = true
 
 

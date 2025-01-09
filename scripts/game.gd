@@ -63,14 +63,16 @@ func _on_grav_pusher_2_body_entered(body: Node2D) -> void:
 		print(player.externalForce)
 		
 func _on_grav_pusher_2_body_exited(body: Node2D) -> void:
-	player.externalForce = Vector2.ZERO
-	print(player.externalForce)
+	if body == player:
+		player.externalForce = Vector2.ZERO
+		print(player.externalForce)
 
 
 
 func _on_grav_pusher_body_exited(body: Node2D) -> void:
-	player.externalForce = Vector2.ZERO
-	print(player.externalForce)
+	if body == player:
+		player.externalForce = Vector2.ZERO
+		print(player.externalForce)
 
 
 func _on_level_body_entered(body: Node2D) -> void:

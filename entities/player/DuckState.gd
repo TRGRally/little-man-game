@@ -34,7 +34,7 @@ func HandleIdle():
 		if canUnDuck == true:
 			Player.ChangeState(States.Idle)
 
-func HandleMovement(delta):
+func HandleMovement(_delta):
 	if Player.inputVector.x != 0:
 		Player.ChangeState(States.DuckWalk)
 

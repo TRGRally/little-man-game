@@ -19,14 +19,14 @@ func set_velocity(velocity: Vector2):
 	var speed = snapped(velocity.length(), 0)
 	%DevHUD/Velocity.text = str(speed)
 	%Speedometer/Bar.value = abs(snapped(velocity.x, 0))
-	%Speedometer/Xvel.text = str(abs(snapped(velocity.x, 0)))
+	%SpeedometerXvel.text = str(abs(snapped(velocity.x, 0)))
 	%DevHUD/Yvel.text = str(abs(snapped(abs(velocity.y), 0)))
 	
 func set_state(state: String):
 	%DevHUD/State.text = state
 
 func set_timer(time: float):
-	print(\"setting timer\")
+	#print(\"setting timer\")
 	#time is seconds decimal so convert to minutes and seconds string
 	var timeFormatted = snapped(time, 0.01)
 	%RaceTime.text = str(timeFormatted)
@@ -53,10 +53,10 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var window_size = DisplayServer.window_get_size()
 	var screen_size = DisplayServer.screen_get_size()
 	var dpi = DisplayServer.screen_get_dpi()
@@ -208,7 +208,13 @@ max_value = 1000.0
 step = 1.0
 show_percentage = false
 
-[node name="Xvel" type="Label" parent="Control/MarginContainer/Speedometer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/Speedometer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="SpeedometerXvel" type="Label" parent="Control/MarginContainer/Speedometer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 theme_type_variation = &"HeaderSmall"

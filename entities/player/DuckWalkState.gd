@@ -40,7 +40,7 @@ func HandleIdle():
 			else:
 				Player.ChangeState(States.Duck)
 
-func HandleMovement(delta):
+func HandleMovement(_delta):
 	if Player.inputVector.x != 0:
 		Player.velocity.x += Player.inputVector.x * Player.SPEED
 

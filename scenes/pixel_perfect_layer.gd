@@ -17,7 +17,7 @@ func _ready() -> void:
 		thing.call_deferred("reparent", sub_viewport, true)
 		
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	if !pp_camera or !main_camera: return
 	#multiplier from main window to pixel perfect window
