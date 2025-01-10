@@ -1,11 +1,11 @@
 [gd_scene load_steps=42 format=4 uid="uid://d2kw56o8nwcj1"]
 
-[ext_resource type="PackedScene" uid="uid://cgg5j7144n06e" path="res://grav_pusher.tscn" id="1_a1mj8"]
-[ext_resource type="Script" path="res://scenes/dev_level.gd" id="1_nndej"]
-[ext_resource type="PackedScene" uid="uid://boymwxx7yjidg" path="res://scenes/parallax.tscn" id="2_fleuw"]
-[ext_resource type="PackedScene" uid="uid://crrn62if0387i" path="res://scenes/platform.tscn" id="3_rhgle"]
-[ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="4_w8ojf"]
-[ext_resource type="Texture2D" uid="uid://c2f34vke0octl" path="res://assets/sprites/dev-tileset-12x.png" id="5_q5l42"]
+[ext_resource type="Script" path="res://scenes/dev_level.gd" id="1_qwqua"]
+[ext_resource type="PackedScene" uid="uid://cgg5j7144n06e" path="res://grav_pusher.tscn" id="2_6xd5r"]
+[ext_resource type="PackedScene" uid="uid://boymwxx7yjidg" path="res://scenes/parallax.tscn" id="3_b51g1"]
+[ext_resource type="PackedScene" uid="uid://crrn62if0387i" path="res://scenes/platform.tscn" id="4_jhmmj"]
+[ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="5_hm6b3"]
+[ext_resource type="Texture2D" uid="uid://c2f34vke0octl" path="res://assets/sprites/dev-tileset-12x.png" id="6_8lldn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0koo"]
 
@@ -107,7 +107,7 @@ polygon = PackedVector2Array(-6, -6, 6, -6, 6, 6, -6, 6)
 polygon = PackedVector2Array(-6, -6, 6, -6, 6, 6, -6, 6)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uurwa"]
-texture = ExtResource("5_q5l42")
+texture = ExtResource("6_8lldn")
 texture_region_size = Vector2i(12, 12)
 0:0/0 = 0
 0:0/0/terrain_set = 1
@@ -574,7 +574,7 @@ terrain_set_1/terrain_0/color = Color(0.177733, 0.204213, 1, 1)
 sources/0 = SubResource("TileSetAtlasSource_uurwa")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k4aes"]
-texture = ExtResource("5_q5l42")
+texture = ExtResource("6_8lldn")
 texture_region_size = Vector2i(12, 12)
 1:9/0 = 0
 3:9/0 = 0
@@ -674,7 +674,7 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_k4aes")
 
 [node name="DevLevel" type="Node2D"]
-script = ExtResource("1_nndej")
+script = ExtResource("1_qwqua")
 
 [node name="Level" type="Area2D" parent="."]
 position = Vector2(-1548, 462)
@@ -697,17 +697,17 @@ position = Vector2(-2166, 318)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DebugFinish"]
 shape = SubResource("RectangleShape2D_ospmc")
 
-[node name="GravPusher" parent="." groups=["GravPushers"] instance=ExtResource("1_a1mj8")]
+[node name="GravPusher" parent="." groups=["GravPushers"] instance=ExtResource("2_6xd5r")]
 material = SubResource("CanvasItemMaterial_yu16j")
 position = Vector2(-888, 660)
 scale = Vector2(48, 288)
 
-[node name="GravPusher2" parent="." groups=["GravPushers"] instance=ExtResource("1_a1mj8")]
+[node name="GravPusher2" parent="." groups=["GravPushers"] instance=ExtResource("2_6xd5r")]
 material = SubResource("CanvasItemMaterial_fr6el")
 position = Vector2(-3102, 796)
 scale = Vector2(76, 360)
 
-[node name="GravPusher3" parent="." groups=["GravPushers"] instance=ExtResource("1_a1mj8")]
+[node name="GravPusher3" parent="." groups=["GravPushers"] instance=ExtResource("2_6xd5r")]
 material = SubResource("CanvasItemMaterial_x6tfo")
 position = Vector2(-2280, -108)
 scale = Vector2(72, 1200)
@@ -732,7 +732,7 @@ shadow_filter = 1
 texture = SubResource("GradientTexture2D_73ddp")
 height = 10.0
 
-[node name="Parallax" parent="." instance=ExtResource("2_fleuw")]
+[node name="Parallax" parent="." instance=ExtResource("3_b51g1")]
 show_behind_parent = true
 z_index = -10
 z_as_relative = false
@@ -743,16 +743,16 @@ position = Vector2(0, 1000)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
 shape = SubResource("WorldBoundaryShape2D_eyfp4")
 
-[node name="Platform" parent="." instance=ExtResource("3_rhgle")]
+[node name="Platform" parent="." instance=ExtResource("4_jhmmj")]
 z_index = 1
 texture_filter = 2
-material = ExtResource("4_w8ojf")
+material = ExtResource("5_hm6b3")
 position = Vector2(-1100, 540)
 
-[node name="Platform2" parent="." instance=ExtResource("3_rhgle")]
+[node name="Platform2" parent="." instance=ExtResource("4_jhmmj")]
 z_index = 1
 texture_filter = 2
-material = ExtResource("4_w8ojf")
+material = ExtResource("5_hm6b3")
 position = Vector2(-1674, 700)
 
 [node name="Foreground" type="TileMapLayer" parent="."]
