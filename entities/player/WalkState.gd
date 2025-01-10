@@ -27,6 +27,7 @@ func Draw():
 	pass
 
 func Update(delta: float):
+	#print("Walk Update")
 	#handle movements
 	HandleDuck()
 	Player.HandleFalling()

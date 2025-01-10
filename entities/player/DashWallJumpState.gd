@@ -1,5 +1,7 @@
 extends PlayerState
 
+signal enter_state
+signal exit_state
 
 #true = right
 var flipDirection = true

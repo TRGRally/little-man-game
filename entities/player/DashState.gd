@@ -19,9 +19,9 @@ func EnterState():
 	var direction: Vector2 = directionRaw.normalized()
 	
 	Player.changeHitbox("shrunk")
-	
 	#dash highlight shader
 	Player.dashHighlight()
+	
 	
 	Player.dashCount = Player.dashCount + 1
 	
@@ -66,8 +66,9 @@ func Update(_delta: float):
 	
 	if not floorDash:
 		Player.velocity = dashPushVector
-		
+
 	Player.HandleJump()
+	
 	
 
 func HandleAnimations():

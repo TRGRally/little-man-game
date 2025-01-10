@@ -17,7 +17,6 @@ func Update(_delta: float):
 	#prank the state machine by making this state transitive.
 	#makes the next state's previousState be THIS state's previousState
 	Player.currentState = Player.previousState
-	print("-> Jump peaked")
 	Player.ChangeState(States.Fall)
 	
 	

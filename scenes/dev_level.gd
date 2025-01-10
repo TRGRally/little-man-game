@@ -4,6 +4,8 @@ extends Node2D
 @export var HUD: CanvasLayer
 @export var camera: Camera2D
 
+var SPAWN_POSITION: Vector2 = Vector2(-1100, 520)
+
 var deaths = 0
 
 func add_death():
@@ -38,7 +40,7 @@ func _ready() -> void:
 		print("connected gravPusher")
 		gravPusher.connect("body_entered", grav_pusher_entered)
 		gravPusher.connect("body_exited", grav_pusher_exited)
-
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -53,6 +55,8 @@ func _process(delta: float) -> void:
 			camera.global_position -= transform
 	else:
 		cameraFollowObject = player
+		player.global_position = SPAWN_POSITION
+		camera.global_position = player.global_position
 	
 func _physics_process(delta: float) -> void:
 	if startedDebugRace:
@@ -61,10 +65,10 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_debug_start_body_entered(body: Node2D) -> void:
-	if body == player and startedDebugRace == false:
-		print("starting race")
-		currentDebugRaceTimer = 0.0
-		startedDebugRace = true
+	if body == player and startedDebugRace == true:
+		print("abandoning race")
+		startedDebugRace = false
+		HUD.set_timer(0.0)
 
 
 func _on_debug_finish_body_entered(body: Node2D) -> void:
@@ -94,3 +98,10 @@ func _on_killzone_body_entered(body: Node2D) -> void:
 	body.position = Vector2(0,100)
 	var deaths = add_death()
 	HUD.set_deaths(deaths)
+
+
+func _on_debug_start_body_exited(body: Node2D) -> void:
+	if body == player and startedDebugRace == false:
+		print("starting race")
+		currentDebugRaceTimer = 0.0
+		startedDebugRace = true

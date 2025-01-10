@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dwvu6qqm1x438"]
+[gd_scene load_steps=17 format=3 uid="uid://dwvu6qqm1x438"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_8bmj7"]
 [ext_resource type="PackedScene" uid="uid://20vymhe38nsq" path="res://entities/player/player.tscn" id="1_rss1j"]
@@ -18,6 +18,9 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_60qy2")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fruoj"]
+light_mode = 1
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_qdmtq"]
 viewport_path = NodePath("PixelPerfectLayer/SubViewport")
@@ -40,6 +43,7 @@ ssao_intensity = 16.0
 ssao_light_affect = 0.64
 ssil_intensity = 3.8
 sdfgi_use_occlusion = true
+glow_enabled = true
 glow_levels/1 = 10.0
 glow_levels/2 = 3.0
 glow_levels/4 = 1.0
@@ -52,6 +56,7 @@ fog_mode = 1
 fog_light_energy = 3.67
 fog_density = 1.0
 adjustment_enabled = true
+adjustment_saturation = 1.1
 
 [node name="Game" type="Node2D"]
 texture_filter = 2
@@ -66,8 +71,6 @@ script = ExtResource("3_jqb4x")
 [node name="PlayerCamera" type="Camera2D" parent="."]
 unique_name_in_owner = true
 physics_interpolation_mode = 2
-position = Vector2(-1236, 636)
-scale = Vector2(50.5841, -9.00467)
 script = ExtResource("7_p1ddu")
 
 [node name="Player" parent="." instance=ExtResource("1_rss1j")]
@@ -75,7 +78,6 @@ light_mask = 0
 visibility_layer = 2
 z_index = 1
 material = ExtResource("3_csxic")
-position = Vector2(-1100, 520)
 slide_on_ceiling = false
 
 [node name="PointLight2D2" type="PointLight2D" parent="Player"]
@@ -96,12 +98,12 @@ texture_scale = 3.0
 height = 16.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
 
 [node name="PixelPerfectLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("main_camera", "pp_camera")]
 script = ExtResource("9_i5pqh")
 main_camera = NodePath("../PlayerCamera")
 pp_camera = NodePath("SubViewport/PPCamera")
-canvas_height = 285
 
 [node name="SubViewport" type="SubViewport" parent="PixelPerfectLayer"]
 disable_3d = true
@@ -116,6 +118,7 @@ physics_interpolation_mode = 2
 position_smoothing_speed = 2.0
 
 [node name="ViewportTexture" type="TextureRect" parent="PixelPerfectLayer"]
+material = SubResource("CanvasItemMaterial_fruoj")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

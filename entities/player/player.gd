@@ -59,7 +59,7 @@ func changeHitbox(newHitboxName):
 	if currentHitboxName == newHitboxName:
 		return
 		
-	print("[hitbox] " + str(newHitboxName))
+	#print("[hitbox] " + str(newHitboxName))
 	hitbox_shape.set_point_cloud(hitboxes[newHitboxName])
 	currentHitboxName = newHitboxName
 	
@@ -238,13 +238,17 @@ func stampSprite():
 	stamp.material = mat
 	
 	get_tree().root.add_child(stamp)
-	var stampTimer: Timer = Timer.new()
-	stampTimer.one_shot = true
-	add_child(stampTimer)
-	stampTimer.start(DASH_BUFFER_TIME_S + DASH_TIME_S + 0.1)
 	
-	await stampTimer.timeout
-	stamp.queue_free()
+	var tween = get_tree().create_tween()
+	tween.tween_property(stamp, "modulate:a", 0, 0.6).set_trans(Tween.TRANS_SINE)
+	tween.tween_callback(stamp.queue_free)
+	#var stampTimer: Timer = Timer.new()
+	#stampTimer.one_shot = true
+	#add_child(stampTimer)
+	#stampTimer.start(DASH_BUFFER_TIME_S + DASH_TIME_S + 0.3)
+	#
+	#await stampTimer.timeout
+	#stamp.queue_free()
 	
 	
 func dashStamps():
@@ -368,7 +372,7 @@ func HandleJump():
 		#jump either just pressed or buffered previously
 		if (%JumpBuffer.time_left > 0 or Input.is_action_just_pressed("jump")):
 			if %JumpBuffer.time_left > 0 and not Input.is_action_just_pressed("jump"):
-				print("BUFFERED JUMP")
+				print("BUFFERED JUMP IN STATE " + currentState.Name)
 			%JumpBuffer.stop()
 			dashCount = 0
 			if currentState == States.Dash:
@@ -425,17 +429,26 @@ func HandleWallJump():
 		if %JumpBuffer.time_left > 0 or Input.is_action_just_pressed("jump"):
 			%JumpBuffer.stop()
 			ChangeState(States.WallJump)
+	
+	if currentState == States.Dash and wallVector!= Vector2.ZERO:
+		if %JumpBuffer.time_left > 0 or Input.is_action_just_pressed("jump"):
+			%JumpBuffer.stop()
+			ChangeState(States.DashWallJump)
 
 func HandleLanding():
 	if (is_on_floor()):
-		ChangeState(States.Idle)
+		if inputVector.x == 0:
+			ChangeState(States.Idle)
+		else:
+			ChangeState(States.Walk)
 		
 		
 func HandleFriction():
 	if not is_on_floor():
 		velocity.x = velocity.x * AIR_FRICTION
 	else:
-		velocity.x = velocity.x * FRICTION
+		if currentState != States.Jump and currentState != States.DashJump:
+			velocity.x = velocity.x * FRICTION
 	
 func GetRoundedPosition(atFeet = false):
 	if atFeet:

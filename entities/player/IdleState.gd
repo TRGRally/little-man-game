@@ -13,6 +13,7 @@ func EnterState():
 	if Player.previousState == States.Fall:
 		print("setting landing frames to zero")
 		landingFrames = 0
+		firstFrame = true
 		landingSoundPlayed = false
 
 func ExitState():
@@ -24,7 +25,7 @@ func Draw():
 	
 
 func Update(_delta: float):
-	
+	#print("Idle Update")
 	if (Player.inputVector.x != 0):
 		if Input.is_action_pressed("move_down"):
 			Player.ChangeState(States.DuckWalk)
