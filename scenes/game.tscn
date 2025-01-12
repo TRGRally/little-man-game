@@ -115,7 +115,7 @@ size = Vector2i(640, 360)
 
 [node name="PPCamera" type="Camera2D" parent="PixelPerfectLayer/SubViewport"]
 physics_interpolation_mode = 2
-position_smoothing_speed = 2.0
+position_smoothing_speed = 100.0
 
 [node name="ViewportTexture" type="TextureRect" parent="PixelPerfectLayer"]
 material = SubResource("CanvasItemMaterial_fruoj")

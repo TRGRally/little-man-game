@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/fps.gd" id="1_852id"]
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="1_pwwql"]
-[ext_resource type="LabelSettings" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
+[ext_resource type="LabelSettings" uid="uid://bjchqc57a2i27" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
 
 [sub_resource type="GDScript" id="GDScript_6laai"]
 resource_name = "res://scripts/hud.gd"

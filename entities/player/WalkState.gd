@@ -63,6 +63,11 @@ func HandleDuck():
 	
 	
 func HandleAnimations():
+	if landingFrames <= LANDING_ANIMATION_LENGTH:
+		if landingSoundPlayed == false:
+			landingSoundPlayed = true
+			Player.load_sfx(Player.sfx_landing)
+			
 	
 	#if Player.wallDirection
 	Player.sprite.animation = "walk"

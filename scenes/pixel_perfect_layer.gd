@@ -21,10 +21,11 @@ func _process(_delta: float) -> void:
 	
 	if !pp_camera or !main_camera: return
 	#multiplier from main window to pixel perfect window
-	var resolutionRatio = DisplayServer.screen_get_size().x / canvas_width
+	#var resolutionRatio = DisplayServer.screen_get_size().x / canvas_width
 	#print(resolutionRatio)
 	
-	var newSpeed = main_camera.position_smoothing_speed / resolutionRatio
+	#var newSpeed = main_camera.position_smoothing_speed / resolutionRatio
 	#print(newSpeed)
-	pp_camera.set_global_transform(main_camera.get_global_transform())
 	
+	var camera_pos: Vector2 = main_camera.global_position
+	pp_camera.global_position = camera_pos

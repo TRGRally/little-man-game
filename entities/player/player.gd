@@ -42,15 +42,15 @@ const ROOM_LOCKED_TIME_S: float = 0.5
 #model
 const MIDPOINT_OFFSET: int = -16
 var hitboxes = {
-	"default": PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)]),
-	"fall_coersion": PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)]),
-	"air_coersion": PackedVector2Array([Vector2(0,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)]),
-	"shrunk": PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
+	"default": PackedVector2Array([Vector2(7,13), Vector2(-7,13), Vector2(-7,-13), Vector2(7,-13)]),
+	"fall_coersion": PackedVector2Array([Vector2(7,13), Vector2(-7,13), Vector2(-7,0), Vector2(0,-13), Vector2(7,0)]),
+	"air_coersion": PackedVector2Array([Vector2(0,13), Vector2(-7,0), Vector2(0,-13), Vector2(7,0)]),
+	"shrunk": PackedVector2Array([Vector2(7,13), Vector2(-7,13), Vector2(-7,-2), Vector2(7,-2)])
 }
-var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)])
-var fall_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
-var air_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(0,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
-var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
+#var normal_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,-12), Vector2(6,-12)])
+#var fall_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
+#var air_coersion_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(0,12), Vector2(-6,0), Vector2(0,-12), Vector2(6,0)])
+#var shrunk_hitbox_shape: PackedVector2Array = PackedVector2Array([Vector2(6,12), Vector2(-6,12), Vector2(-6,0), Vector2(6,0)])
 
 
 var currentHitboxName = "default"

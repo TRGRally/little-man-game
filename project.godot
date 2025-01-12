@@ -13,7 +13,7 @@ config_version=5
 config/name="unserious gaming"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-run/max_fps=360
+run/max_fps=240
 config/icon="res://icon.svg"
 
 [autoload]
@@ -107,6 +107,7 @@ common/physics_jitter_fix=0.0
 2d/default_linear_damp=0.0
 2d/default_angular_damp=0.0
 common/physics_interpolation=true
+common/enable_object_picking=false
 
 [rendering]
 

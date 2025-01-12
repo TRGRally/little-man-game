@@ -1,6 +1,6 @@
 extends PlayerState
 
-const JUMP_DOWN_ANIMATION_LENGTH = 4
+const JUMP_DOWN_ANIMATION_LENGTH = 8
 var fallingFrames = 0
 
 func EnterState():

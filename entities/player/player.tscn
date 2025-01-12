@@ -1,4 +1,4 @@
-[gd_scene load_steps=193 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=191 format=3 uid="uid://20vymhe38nsq"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
@@ -23,7 +23,6 @@
 [ext_resource type="AudioStream" uid="uid://bysi40rsbjo4" path="res://assets/sound/player/footsteps/grass/4.ogg" id="6_50fo6"]
 [ext_resource type="Script" path="res://entities/player/JumpState.gd" id="6_scppm"]
 [ext_resource type="Script" path="res://entities/player/wall_slide_right_particles.gd" id="6_v8acb"]
-[ext_resource type="Texture2D" uid="uid://cj88xrac6mwh1" path="res://assets/sprites/player/Player Jump/player jump 48x48.png" id="6_yof4p"]
 [ext_resource type="AudioStream" uid="uid://dmk0h5l8ns8g0" path="res://assets/sound/player/footsteps/wood/3.ogg" id="6_yp7lq"]
 [ext_resource type="AudioStream" uid="uid://dvnvx40f2wf1" path="res://assets/sound/player/footsteps/grass/5.ogg" id="7_3a31s"]
 [ext_resource type="AudioStream" uid="uid://cueeg8imed7ja" path="res://assets/sound/player/footsteps/wood/4.ogg" id="7_7cjsy"]
@@ -60,12 +59,14 @@
 [ext_resource type="AudioStream" uid="uid://cjof5jdyklpar" path="res://assets/sound/player/landing/land4.wav" id="22_snk8a"]
 [ext_resource type="AudioStream" uid="uid://dx2s7dj06122" path="res://assets/sound/player/landing/land.wav" id="23_4r587"]
 [ext_resource type="Script" path="res://entities/player/DuckWalkState.gd" id="25_5xafn"]
+[ext_resource type="Material" uid="uid://m0r3p7w1p07t" path="res://scenes/white_particles.tres" id="27_ucgyx"]
 [ext_resource type="Script" path="res://entities/player/DashWallJumpState.gd" id="32_3bs66"]
 [ext_resource type="Shader" path="res://scenes/smoothpixel.gdshader" id="33_xl5yw"]
 [ext_resource type="AudioStream" uid="uid://dhf2t4v0bxd48" path="res://assets/sound/player/woosh.wav" id="39_1cjw1"]
 [ext_resource type="Texture2D" uid="uid://tshj0mrswti2" path="res://assets/sprites/player/Hat/PlayerWalk 48x48 Hat.png" id="42_12mfm"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wxvhd"]
+blend_mode = 4
 light_mode = 1
 
 [sub_resource type="Curve" id="Curve_348bb"]
@@ -120,7 +121,7 @@ turbulence_influence_max = 0.205
 turbulence_influence_over_life = SubResource("CurveTexture_bbcdt")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fmpaq"]
-blend_mode = 1
+blend_mode = 4
 light_mode = 1
 
 [sub_resource type="Curve" id="Curve_3htn8"]
@@ -135,6 +136,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_bcifn"]
 gradient = SubResource("Gradient_8b0vo")
+use_hdr = true
 
 [sub_resource type="Curve" id="Curve_07o86"]
 max_value = 100.0
@@ -165,16 +167,6 @@ scale_over_velocity_min = 1000.0
 scale_over_velocity_max = 1000.0
 color_ramp = SubResource("GradientTexture1D_bcifn")
 alpha_curve = SubResource("CurveTexture_xor2e")
-
-[sub_resource type="Shader" id="Shader_rcppc"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
-
-shader_type canvas_item;
-render_mode blend_mix;
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6yrdc"]
-shader = SubResource("Shader_rcppc")
 
 [sub_resource type="Curve" id="Curve_xj428"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.253886, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -455,9 +447,9 @@ region = Rect2(384, 0, 48, 48)
 atlas = ExtResource("4_v7jd1")
 region = Rect2(432, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xprwx"]
-atlas = ExtResource("6_yof4p")
-region = Rect2(96, 0, 48, 48)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4v2gr"]
+atlas = ExtResource("7_esktx")
+region = Rect2(192, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d4ked"]
 atlas = ExtResource("9_belvd")
@@ -805,7 +797,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xprwx")
+"texture": SubResource("AtlasTexture_4v2gr")
 }],
 "loop": true,
 "name": &"fall",
@@ -1046,7 +1038,7 @@ animations = [{
 light_mode = 1
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_w6gbp"]
-points = PackedVector2Array(6, 12, -6, 12, -6, -12, 6, -12)
+points = PackedVector2Array(7, 13, -7, 13, -7, -13, 7, -13)
 
 [node name="Player" type="CharacterBody2D"]
 physics_interpolation_mode = 1
@@ -1095,7 +1087,7 @@ script = ExtResource("3_037vy")
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
-material = SubResource("ShaderMaterial_6yrdc")
+material = ExtResource("27_ucgyx")
 emitting = false
 amount = 35
 process_material = SubResource("ParticleProcessMaterial_ulbea")
@@ -1108,6 +1100,7 @@ script = ExtResource("3_bx257")
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
+material = ExtResource("27_ucgyx")
 emitting = false
 amount = 300
 process_material = SubResource("ParticleProcessMaterial_jhn08")
@@ -1120,7 +1113,7 @@ script = ExtResource("4_tdood")
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
-material = SubResource("ShaderMaterial_6yrdc")
+material = ExtResource("27_ucgyx")
 position = Vector2(-6, -12)
 rotation = 1.5708
 emitting = false
@@ -1135,7 +1128,7 @@ script = ExtResource("5_uecvt")
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
-material = SubResource("ShaderMaterial_6yrdc")
+material = ExtResource("27_ucgyx")
 position = Vector2(6, -12)
 rotation = -1.5708
 emitting = false
@@ -1150,6 +1143,7 @@ script = ExtResource("6_v8acb")
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
+material = ExtResource("27_ucgyx")
 emitting = false
 amount = 300
 process_material = SubResource("ParticleProcessMaterial_p55dh")
@@ -1162,6 +1156,7 @@ script = ExtResource("8_vpufh")
 unique_name_in_owner = true
 physics_interpolation_mode = 2
 z_index = 6
+material = ExtResource("27_ucgyx")
 emitting = false
 amount = 300
 process_material = SubResource("ParticleProcessMaterial_dl44g")
@@ -1175,8 +1170,9 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_njtbj")
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
-animation = &"idle"
+animation = &"duck_walk"
 autoplay = "idle"
+frame_progress = 0.592224
 
 [node name="Hat" type="Sprite2D" parent="."]
 visible = false
@@ -1188,7 +1184,7 @@ texture = ExtResource("14_yvoow")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 material = SubResource("CanvasItemMaterial_xl2lb")
-position = Vector2(0, -12)
+position = Vector2(0, -13)
 shape = SubResource("ConvexPolygonShape2D_w6gbp")
 debug_color = Color(0, 1, 0.0666666, 0.588235)
 
@@ -1272,30 +1268,30 @@ one_shot = true
 [node name="WallJump" type="Node2D" parent="Raycasts"]
 
 [node name="BottomRight" type="RayCast2D" parent="Raycasts/WallJump"]
-position = Vector2(4, -6)
+position = Vector2(5, -6)
 target_position = Vector2(6, -1)
 
 [node name="BottomLeft" type="RayCast2D" parent="Raycasts/WallJump"]
-position = Vector2(-4, -6)
+position = Vector2(-5, -6)
 target_position = Vector2(-6, -1)
 
 [node name="TopRight" type="RayCast2D" parent="Raycasts/WallJump"]
-position = Vector2(4, -18)
+position = Vector2(5, -18)
 target_position = Vector2(6, 1)
 
 [node name="TopLeft" type="RayCast2D" parent="Raycasts/WallJump"]
-position = Vector2(-4, -18)
+position = Vector2(-5, -18)
 target_position = Vector2(-6, 1)
 
 [node name="Duck" type="Node2D" parent="Raycasts"]
 
 [node name="TopRight" type="RayCast2D" parent="Raycasts/Duck"]
-position = Vector2(5, -12)
-target_position = Vector2(0, -12)
+position = Vector2(5, -13)
+target_position = Vector2(0, -13)
 
 [node name="TopLeft" type="RayCast2D" parent="Raycasts/Duck"]
-position = Vector2(-5, -12)
-target_position = Vector2(0, -12)
+position = Vector2(-5, -13)
+target_position = Vector2(0, -13)
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true

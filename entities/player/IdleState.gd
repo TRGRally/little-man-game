@@ -71,7 +71,6 @@ func HandleAnimations():
 		if landingSoundPlayed == false:
 			landingSoundPlayed = true
 			Player.load_sfx(Player.sfx_landing)
-			%SFXPlayer.play()
 			
 	else:
 		if Player.canUnDuck == true:
