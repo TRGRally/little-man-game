@@ -1172,7 +1172,7 @@ position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
 animation = &"duck_walk"
 autoplay = "idle"
-frame_progress = 0.592224
+frame_progress = 0.444235
 
 [node name="Hat" type="Sprite2D" parent="."]
 visible = false
