@@ -112,6 +112,7 @@ label_settings = SubResource("LabelSettings_2i2es")
 justification_flags = 0
 
 [node name="StartButton" type="Button" parent="Control/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("7_jrmpr")
