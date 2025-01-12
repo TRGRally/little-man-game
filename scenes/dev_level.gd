@@ -15,7 +15,7 @@ func add_death():
 var enableSmoothingNextFrame = false
 
 var cameraFollowObject: Node2D
-var cameraFollowSpeed: float = 5.0
+var cameraFollowSpeed: float = 6.0
 var cameraIsFollowing = true
 
 var startedDebugRace = false
@@ -46,12 +46,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if cameraFollowObject != null:
 		if cameraIsFollowing == true:
-			var direction: Vector2 = camera.global_position - player.global_position
-			var transform: Vector2 = direction * cameraFollowSpeed * delta
+			var pos_delta: Vector2 = camera.global_position - player.global_position
+			var transform: Vector2 = pos_delta * cameraFollowSpeed * delta
 			camera.global_position -= transform
 		else:
-			var direction: Vector2 = camera.global_position - camera.DEV_ROOM_POSITION
-			var transform: Vector2 = direction * cameraFollowSpeed * delta
+			var pos_delta: Vector2 = camera.global_position - camera.DEV_ROOM_POSITION
+			var transform: Vector2 = pos_delta * cameraFollowSpeed * delta
 			camera.global_position -= transform
 	else:
 		cameraFollowObject = player
