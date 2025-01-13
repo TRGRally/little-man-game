@@ -5,6 +5,10 @@ extends Node2D
 func _ready() -> void:
 	print("title screen ready")
 	%StartButton.grab_focus()
+	print("FROM TITLE SCREEN")
+	print(str(Global.saveData))
+	print(str(Global.allLevels))
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
