@@ -50,6 +50,7 @@ func camera_anchor_body_entered(body, binds):
 		set_camera_anchor(area.anchor, area.transitionLockState)
 
 func camera_anchor_body_exited(body, binds):
+	print("YOURMUM")
 	var area = binds[0]
 	if body == player:
 		release_camera_anchor(area.transitionLockState)

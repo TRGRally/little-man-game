@@ -675,9 +675,8 @@ sources/0 = SubResource("TileSetAtlasSource_a5h54")
 [node name="DevLevel" type="Node2D"]
 script = ExtResource("1_qwqua")
 
-[node name="CameraLockArea" parent="." instance=ExtResource("2_l643v")]
-position = Vector2(-1228, 642)
-scale = Vector2(1e-05, 1e-05)
+[node name="CameraLockArea2" parent="." instance=ExtResource("2_l643v")]
+position = Vector2(-1236, 636)
 
 [node name="DebugStart" type="Area2D" parent="."]
 position = Vector2(-2190, -744)
