@@ -27,7 +27,7 @@ func changeLevel(sceneName: String):
 func _ready() -> void:
 	Engine.set_time_scale(1)
 	
-	changeLevel(Global.STARTING_LEVEL)
+	changeLevel(Global.saveData["currentLevel"])
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

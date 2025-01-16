@@ -17,8 +17,12 @@ func _process(delta: float) -> void:
 
 
 func _on_start_button_pressed() -> void:
+	Global.saveData["currentLevel"] = "dev_level"
+	Global.saveToFile()
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
 func _on_test_button_pressed() -> void:
+	Global.saveData["currentLevel"] = "room_test_level"
+	Global.saveToFile()
 	get_tree().change_scene_to_file("res://scenes/game.tscn")

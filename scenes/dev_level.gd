@@ -12,11 +12,11 @@ func add_death():
 	deaths += 1
 	return deaths
 
-var enableSmoothingNextFrame = false
 
 var cameraFollowObject: Node2D
 var cameraFollowSpeed: float = 6.0
 var cameraIsFollowing = true
+var cameraAnchor: Vector2 = Vector2(0,0)
 
 var startedDebugRace = false
 var currentDebugRaceTimer: float = 0.0
@@ -31,16 +31,43 @@ func grav_pusher_exited(body):
 	if body == player:
 		player.externalForce = Vector2.ZERO
 		print(player.externalForce)
+		
+
+func set_camera_anchor(anchor, transitionLockState):
+	cameraAnchor = anchor
+	cameraIsFollowing = false
+	player.ChangeState(player.States.Locked)
+	
+func release_camera_anchor(transitionLockState):
+	cameraIsFollowing = true
+	player.ChangeState(player.States.Locked)
+	
+func camera_anchor_body_entered(body, binds):
+	var area = binds[0]
+	print("YOURMUM")
+	print(area)
+	if body == player:
+		set_camera_anchor(area.anchor, area.transitionLockState)
+
+func camera_anchor_body_exited(body, binds):
+	var area = binds[0]
+	if body == player:
+		release_camera_anchor(area.transitionLockState)
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var gravPushers = get_tree().get_nodes_in_group("GravPushers")
+	var cameraLockAreas = get_tree().get_nodes_in_group("CameraLockAreas")
 	for gravPusher in gravPushers:
 		print("connected gravPusher")
 		gravPusher.connect("body_entered", grav_pusher_entered)
 		gravPusher.connect("body_exited", grav_pusher_exited)
 		
+	for area in cameraLockAreas:
+		print("connected cameraLockArea")
+		area.connect("body_entered", camera_anchor_body_entered.bind([area]))
+		area.connect("body_exited", camera_anchor_body_exited.bind([area]))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -50,7 +77,7 @@ func _process(delta: float) -> void:
 			var transform: Vector2 = pos_delta * cameraFollowSpeed * delta
 			camera.global_position -= transform
 		else:
-			var pos_delta: Vector2 = camera.global_position - camera.DEV_ROOM_POSITION
+			var pos_delta: Vector2 = camera.global_position - cameraAnchor
 			var transform: Vector2 = pos_delta * cameraFollowSpeed * delta
 			camera.global_position -= transform
 	else:
@@ -78,20 +105,6 @@ func _on_debug_finish_body_entered(body: Node2D) -> void:
 			HUD.set_best_time(currentDebugRaceTimer)
 			bestRaceTime = currentDebugRaceTimer
 		startedDebugRace = false
-
-
-func _on_level_body_entered(body: Node2D) -> void:
-	if body == player:
-		print("[debugLevel] player entered level")
-		cameraIsFollowing = false
-		player.ChangeState(player.States.Locked)
-
-
-func _on_level_body_exited(body: Node2D) -> void:
-	if body == player:
-		print("[debugLevel] player exited level")
-		cameraIsFollowing = true 
-		player.ChangeState(player.States.Locked)
 
 
 func _on_killzone_body_entered(body: Node2D) -> void:

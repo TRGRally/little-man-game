@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcgubvwhwrluo"]
+
+[ext_resource type="Script" path="res://scenes/levels/cameraLockArea.gd" id="1_nhjfn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b0koo"]
+size = Vector2(640, 360)
+
+[node name="CameraLockArea" type="Area2D" groups=["CameraLockAreas"]]
+script = ExtResource("1_nhjfn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_b0koo")
+debug_color = Color(0.653333, 0.7, 0, 0.0392157)

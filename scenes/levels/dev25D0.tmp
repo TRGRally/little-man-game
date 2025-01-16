@@ -1,12 +1,14 @@
-[gd_scene load_steps=42 format=4 uid="uid://d2kw56o8nwcj1"]
+[gd_scene load_steps=43 format=4 uid="uid://d2kw56o8nwcj1"]
 
 [ext_resource type="Script" path="res://scenes/dev_level.gd" id="1_qwqua"]
 [ext_resource type="PackedScene" uid="uid://cgg5j7144n06e" path="res://grav_pusher.tscn" id="2_6xd5r"]
-[ext_resource type="PackedScene" uid="uid://bcgubvwhwrluo" path="res://scenes/camera_lock_area.tscn" id="2_l643v"]
+[ext_resource type="Script" path="res://scenes/levels/cameraLockArea.gd" id="2_i05rx"]
 [ext_resource type="PackedScene" uid="uid://boymwxx7yjidg" path="res://scenes/parallax.tscn" id="3_b51g1"]
 [ext_resource type="PackedScene" uid="uid://crrn62if0387i" path="res://scenes/platform.tscn" id="4_jhmmj"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="5_hm6b3"]
 [ext_resource type="Texture2D" uid="uid://c2f34vke0octl" path="res://assets/sprites/dev-tileset-12x.png" id="6_8lldn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b0koo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43ro4"]
 size = Vector2(12, 72)
@@ -675,9 +677,15 @@ sources/0 = SubResource("TileSetAtlasSource_a5h54")
 [node name="DevLevel" type="Node2D"]
 script = ExtResource("1_qwqua")
 
-[node name="CameraLockArea" parent="." instance=ExtResource("2_l643v")]
-position = Vector2(-1228, 642)
-scale = Vector2(1e-05, 1e-05)
+[node name="Level" type="Area2D" parent="." groups=["CameraLockAreas"]]
+position = Vector2(-1548, 462)
+scale = Vector2(31.5, 18)
+script = ExtResource("2_i05rx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level"]
+position = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_b0koo")
+debug_color = Color(0.653333, 0.7, 0, 0.0392157)
 
 [node name="DebugStart" type="Area2D" parent="."]
 position = Vector2(-2190, -744)
@@ -764,6 +772,10 @@ tile_map_data = PackedByteArray("AAAMAAMAAAABAAkAAAAMAAQAAAABAAkAAAAMAAUAAAABAAk
 tile_set = SubResource("TileSet_07823")
 collision_visibility_mode = 2
 
+[connection signal="body_entered" from="Level" to="." method="_on_level_body_entered"]
+[connection signal="body_entered" from="Level" to="Level" method="_on_body_entered"]
+[connection signal="body_exited" from="Level" to="." method="_on_level_body_exited"]
+[connection signal="body_exited" from="Level" to="Level" method="_on_body_exited"]
 [connection signal="body_entered" from="DebugStart" to="." method="_on_debug_start_body_entered"]
 [connection signal="body_exited" from="DebugStart" to="." method="_on_debug_start_body_exited"]
 [connection signal="body_entered" from="DebugFinish" to="." method="_on_debug_finish_body_entered"]
