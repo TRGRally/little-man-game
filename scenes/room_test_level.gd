@@ -4,7 +4,7 @@ extends Node2D
 @export var HUD: CanvasLayer
 @export var camera: Camera2D
 
-var SPAWN_POSITION = Vector2(0,0)
+var SPAWN_POSITION = Vector2(-288,76)
 
 var cameraFollowObject: Node2D
 var cameraFollowSpeed: float = 6.0
