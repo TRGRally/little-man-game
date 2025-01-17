@@ -26,3 +26,10 @@ func _on_test_button_pressed() -> void:
 	Global.saveData["currentLevel"] = "room_test_level"
 	Global.saveToFile()
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+
+func _on_exit_button_pressed() -> void:
+	#notifies the scene tree of quit request, allows the game to prepare if necessary
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+	#but for now just force quit
+	get_tree().quit()
