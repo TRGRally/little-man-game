@@ -17,9 +17,10 @@ var cameraAnchorCollisionMap: Dictionary
 func set_camera_anchor(anchor, transitionLockState):
 	cameraAnchor = anchor
 	cameraIsFollowing = false
-	player.ChangeState(player.States.Locked)
+	if transitionLockState:
+		player.ChangeState(player.States.Locked)
 	
-func release_camera_anchor(transitionLockState):#
+func release_camera_anchor(transitionLockState):
 	var stillHaveAnchor = false
 	var foundAnchor = Vector2(0,0)
 	for anchor in cameraAnchorCollisionMap.keys():
@@ -32,7 +33,8 @@ func release_camera_anchor(transitionLockState):#
 		pass
 	else:
 		cameraIsFollowing = true
-		player.ChangeState(player.States.Locked)
+		if transitionLockState:
+			player.ChangeState(player.States.Locked)
 	
 func camera_anchor_body_entered(body, binds):
 	var area = binds[0]
