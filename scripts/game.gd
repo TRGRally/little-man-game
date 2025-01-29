@@ -26,8 +26,12 @@ func changeLevel(sceneName: String):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Engine.set_time_scale(1)
-	
-	changeLevel(Global.saveData["currentLevel"])
+	if Global.saveData["currentLevel"]:
+		changeLevel(Global.saveData["currentLevel"])
+	else:
+		#load title_screen for first time start
+		var scene = load("res://scenes/title_screen.tscn").instantiate()
+		get_tree().root.add_child(scene)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
