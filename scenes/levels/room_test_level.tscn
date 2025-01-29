@@ -650,12 +650,10 @@ color = Color(0.86, 0.7568, 0.81872, 1)
 
 [node name="CameraLockArea" parent="." instance=ExtResource("2_8a880")]
 anchor = Vector2(0, 0)
-transitionLockState = false
 
 [node name="CameraLockArea2" parent="." instance=ExtResource("2_8a880")]
 position = Vector2(640, 0)
 anchor = Vector2(640, 0)
-transitionLockState = false
 
 [node name="Foreground" type="TileMapLayer" parent="."]
 z_index = 2

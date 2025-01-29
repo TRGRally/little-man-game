@@ -11,43 +11,47 @@ var cameraFollowSpeed: float = 6.0
 var cameraIsFollowing = true
 var cameraAnchor: Vector2 = Vector2(0,0)
 
-#dict of Vector2(x,y) -> bool (inside/outside)
-var cameraAnchorCollisionMap: Dictionary
+var roomsInside: Array[Node2D] = []
 
-func set_camera_anchor(anchor, transitionLockState):
+func set_camera_anchor(anchor):
 	cameraAnchor = anchor
 	cameraIsFollowing = false
-	if transitionLockState:
-		player.ChangeState(player.States.Locked)
 	
-func release_camera_anchor(transitionLockState):
-	var stillHaveAnchor = false
-	var foundAnchor = Vector2(0,0)
-	for anchor in cameraAnchorCollisionMap.keys():
-		if cameraAnchorCollisionMap[anchor] == 1:
-			stillHaveAnchor = true
-			foundAnchor = anchor
-		
-	if stillHaveAnchor:
-		cameraAnchor = foundAnchor
-		pass
-	else:
-		cameraIsFollowing = true
-		if transitionLockState:
-			player.ChangeState(player.States.Locked)
-	
+func release_camera_anchor():
+	cameraIsFollowing = true
+
 func camera_anchor_body_entered(body, binds):
 	var area = binds[0]
-	print(area)
 	if body == player:
-		cameraAnchorCollisionMap[area.anchor] = 1
-		set_camera_anchor(area.anchor, area.transitionLockState)
+		print("ENTER: " + area.name)
+		roomsInside.append(area)
+		#theres no difference between the two outcomes below but there might be in the future
+		if player.currentRoom == null:
+			#entering room from follow cam
+			player.ChangeRoom(area)
+			if player.currentRoom == area:
+				set_camera_anchor(area.anchor)
+		else:
+			#entering room from another room 
+			player.ChangeRoom(area)
+			if player.currentRoom == area:
+				set_camera_anchor(area.anchor)
+		
 
 func camera_anchor_body_exited(body, binds):
 	var area = binds[0]
 	if body == player:
-		cameraAnchorCollisionMap[area.anchor] = 0
-		release_camera_anchor(area.transitionLockState)
+		print("EXIT: " + area.name)
+		roomsInside.erase(area)
+		if roomsInside.size() == 0:
+			player.ChangeRoom(null)
+			if player.currentRoom == null:
+				release_camera_anchor()
+		else:
+			var fallbackRoom = roomsInside.back()
+			player.ChangeRoom(fallbackRoom)
+			if player.currentRoom == fallbackRoom:
+				set_camera_anchor(fallbackRoom.anchor)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -59,6 +63,9 @@ func _ready() -> void:
 		area.connect("body_exited", camera_anchor_body_exited.bind([area]))
 
 
+func _physics_process(delta: float) -> void:
+	if player.currentRoom == null:
+		cameraIsFollowing = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

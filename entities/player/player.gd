@@ -18,7 +18,7 @@ const WALL_JUMP_SPEED: float = -300.0
 const WALL_JUMP_KICKBACK_SPEED: float = 250.0
 const VARIABLE_JUMP_MULTIPLIER: float = 0.5
 const VARIABLE_WALLJUMP_MULTIPLIER: float = 0.85
-const JUMP_BUFFER_TIME_S: float = 0.15
+const JUMP_BUFFER_TIME_S: float = 1.0
 const DASH_JUMP_SPEED: float = -250.0
 const COYOTE_TIME_S: float = 0.15
 const DASH_COYOTE_TIME_S: float = 0.1
@@ -40,7 +40,7 @@ const DASH_BUFFER_TIME_S: float = 0.05
 const ROOM_LOCKED_TIME_S: float = 0.5
 
 #model
-const MIDPOINT_OFFSET: int = -16
+const MIDPOINT_OFFSET: int = -13
 var hitboxes = {
 	"default": PackedVector2Array([Vector2(7,13), Vector2(-7,13), Vector2(-7,-13), Vector2(7,-13)]),
 	"fall_coersion": PackedVector2Array([Vector2(7,13), Vector2(-7,13), Vector2(-7,0), Vector2(0,-13), Vector2(7,0)]),
@@ -130,6 +130,26 @@ func damage(amount):
 	
 	return alive
 		
+		
+
+
+#camera room stuff
+var currentRoom: Node2D = null
+var previousRoom: Node2D = null
+
+func ChangeRoom(newRoom: Node2D):
+	if newRoom == null:
+		#player has left all rooms, follow cam
+		previousRoom = currentRoom
+		currentRoom = null
+		print("no rooms left")
+	elif (newRoom != null and newRoom != currentRoom):
+		previousRoom = currentRoom
+		currentRoom = newRoom
+		if newRoom.transitionLockState == true:
+			ChangeState(States.Locked)
+	else:
+		print("ignoring duplicate camera anchor change: " + currentRoom.name + " -> " + newRoom.name)
 
 
 #state machine stuff
@@ -146,7 +166,7 @@ func ChangeState(newState: PlayerState):
 		print(previousState.Name + " -> " + currentState.Name)
 		return
 	else:
-		print("erroneous state change: " + currentState.name + " -> " + newState.Name)
+		print("erroneous state change: " + currentState.Name + " -> " + newState.Name)
 		return
 
 
@@ -228,6 +248,7 @@ func stampSprite():
 	var stamp: Node2D = AnimatedSprite2D.new()
 	stamp.sprite_frames = sprite.sprite_frames
 	stamp.animation = "dash"
+	stamp.offset = sprite.offset
 	stamp.frame = stamp.frame
 	
 	stamp.pause()

@@ -10,7 +10,8 @@ func EnterState():
 		fallingFrames = 0
 
 func ExitState():
-	pass
+	Player.sprite.scale.y = 1.0
+	Player.sprite.scale.x = 1.0
 	
 	
 func Draw():
@@ -26,12 +27,20 @@ func Update(delta: float):
 	Player.HandleFriction()
 	Player.HandleWall()
 	Player.HandleWallJump()
-	HandleAnimations()
+	HandleAnimations(delta)
 	
 	fallingFrames += 1
 
-func HandleAnimations():
+func HandleAnimations(delta):
 	if fallingFrames <= JUMP_DOWN_ANIMATION_LENGTH:
 		Player.sprite.animation = "jump_down"
 	else:
 		Player.sprite.animation = "fall"
+	
+	#if Player.velocity.y > Player.MAX_FALL_SPEED:
+		#Player.sprite.scale.y = move_toward(Player.sprite.scale.y, 1.2, 1.5 * delta)
+		#Player.sprite.scale.x = move_toward(Player.sprite.scale.x, 0.9, 1.5 * delta)
+		#print("sprite scale:" + str(Player.sprite.scale.y))
+	#else:
+		#Player.sprite.scale.y = move_toward(Player.sprite.scale.y, 1.0, 1.5 * delta)
+		#Player.sprite.scale.x = move_toward(Player.sprite.scale.x, 1.0, 1.5 * delta)

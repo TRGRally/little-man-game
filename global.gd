@@ -133,7 +133,7 @@ func _physics_process(delta: float) -> void:
 	var symbol = [inputsThisFrame, frameCounter]
 	inputHistory.append(symbol)
 	inputsThisFrame = []
-	print(symbol)
+	#print(symbol)
 		
 		
 		
