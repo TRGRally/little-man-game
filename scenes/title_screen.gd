@@ -10,7 +10,6 @@ func _ready() -> void:
 	print(str(Global.allLevels))
 	
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
@@ -33,3 +32,9 @@ func _on_exit_button_pressed() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	#but for now just force quit
 	get_tree().quit()
+
+
+func _on_crazy_button_pressed() -> void:
+	Global.saveData["currentLevel"] = "crazy_level"
+	Global.saveToFile()
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
