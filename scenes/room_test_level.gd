@@ -66,6 +66,24 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if player.currentRoom == null:
 		cameraIsFollowing = true
+	
+	#if cameraFollowObject != null:
+		#if cameraIsFollowing == true:
+			#var pos_delta: Vector2 = camera.global_position - player.global_position
+			#var transform: Vector2 = pos_delta * cameraFollowSpeed * delta
+			#camera.global_position -= transform
+		#else:
+			##var pos_delta: Vector2 = camera.global_position - cameraAnchor
+			##pos_delta.x = int(pos_delta.x)
+			##pos_delta.y = int(pos_delta.y)
+			##var transform: Vector2 = pos_delta * cameraFollowSpeed * delta
+			##camera.global_position -= transform
+			#print("lerp")
+			#camera.global_position = lerp(camera.global_position, cameraAnchor, 0.125)
+	#else:
+		#cameraFollowObject = player
+		#player.global_position = SPAWN_POSITION
+		#camera.global_position = player.global_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -75,9 +93,13 @@ func _process(delta: float) -> void:
 			var transform: Vector2 = pos_delta * cameraFollowSpeed * delta
 			camera.global_position -= transform
 		else:
-			var pos_delta: Vector2 = camera.global_position - cameraAnchor
-			var transform: Vector2 = pos_delta * cameraFollowSpeed * delta
-			camera.global_position -= transform
+			#var pos_delta: Vector2 = camera.global_position - cameraAnchor
+			#pos_delta.x = int(pos_delta.x)
+			#pos_delta.y = int(pos_delta.y)
+			#var transform: Vector2 = pos_delta * cameraFollowSpeed * delta
+			#camera.global_position -= transform
+			#print("lerp")
+			camera.global_position = lerp(camera.global_position, cameraAnchor, 1.01 - pow(0.025, delta))
 	else:
 		cameraFollowObject = player
 		player.global_position = SPAWN_POSITION

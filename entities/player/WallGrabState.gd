@@ -13,14 +13,13 @@ func EnterState():
 		#check top then bottom then fail
 		if grabPosTop:
 			Player.position.x = grabPosTop.x
-			Player.position.y += 1
+			#Player.position.y += 1
 		elif grabPosBottom:
 			Player.position.x = grabPosBottom.x
-			Player.position.y += 1
+			#Player.position.y += 1
 		else:
 			print("FUCK :sob:")
 			
-		
 		
 	else:
 		var grabPosBottom = Player.rc_bottomRight.get_collision_point()
@@ -29,17 +28,19 @@ func EnterState():
 		#check top then bottom then fail
 		if grabPosTop:
 			Player.position.x = grabPosTop.x
-			Player.position.y += 1
+			#Player.position.y += 1
 		elif grabPosBottom:
 			Player.position.x = grabPosBottom.x
-			Player.position.y += 1
+			#Player.position.y += 1
 		else:
 			print("FUCK :sob:")
 		
 	
+		
+	
 
 func ExitState():
-	pass
+	Player.sprite.offset.x = 0
 	
 	
 func Draw():
@@ -57,6 +58,8 @@ func Update(_delta: float):
 func HandleAnimations():
 	Player.sprite.animation = "wall_grab"
 	if Player.wallVector.x < 0:
+		Player.sprite.offset.x = -1
 		Player.sprite.flip_h = true
 	else:
+		Player.sprite.offset.x = 1
 		Player.sprite.flip_h = false

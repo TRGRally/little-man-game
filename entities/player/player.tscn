@@ -1,67 +1,66 @@
-[gd_scene load_steps=191 format=3 uid="uid://20vymhe38nsq"]
+[gd_scene load_steps=190 format=3 uid="uid://20vymhe38nsq"]
 
-[ext_resource type="Script" path="res://entities/player/player.gd" id="1_6enp7"]
+[ext_resource type="Script" uid="uid://bl1wrvcg6yp5j" path="res://entities/player/player.gd" id="1_6enp7"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="2_5x65k"]
 [ext_resource type="AudioStream" uid="uid://bvktu65hyalu7" path="res://assets/sound/player/footsteps/grass/0.ogg" id="2_7qe32"]
-[ext_resource type="Script" path="res://entities/player/dash_particles.gd" id="2_60ron"]
+[ext_resource type="Script" uid="uid://i0h14yb6voad" path="res://entities/player/dash_particles.gd" id="2_60ron"]
 [ext_resource type="AudioStream" uid="uid://dm1o84frr2svi" path="res://assets/sound/player/footsteps/wood/0.ogg" id="3_1g82e"]
-[ext_resource type="Script" path="res://entities/player/dash_jump_particles_2.gd" id="3_037vy"]
-[ext_resource type="Script" path="res://entities/player/walk_particles.gd" id="3_bx257"]
-[ext_resource type="Script" path="res://entities/player/states.gd" id="3_ckwwy"]
+[ext_resource type="Script" uid="uid://crpil3hihghfp" path="res://entities/player/dash_jump_particles_2.gd" id="3_037vy"]
+[ext_resource type="Script" uid="uid://dj7vg5i5dl7wy" path="res://entities/player/walk_particles.gd" id="3_bx257"]
+[ext_resource type="Script" uid="uid://cj3wjsd6s7wjw" path="res://entities/player/states.gd" id="3_ckwwy"]
 [ext_resource type="Texture2D" uid="uid://ih75tjr7oemq" path="res://assets/sprites/player/Crouch-Idle/Player Crouch-Idle 48x48.png" id="3_ecvq1"]
 [ext_resource type="AudioStream" uid="uid://cx4q8r0vswn27" path="res://assets/sound/player/footsteps/grass/1.ogg" id="3_qh4xb"]
-[ext_resource type="Script" path="res://entities/player/LockedState.gd" id="4_0ffgt"]
+[ext_resource type="Script" uid="uid://ya2248y8lekw" path="res://entities/player/LockedState.gd" id="4_0ffgt"]
 [ext_resource type="AudioStream" uid="uid://csi8p0cavxoir" path="res://assets/sound/player/footsteps/grass/2.ogg" id="4_1ur1r"]
-[ext_resource type="Script" path="res://entities/player/IdleState.gd" id="4_107eg"]
+[ext_resource type="Script" uid="uid://bjau8j1mm8jel" path="res://entities/player/IdleState.gd" id="4_107eg"]
 [ext_resource type="AudioStream" uid="uid://byn41lolqsbhd" path="res://assets/sound/player/footsteps/wood/1.ogg" id="4_cfktp"]
-[ext_resource type="Script" path="res://entities/player/jump_particles.gd" id="4_tdood"]
+[ext_resource type="Script" uid="uid://c6hm3r5j8yh4d" path="res://entities/player/jump_particles.gd" id="4_tdood"]
 [ext_resource type="Texture2D" uid="uid://duxmo3t2tyc4x" path="res://assets/sprites/player/Crouch-Walk/player crouch-walk 48x48.png" id="4_v7jd1"]
 [ext_resource type="AudioStream" uid="uid://b4qix1vy1sbsl" path="res://assets/sound/player/footsteps/grass/3.ogg" id="5_cfsso"]
 [ext_resource type="AudioStream" uid="uid://b8q0d0hc38xly" path="res://assets/sound/player/footsteps/wood/2.ogg" id="5_fa1io"]
-[ext_resource type="Script" path="res://entities/player/WalkState.gd" id="5_jmwou"]
-[ext_resource type="Script" path="res://entities/player/wall_slide_left_particles.gd" id="5_uecvt"]
+[ext_resource type="Script" uid="uid://df51yo3q80m71" path="res://entities/player/WalkState.gd" id="5_jmwou"]
+[ext_resource type="Script" uid="uid://uo2txdiudrvf" path="res://entities/player/wall_slide_left_particles.gd" id="5_uecvt"]
 [ext_resource type="AudioStream" uid="uid://bysi40rsbjo4" path="res://assets/sound/player/footsteps/grass/4.ogg" id="6_50fo6"]
-[ext_resource type="Script" path="res://entities/player/JumpState.gd" id="6_scppm"]
-[ext_resource type="Script" path="res://entities/player/wall_slide_right_particles.gd" id="6_v8acb"]
+[ext_resource type="Script" uid="uid://b5ffwicmu6pnk" path="res://entities/player/JumpState.gd" id="6_scppm"]
+[ext_resource type="Script" uid="uid://77w5yv538o8s" path="res://entities/player/wall_slide_right_particles.gd" id="6_v8acb"]
 [ext_resource type="AudioStream" uid="uid://dmk0h5l8ns8g0" path="res://assets/sound/player/footsteps/wood/3.ogg" id="6_yp7lq"]
 [ext_resource type="AudioStream" uid="uid://dvnvx40f2wf1" path="res://assets/sound/player/footsteps/grass/5.ogg" id="7_3a31s"]
 [ext_resource type="AudioStream" uid="uid://cueeg8imed7ja" path="res://assets/sound/player/footsteps/wood/4.ogg" id="7_7cjsy"]
 [ext_resource type="Texture2D" uid="uid://bfgcb3p2rkdqc" path="res://assets/sprites/player/Player Jump/player new jump 48x48.png" id="7_esktx"]
-[ext_resource type="Script" path="res://entities/player/JumpPeakState.gd" id="7_ortu5"]
-[ext_resource type="Script" path="res://entities/player/FallState.gd" id="8_0rjko"]
+[ext_resource type="Script" uid="uid://cfdld81hmvdf3" path="res://entities/player/JumpPeakState.gd" id="7_ortu5"]
+[ext_resource type="Script" uid="uid://o4wagoph2tuo" path="res://entities/player/FallState.gd" id="8_0rjko"]
 [ext_resource type="AudioStream" uid="uid://befaapwhlmqls" path="res://assets/sound/player/footsteps/grass/6.ogg" id="8_3ahtt"]
 [ext_resource type="Texture2D" uid="uid://co4bk5cdeea5x" path="res://assets/sprites/player/Player Land/player land 48x48.png" id="8_romr0"]
-[ext_resource type="Script" path="res://entities/player/wall_jump_left_particles.gd" id="8_vpufh"]
+[ext_resource type="Script" uid="uid://1pl5sejwe6nx" path="res://entities/player/wall_jump_left_particles.gd" id="8_vpufh"]
 [ext_resource type="AudioStream" uid="uid://4s03y2wmu4hq" path="res://assets/sound/player/footsteps/wood/5.ogg" id="8_y3dqo"]
 [ext_resource type="AudioStream" uid="uid://lg2nwfcerg7i" path="res://assets/sound/player/footsteps/wood/6.ogg" id="9_2aqsv"]
 [ext_resource type="Texture2D" uid="uid://b1bcfh4l2vkgd" path="res://assets/sprites/player/Player Run/player run 48x48.png" id="9_8krlu"]
 [ext_resource type="AudioStream" uid="uid://dc4smfft7xmx" path="res://assets/sound/player/footsteps/grass/7.ogg" id="9_a1y7p"]
 [ext_resource type="Texture2D" uid="uid://ck6lh8lajqfgs" path="res://assets/sprites/player/Hat/Player_Idle_With_Hat_And_No_Outline_At_All_48x48.png" id="9_belvd"]
-[ext_resource type="Script" path="res://entities/player/wall_jump_right_particles.gd" id="9_r65lo"]
+[ext_resource type="Script" uid="uid://dh8ajhhqfury1" path="res://entities/player/wall_jump_right_particles.gd" id="9_r65lo"]
 [ext_resource type="AudioStream" uid="uid://bruibebjb3841" path="res://assets/sound/player/footsteps/wood/7.ogg" id="10_4iu73"]
-[ext_resource type="Script" path="res://entities/player/DashState.gd" id="10_5p7vt"]
+[ext_resource type="Script" uid="uid://bbqgapn6pegq3" path="res://entities/player/DashState.gd" id="10_5p7vt"]
 [ext_resource type="AudioStream" uid="uid://cnc530vo6pysk" path="res://assets/sound/player/footsteps/grass/8.ogg" id="10_ciajc"]
 [ext_resource type="Texture2D" uid="uid://d3ydq8jqnyeko" path="res://assets/sprites/player/Player Wall Land/player wall land 48x48.png" id="11_nk0yv"]
 [ext_resource type="AudioStream" uid="uid://dooevdh2du2i1" path="res://assets/sound/player/footsteps/wood/8.ogg" id="11_r6aqj"]
-[ext_resource type="Script" path="res://entities/player/WallGrabState.gd" id="11_yixrl"]
+[ext_resource type="Script" uid="uid://dfdlvid1vo46e" path="res://entities/player/WallGrabState.gd" id="11_yixrl"]
 [ext_resource type="Texture2D" uid="uid://dqrmapd1rdjyu" path="res://assets/sprites/player/Slide/Player Slide 48x48.png" id="12_1ujfk"]
-[ext_resource type="Script" path="res://entities/player/WallSlideState.gd" id="12_akqea"]
-[ext_resource type="Script" path="res://entities/player/DuckState.gd" id="14_0ayni"]
+[ext_resource type="Script" uid="uid://b43jk6ddsd6ey" path="res://entities/player/WallSlideState.gd" id="12_akqea"]
+[ext_resource type="Script" uid="uid://b2cmhaml4xw6a" path="res://entities/player/DuckState.gd" id="14_0ayni"]
 [ext_resource type="Texture2D" uid="uid://c4vlauhl0sd3g" path="res://assets/sprites/player/Player Climb-Side/Player Side-Climb 48x48.png" id="14_kv85f"]
 [ext_resource type="Texture2D" uid="uid://b8yyu3l47tkx5" path="res://assets/sprites/player/Hat/hat.png" id="14_yvoow"]
-[ext_resource type="Script" path="res://entities/player/WallJumpState.gd" id="15_3kl73"]
-[ext_resource type="Script" path="res://entities/player/DashJumpState.gd" id="15_007vb"]
-[ext_resource type="Texture2D" uid="uid://df410wat8cotf" path="res://assets/sprites/player/Player Wall Slide/player wall slide 48x48.png" id="16_gxdh8"]
-[ext_resource type="Script" path="res://entities/player/DashBufferState.gd" id="16_i50og"]
+[ext_resource type="Script" uid="uid://wohbl3sv5n3t" path="res://entities/player/WallJumpState.gd" id="15_3kl73"]
+[ext_resource type="Script" uid="uid://b47fj6ki6hhmd" path="res://entities/player/DashJumpState.gd" id="15_007vb"]
+[ext_resource type="Script" uid="uid://dh6alj3tub5pp" path="res://entities/player/DashBufferState.gd" id="16_i50og"]
 [ext_resource type="AudioStream" uid="uid://clp5dw3g1y4q0" path="res://assets/sound/player/landing/land2.wav" id="20_b32oe"]
 [ext_resource type="AudioStream" uid="uid://diflqyxlqb8xi" path="res://assets/sound/player/landing/land3.wav" id="21_vrmhw"]
 [ext_resource type="AudioStream" uid="uid://lc85g1mpo1vw" path="res://assets/sound/player/jump/jump_launch_01.wav" id="21_ynsao"]
 [ext_resource type="AudioStream" uid="uid://cjof5jdyklpar" path="res://assets/sound/player/landing/land4.wav" id="22_snk8a"]
 [ext_resource type="AudioStream" uid="uid://dx2s7dj06122" path="res://assets/sound/player/landing/land.wav" id="23_4r587"]
-[ext_resource type="Script" path="res://entities/player/DuckWalkState.gd" id="25_5xafn"]
+[ext_resource type="Script" uid="uid://dqqax8rs53ljt" path="res://entities/player/DuckWalkState.gd" id="25_5xafn"]
 [ext_resource type="Material" uid="uid://m0r3p7w1p07t" path="res://scenes/white_particles.tres" id="27_ucgyx"]
-[ext_resource type="Script" path="res://entities/player/DashWallJumpState.gd" id="32_3bs66"]
-[ext_resource type="Shader" path="res://scenes/smoothpixel.gdshader" id="33_xl5yw"]
+[ext_resource type="Script" uid="uid://b7ikgpj1j1fx4" path="res://entities/player/DashWallJumpState.gd" id="32_3bs66"]
+[ext_resource type="Shader" uid="uid://jlm6pnd2ll4q" path="res://scenes/smoothpixel.gdshader" id="33_xl5yw"]
 [ext_resource type="AudioStream" uid="uid://dhf2t4v0bxd48" path="res://assets/sound/player/woosh.wav" id="39_1cjw1"]
 [ext_resource type="Texture2D" uid="uid://tshj0mrswti2" path="res://assets/sprites/player/Hat/PlayerWalk 48x48 Hat.png" id="42_12mfm"]
 
@@ -139,7 +138,7 @@ gradient = SubResource("Gradient_8b0vo")
 use_hdr = true
 
 [sub_resource type="Curve" id="Curve_07o86"]
-max_value = 100.0
+_limits = [0.0, 100.0, 0.0, 1.0]
 _data = [Vector2(0, 51.498), 0.0, 0.0, 0, 0, Vector2(0.245033, 8.14019), 0.0, 0.0, 0, 0, Vector2(0.505376, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
@@ -687,9 +686,9 @@ region = Rect2(192, 0, 48, 48)
 atlas = ExtResource("11_nk0yv")
 region = Rect2(240, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cbm00"]
-atlas = ExtResource("16_gxdh8")
-region = Rect2(0, 0, 48, 48)
+[sub_resource type="AtlasTexture" id="AtlasTexture_2acbm"]
+atlas = ExtResource("11_nk0yv")
+region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oiw8m"]
 animations = [{
@@ -1027,7 +1026,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cbm00")
+"texture": SubResource("AtlasTexture_2acbm")
 }],
 "loop": true,
 "name": &"wall_slide",
@@ -1057,12 +1056,12 @@ material = SubResource("CanvasItemMaterial_wxvhd")
 position = Vector2(0, -13)
 emitting = false
 amount = 75
-process_material = SubResource("ParticleProcessMaterial_bcgya")
 lifetime = 0.7
 fixed_fps = 24
 interpolate = false
 trail_enabled = true
 trail_lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_bcgya")
 script = ExtResource("2_60ron")
 
 [node name="DashJumpParticles" type="GPUParticles2D" parent="." groups=["PP"]]
@@ -1074,13 +1073,13 @@ position = Vector2(0, -13)
 emitting = false
 amount = 300
 amount_ratio = 0.5
-process_material = SubResource("ParticleProcessMaterial_4nipb")
 lifetime = 2.0
 randomness = 0.5
 fixed_fps = 48
 interpolate = false
 trail_enabled = true
 trail_lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_4nipb")
 script = ExtResource("3_037vy")
 
 [node name="WalkParticles" type="GPUParticles2D" parent="." groups=["PP"]]
@@ -1090,10 +1089,10 @@ z_index = 6
 material = ExtResource("27_ucgyx")
 emitting = false
 amount = 35
-process_material = SubResource("ParticleProcessMaterial_ulbea")
 fixed_fps = 24
 interpolate = false
 fract_delta = false
+process_material = SubResource("ParticleProcessMaterial_ulbea")
 script = ExtResource("3_bx257")
 
 [node name="JumpParticles" type="GPUParticles2D" parent="." groups=["PP"]]
@@ -1103,10 +1102,10 @@ z_index = 6
 material = ExtResource("27_ucgyx")
 emitting = false
 amount = 300
-process_material = SubResource("ParticleProcessMaterial_jhn08")
 lifetime = 0.5
 fixed_fps = 60
 interpolate = false
+process_material = SubResource("ParticleProcessMaterial_jhn08")
 script = ExtResource("4_tdood")
 
 [node name="WallSlideLeftParticles" type="GPUParticles2D" parent="." groups=["PP"]]
@@ -1118,10 +1117,10 @@ position = Vector2(-6, -13)
 rotation = 1.5708
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_13ulk")
 fixed_fps = 15
 interpolate = false
 fract_delta = false
+process_material = SubResource("ParticleProcessMaterial_13ulk")
 script = ExtResource("5_uecvt")
 
 [node name="WallSlideRightParticles" type="GPUParticles2D" parent="." groups=["PP"]]
@@ -1133,10 +1132,10 @@ position = Vector2(6, -13)
 rotation = -1.5708
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_i5wob")
 fixed_fps = 15
 interpolate = false
 fract_delta = false
+process_material = SubResource("ParticleProcessMaterial_i5wob")
 script = ExtResource("6_v8acb")
 
 [node name="WallJumpLeftParticles" type="GPUParticles2D" parent="." groups=["PP"]]
@@ -1146,10 +1145,10 @@ z_index = 6
 material = ExtResource("27_ucgyx")
 emitting = false
 amount = 300
-process_material = SubResource("ParticleProcessMaterial_p55dh")
 lifetime = 0.5
 fixed_fps = 60
 interpolate = false
+process_material = SubResource("ParticleProcessMaterial_p55dh")
 script = ExtResource("8_vpufh")
 
 [node name="WallJumpRightParticles" type="GPUParticles2D" parent="." groups=["PP"]]
@@ -1159,10 +1158,10 @@ z_index = 6
 material = ExtResource("27_ucgyx")
 emitting = false
 amount = 300
-process_material = SubResource("ParticleProcessMaterial_dl44g")
 lifetime = 0.5
 fixed_fps = 60
 interpolate = false
+process_material = SubResource("ParticleProcessMaterial_dl44g")
 script = ExtResource("9_r65lo")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
@@ -1170,8 +1169,9 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_njtbj")
 position = Vector2(0, -13)
 sprite_frames = SubResource("SpriteFrames_oiw8m")
-animation = &"idle"
+animation = &"wall_slide"
 autoplay = "idle"
+frame_progress = 0.00336022
 offset = Vector2(0, -3)
 
 [node name="Hat" type="Sprite2D" parent="."]

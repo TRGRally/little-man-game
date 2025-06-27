@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cgg5j7144n06e"]
 
-[ext_resource type="Shader" path="res://grav_pusher.gdshader" id="1_sc4pa"]
-[ext_resource type="Script" path="res://grav_pusher.gd" id="1_w6v4d"]
+[ext_resource type="Shader" uid="uid://0gw1dc303wa0" path="res://grav_pusher.gdshader" id="1_sc4pa"]
+[ext_resource type="Script" uid="uid://b3wlihqsecciv" path="res://grav_pusher.gd" id="1_w6v4d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pjkre"]
 shader = ExtResource("1_sc4pa")

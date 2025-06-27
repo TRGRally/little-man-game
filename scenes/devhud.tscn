@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://13rlrnnioq0r"]
 
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="1_rkq84"]
-[ext_resource type="Script" path="res://scenes/fps.gd" id="2_ymect"]
+[ext_resource type="Script" uid="uid://dc8o2wa0odb1l" path="res://scenes/fps.gd" id="2_ymect"]
 
 [node name="Control" type="Control"]
 layout_direction = 2

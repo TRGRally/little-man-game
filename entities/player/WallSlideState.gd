@@ -10,6 +10,7 @@ func EnterState():
 	
 
 func ExitState():
+	Player.sprite.offset.x = 0
 	stop_left_particles.emit()
 	stop_right_particles.emit()
 	
@@ -44,11 +45,13 @@ func HandleSliding(delta):
 func HandleAnimations():
 	Player.sprite.animation = "wall_slide"
 	if Player.wallVector.x < 0:
+		Player.sprite.offset.x = -1
 		Player.sprite.flip_h = true
 		if Player.currentState == States.WallSlide:
 			emit_left_particles.emit()
 			stop_right_particles.emit()
 	else:
+		Player.sprite.offset.x = 1
 		Player.sprite.flip_h = false
 		if Player.currentState == States.WallSlide:
 			stop_left_particles.emit()

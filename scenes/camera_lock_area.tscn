@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bcgubvwhwrluo"]
 
-[ext_resource type="Script" path="res://scenes/levels/cameraLockArea.gd" id="1_nhjfn"]
+[ext_resource type="Script" uid="uid://cmirs5qshe2lk" path="res://scenes/levels/cameraLockArea.gd" id="1_nhjfn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0koo"]
 size = Vector2(640, 360)

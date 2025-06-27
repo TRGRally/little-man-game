@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dwo5jg10b1tbh"]
 
-[ext_resource type="Script" path="res://scenes/fps.gd" id="1_852id"]
+[ext_resource type="Script" uid="uid://dc8o2wa0odb1l" path="res://scenes/fps.gd" id="1_852id"]
 [ext_resource type="Theme" uid="uid://b5715plb4akvc" path="res://scenes/devtheme.tres" id="1_pwwql"]
 [ext_resource type="LabelSettings" path="res://scenes/devhud_label_settings.tres" id="2_0avo8"]
 

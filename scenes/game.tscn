@@ -1,13 +1,13 @@
 [gd_scene load_steps=17 format=3 uid="uid://dwvu6qqm1x438"]
 
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_8bmj7"]
+[ext_resource type="Script" uid="uid://byvc8x11q5bho" path="res://scripts/game.gd" id="1_8bmj7"]
 [ext_resource type="PackedScene" uid="uid://20vymhe38nsq" path="res://entities/player/player.tscn" id="1_rss1j"]
 [ext_resource type="AudioStream" uid="uid://dhykem7qmixoj" path="res://assets/sound/environment/wind1.wav" id="2_6bv7f"]
 [ext_resource type="Material" uid="uid://dw2hwdn1583xg" path="res://scenes/smoothpixel.tres" id="3_csxic"]
-[ext_resource type="Script" path="res://scenes/sfx_environment.gd" id="3_jqb4x"]
+[ext_resource type="Script" uid="uid://54guure1lt2e" path="res://scenes/sfx_environment.gd" id="3_jqb4x"]
 [ext_resource type="PackedScene" uid="uid://dwo5jg10b1tbh" path="res://scenes/hud.tscn" id="5_thxls"]
-[ext_resource type="Script" path="res://scenes/Camera.gd" id="7_p1ddu"]
-[ext_resource type="Script" path="res://scenes/pixel_perfect_layer.gd" id="9_i5pqh"]
+[ext_resource type="Script" uid="uid://bv8xg7auticmx" path="res://scenes/Camera.gd" id="7_p1ddu"]
+[ext_resource type="Script" uid="uid://d2wmy6mkgmvjf" path="res://scenes/pixel_perfect_layer.gd" id="9_i5pqh"]
 [ext_resource type="Texture2D" uid="uid://c7fjpdtyw5f40" path="res://assets/backgrounds/Clouds 1/1.png" id="10_7mgb1"]
 
 [sub_resource type="Gradient" id="Gradient_60qy2"]
@@ -76,7 +76,7 @@ unique_name_in_owner = true
 physics_interpolation_mode = 2
 script = ExtResource("7_p1ddu")
 
-[node name="Player" parent="." instance=ExtResource("1_rss1j")]
+[node name="Player" parent="." groups=["PP"] instance=ExtResource("1_rss1j")]
 light_mask = 0
 visibility_layer = 2
 z_index = 1

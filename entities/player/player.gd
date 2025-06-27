@@ -337,8 +337,11 @@ func HandleFalling():
 	
 	if currentState == States.WallGrab:
 		if not Input.is_action_pressed("grab"):
-			print("-> Player let go of wall")
-			ChangeState(States.Fall)
+			print("-> Player let go of wall")#
+			if sign(inputVector.x) == sign(wallVector.x):
+				ChangeState(States.WallSlide)
+			else:
+				ChangeState(States.Fall)
 		return
 		
 	#standard falling off ledge check
